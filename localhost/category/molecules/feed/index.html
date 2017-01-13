@@ -9,7 +9,7 @@
 
 <channel>
 	<title>molecules &#8211; Computational Physics</title>
-	<atom:link href="http://localhost/category/molecules/feed/" rel="self" type="application/rss+xml" />
+	<atom:link href="category/molecules/feed/" rel="self" type="application/rss+xml" />
 	<link>http://localhost</link>
 	<description>Exploring physics beyond what can be counted by hand</description>
 	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
@@ -19,8 +19,8 @@
 	<generator>https://wordpress.org/?v=4.7</generator>
 	<item>
 		<title>Quantum molecular dynamics simulation of $H_2$ &#038; $H_2 O$</title>
-		<link>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/</link>
-		<comments>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/#respond</comments>
+		<link>2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/</link>
+		<comments>2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/#respond</comments>
 		<pubDate>Fri, 22 Nov 2013 16:58:40 +0000</pubDate>
 		<dc:creator><![CDATA[Milad Mobarhan]]></dc:creator>
 				<category><![CDATA[atoms]]></category>
@@ -33,20 +33,20 @@
 		<category><![CDATA[Programming]]></category>
 		<category><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=574</guid>
+		<guid isPermaLink="false">?p=574</guid>
 		<description><![CDATA[The classical molecular dynamics is primarily based on classical motion of atoms interacting with a given potential.  Quantum molecular dynamics, on the other hand, focuses on all the interactions between atoms and electrons, and does not involve fitting interactions to experimental data.  An approach to include the electronic structure is to solve the electronic Schrödinger [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>The classical molecular dynamics is primarily based on classical motion of atoms interacting with a given potential.  Quantum molecular dynamics, on the other hand, focuses on all the interactions between atoms and electrons, and does not involve fitting interactions to experimental data.  An approach to include the electronic structure is to solve the electronic Schrödinger equation, given the set of fixed nuclear positions, in each molecular dynamics step and let the nuclei to move according to classical mechanics in an effective potential due to the electrons.</p>
 <p>In the last two weeks I have been working on calculating this effective  potential, based on the results from my Hartree-Fock code.  The forces acting on the nuclei are found by taking the gradient of the energy with respect to the nuclei positions. Below I have included  molecular dynamics simulation of $H_2$  and $H_2O$ molecule, where the effective potential is calculated in each time step.</p>
 <p><iframe class='youtube-player' type='text/html' width='625' height='382' src='http://www.youtube.com/embed/fLs1nCLNv3c?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></p>
 <p><iframe class='youtube-player' type='text/html' width='625' height='382' src='http://www.youtube.com/embed/2QCJa-GghmQ?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></p>
 ]]></content:encoded>
-			<wfw:commentRss>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/feed/</wfw:commentRss>
+			<wfw:commentRss>2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/feed/</wfw:commentRss>
 		<slash:comments>0</slash:comments>
 		</item>
 		<item>
 		<title>Symmetries in one-body and two-body matrix elements in Hartree-Fock</title>
-		<link>http://localhost/2013/11/19/symmetries-in-one-body-and-two-body-matrix-elements-in-hartree-fock/</link>
-		<comments>http://localhost/2013/11/19/symmetries-in-one-body-and-two-body-matrix-elements-in-hartree-fock/#respond</comments>
+		<link>2013/11/19/symmetries-in-one-body-and-two-body-matrix-elements-in-hartree-fock/</link>
+		<comments>2013/11/19/symmetries-in-one-body-and-two-body-matrix-elements-in-hartree-fock/#respond</comments>
 		<pubDate>Tue, 19 Nov 2013 20:43:25 +0000</pubDate>
 		<dc:creator><![CDATA[Milad Mobarhan]]></dc:creator>
 				<category><![CDATA[Computational Physics]]></category>
@@ -55,7 +55,7 @@
 		<category><![CDATA[performance]]></category>
 		<category><![CDATA[Physics]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=535</guid>
+		<guid isPermaLink="false">?p=535</guid>
 		<description><![CDATA[As a part of my master project, I have lately  been working on  developing a Hartree-Fock (HF) code for atomic and molecular systems.   The Hartree-Fock method is the simplest many-body theory and a central starting point for most methods that describe the many-electron system more accurately. One of the advantages of HF is its low [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>As a part of my master project, I have lately  been working on  developing a Hartree-Fock (HF) code for atomic and molecular systems.   The Hartree-Fock method is the simplest many-body theory and a central starting point for most methods that describe the many-electron system more accurately. One of the advantages of HF is its low computational cost compare to more sophisticated techniques, which makes it attractive for quantum molecular dynamics studies.</p>
 <p>Our HF code is based on gaussian basis sets, which makes the integral evaluations much easier and gives a huge computational saving.  However, by taking into account the symmetries in one-body and two-body integrals, the computational cost can be reduced even further.  Since the basis functions and matrix elements  are real, we have the following symmetries</p>
@@ -64,12 +64,12 @@
 <p>$$\langle i k|jl \rangle = \langle jk |il \rangle =  \langle il |jk \rangle = \langle jl |ik \rangle =\langle ki |lj \rangle = \langle li |kj \rangle = \langle kj| li \rangle=  \langle lj |ki \rangle $$</p>
 <p>for one-body and two-body matrix elements, respectively. Having implemented these symmetries, the computation time for  the ground state energy for a single water molecule (using 4-31G basis set) went from 6 sec to 1 sec, which is a huge speed up! For more details please check out this <a href="http://theoretical-physics.net/dev/src/quantum/hf.html">site</a>.</p>
 ]]></content:encoded>
-			<wfw:commentRss>http://localhost/2013/11/19/symmetries-in-one-body-and-two-body-matrix-elements-in-hartree-fock/feed/</wfw:commentRss>
+			<wfw:commentRss>2013/11/19/symmetries-in-one-body-and-two-body-matrix-elements-in-hartree-fock/feed/</wfw:commentRss>
 		<slash:comments>0</slash:comments>
 		</item>
 		<item>
 		<title>Getting the latest version of Ovito for Ubuntu</title>
-		<link>http://localhost/2013/02/28/getting-the-latest-version-of-ovito-for-ubuntu/</link>
+		<link>2013/02/28/getting-the-latest-version-of-ovito-for-ubuntu/</link>
 		<pubDate>Thu, 28 Feb 2013 10:09:22 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[atoms]]></category>

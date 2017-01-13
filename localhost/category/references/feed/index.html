@@ -9,7 +9,7 @@
 
 <channel>
 	<title>references &#8211; Computational Physics</title>
-	<atom:link href="http://localhost/category/references/feed/" rel="self" type="application/rss+xml" />
+	<atom:link href="category/references/feed/" rel="self" type="application/rss+xml" />
 	<link>http://localhost</link>
 	<description>Exploring physics beyond what can be counted by hand</description>
 	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
@@ -19,8 +19,8 @@
 	<generator>https://wordpress.org/?v=4.7</generator>
 	<item>
 		<title>Automatic panel lettering within LaTeX</title>
-		<link>http://localhost/2014/04/04/automatic-panel-lettering-within-latex/</link>
-		<comments>http://localhost/2014/04/04/automatic-panel-lettering-within-latex/#respond</comments>
+		<link>2014/04/04/automatic-panel-lettering-within-latex/</link>
+		<comments>2014/04/04/automatic-panel-lettering-within-latex/#respond</comments>
 		<pubDate>Fri, 04 Apr 2014 07:27:14 +0000</pubDate>
 		<dc:creator><![CDATA[Jørgen Kjoshagen Trømborg]]></dc:creator>
 				<category><![CDATA[LaTeX]]></category>
@@ -29,12 +29,12 @@
 		<category><![CDATA[lettering]]></category>
 		<category><![CDATA[panels]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=768</guid>
+		<guid isPermaLink="false">?p=768</guid>
 		<description><![CDATA[Frequently when you include figures in a document you want them as panels within one larger float. Standard procedure is to put a letter on each panel and refer to it like Figure 69g. If you have unlimited space, using the subcaption or subfig packages to assign a letter and caption to each panel is [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>Frequently when you include figures in a document you want them as panels within one larger float. Standard procedure is to put a letter on each panel and refer to it like Figure 69g. If you have unlimited space, using the subcaption or subfig packages to assign a letter and caption to each panel is the way to go.</p>
 <p>However, if space is limited you usually want a single letter inside the panel. Your options are 1) open the image/plot/whatever in image editing software and put a letter on it; 2) have your plotting routine put the letter on; 3) put the letter on in LaTeX. 1) is a bad idea if you expect the contents of the panel to change, because you have to redo the lettering every time. 2) works better, but gets annoying when you shuffle your panels around, or when you use the same panel in different figures (often in a different document altogether). Here I show you how to do 3).</p>
 <p>The idea is simple: use subfig to automatically assign a letter to your panel, but don&#8217;t ask for a caption. Refer to the panel number assigned, but do this within a \put() command, and put the letter returned by \subref somewhere on the panel (I opted for top left, but you can easily change this or move the letter around). You&#8217;re done.</p>
-<div id="attachment_769" style="width: 435px" class="wp-caption alignnone"><a href="http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" rel="lightbox[768]"><img src="http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" alt="The figure looks like you expect, and all the subfig functionality is unaffected." width="425" height="427" class="size-full wp-image-769" srcset="http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg 425w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-150x150.jpg 150w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-298x300.jpg 298w" sizes="(max-width: 425px) 100vw, 425px" /></a><p class="wp-caption-text">The figure looks like you expect, and all the subfig functionality is unaffected.</p></div>
+<div id="attachment_769" style="width: 435px" class="wp-caption alignnone"><a href="wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" rel="lightbox[768]"><img src="wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" alt="The figure looks like you expect, and all the subfig functionality is unaffected." width="425" height="427" class="size-full wp-image-769" srcset="wp-content/uploads/2014/04/autoLetteringOfPanels.jpg 425w, wp-content/uploads/2014/04/autoLetteringOfPanels-150x150.jpg 150w, wp-content/uploads/2014/04/autoLetteringOfPanels-298x300.jpg 298w" sizes="(max-width: 425px) 100vw, 425px" /></a><p class="wp-caption-text">The figure looks like you expect, and all the subfig functionality is unaffected.</p></div>
 <p><code><br />
 \begin{figure}<br />
 \panel{.5}{./panel1}{pan:cod}<br />
@@ -42,15 +42,15 @@
 \caption{Two panels from separate image files with the subfig package and some other commands used to place panel lettering on the panels within LaTeX. \protect\subref{pan:cod} A cod. \protect\subref{pan:gull} A gull.\label{fig:animals}}<br />
 \end{figure}<br />
 </code></p>
-<p><a href="http://localhost/wp-content/uploads/2014/04/AutoLetteringOfPanels.zip">Working example for download.</a></p>
+<p><a href="wp-content/uploads/2014/04/AutoLetteringOfPanels.zip">Working example for download.</a></p>
 <p>Note that contrary to what Filip said in a recent post, <a href="http://tex.stackexchange.com/questions/144782/subfigure-and-subfig-packages-deprecated">subfig is still going strong</a>. </p>
 ]]></content:encoded>
-			<wfw:commentRss>http://localhost/2014/04/04/automatic-panel-lettering-within-latex/feed/</wfw:commentRss>
+			<wfw:commentRss>2014/04/04/automatic-panel-lettering-within-latex/feed/</wfw:commentRss>
 		<slash:comments>0</slash:comments>
 		</item>
 		<item>
 		<title>Optimizing your C++ code for molecular dynamics</title>
-		<link>http://localhost/2013/03/19/optimizing-your-c-code-for-molecular-dynamics/</link>
+		<link>2013/03/19/optimizing-your-c-code-for-molecular-dynamics/</link>
 		<pubDate>Tue, 19 Mar 2013 18:10:18 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[C++]]></category>

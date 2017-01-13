@@ -9,7 +9,7 @@
 
 <channel>
 	<title>Qt &#8211; Computational Physics</title>
-	<atom:link href="http://localhost/category/programming/qt/feed/" rel="self" type="application/rss+xml" />
+	<atom:link href="category/programming/qt/feed/" rel="self" type="application/rss+xml" />
 	<link>http://localhost</link>
 	<description>Exploring physics beyond what can be counted by hand</description>
 	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
@@ -19,7 +19,7 @@
 	<generator>https://wordpress.org/?v=4.7</generator>
 	<item>
 		<title>New project structure for projects in Qt Creator with unit tests</title>
-		<link>http://localhost/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/</link>
+		<link>2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/</link>
 		<pubDate>Thu, 13 Mar 2014 15:26:21 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[C++]]></category>
@@ -35,7 +35,7 @@
 		<category><![CDATA[qt]]></category>
 		<category><![CDATA[structure]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=692</guid>
+		<guid isPermaLink="false">?p=692</guid>
 		<description><![CDATA[Note: This is a new version of an earlier post, with a revised project structure. Note 2: See this post for the same project structure using the even better Catch testing framework. This post assumes that you are using a C++ testing framework such as UnitTest++. See this earlier post for some information on installing [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p><em><strong>Note:</strong> This is a new version of <a href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">an earlier post</a>, with a revised project structure.</em></p>
 <p><em><strong>Note 2:</strong> See <a href="http://dragly.org/2015/11/24/getting-started-with-unit-tests-in-qt-creator-with-catch/">this post for the same project structure</a> using the even better Catch testing framework.</em></p>
@@ -159,13 +159,13 @@ public:
 			</item>
 		<item>
 		<title>Copying data files to the build directory with qmake</title>
-		<link>http://localhost/2013/11/05/copying-data-files-to-the-build-directory-with-qmake/</link>
+		<link>2013/11/05/copying-data-files-to-the-build-directory-with-qmake/</link>
 		<pubDate>Tue, 05 Nov 2013 19:17:29 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[Programming]]></category>
 		<category><![CDATA[Qt]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=510</guid>
+		<guid isPermaLink="false">?p=510</guid>
 		<description><![CDATA[Sometimes you want to copy some data files to the same folder as your final executable when you are building with qmake in a different directory than your source code. This is what Qt Creator does by default, so this is quite often needed. Just add the following to your .pro file to copy the [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>Sometimes you want to copy some data files to the same folder as your final executable when you are building with qmake in a different directory than your source code. This is what Qt Creator does by default, so this is quite often needed.</p>
 <p>Just add the following to your .pro file to copy the folder &#8220;data&#8221; from the source directory to the build directory whenever you build the source code:</p>
@@ -191,14 +191,14 @@ QMAKE_EXTRA_TARGETS += first copydata</pre>
 			</item>
 		<item>
 		<title>Multiple billboards in Qt3D</title>
-		<link>http://localhost/2013/10/29/multiple-billboards-in-qt3d/</link>
+		<link>2013/10/29/multiple-billboards-in-qt3d/</link>
 		<pubDate>Tue, 29 Oct 2013 13:52:14 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[3D]]></category>
 		<category><![CDATA[Programming]]></category>
 		<category><![CDATA[Qt]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=483</guid>
+		<guid isPermaLink="false">?p=483</guid>
 		<description><![CDATA[While Qt3D has a transform for drawing billboards, it is not very useful if you are drawing thousands of particles. This is because the transform can only be applied to one object at the time, and using thousands of objects is never a good idea in neither OpenGL or Qt. This is simply because the [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>While Qt3D has a transform for drawing billboards, it is not very useful if you are drawing thousands of particles. This is because the transform can only be applied to one object at the time, and using thousands of objects is never a good idea in neither OpenGL or Qt. This is simply because the overhead of each object is very large, both in terms of memory and performance.</p>
 <p>The solution I found was to write my own custom class that inherits QQuickItem3D and is capable of drawing a list of 3D points as billboards by directly turning each sprite towards the camera at every draw call. This is not very efficient, but it works and is way faster than the options: Drawing spheres or creating one billboard per particle. The ideal option is of course to use geometry shaders, but they are not easily available in Qt3D yet. Most likely because its a new feature in OpenGL 3.2.</p>
@@ -208,7 +208,7 @@ QMAKE_EXTRA_TARGETS += first copydata</pre>
 			</item>
 		<item>
 		<title>Using Qt3D today</title>
-		<link>http://localhost/2013/10/29/using-qt3d-today/</link>
+		<link>2013/10/29/using-qt3d-today/</link>
 		<pubDate>Tue, 29 Oct 2013 13:50:45 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[3D]]></category>
@@ -224,7 +224,7 @@ QMAKE_EXTRA_TARGETS += first copydata</pre>
 		<category><![CDATA[qt3d]]></category>
 		<category><![CDATA[qt5.2]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=481</guid>
+		<guid isPermaLink="false">?p=481</guid>
 		<description><![CDATA[Qt3D is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. It was announced that it [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p><a href="http://doc-snapshot.qt-project.org/qt3d-1.0/">Qt3D</a> is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. <a href="http://blog.qt.digia.com/blog/2012/04/11/qt-3d-and-qt5-qt4-news-and-releases/">It was announced</a> that it would be bundled with Qt5.0, but because of the state of the library at the time, its release was postponed. Even so, the library is still very mature and appears to work very well in my opinion. So I would urge you to test it out.</p>
 <h2>Simple install on Ubuntu</h2>
@@ -251,7 +251,7 @@ QMAKE_EXTRA_TARGETS += first copydata</pre>
 			</item>
 		<item>
 		<title>Speeding up compilation on Ubuntu with Qt Creator</title>
-		<link>http://localhost/2013/05/13/speeding-up-compilation-on-ubuntu-with-qt-creator/</link>
+		<link>2013/05/13/speeding-up-compilation-on-ubuntu-with-qt-creator/</link>
 		<pubDate>Mon, 13 May 2013 12:32:10 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[C++]]></category>
@@ -265,7 +265,7 @@ QMAKE_EXTRA_TARGETS += first copydata</pre>
 		<category><![CDATA[threader]]></category>
 		<category><![CDATA[threading]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=414</guid>
+		<guid isPermaLink="false">?p=414</guid>
 		<description><![CDATA[Are you reading random stuff on the web while waiting for your C++ compilation to finish? Then you have come to the right place. In this post I will tell you about two really nice tweaks you may do to speed up your compilations, namely ccache and the make -j flag, and how you may [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>Are you reading random stuff on the web while waiting for your C++ <a href="http://en.wikipedia.org/wiki/Compiler">compilation</a> to finish? Then you have come to the right place. In this post I will tell you about two really nice tweaks you may do to speed up your compilations, namely ccache and the make -j flag, and how you may set these up in Qt Creator.</p>
 <h2>ccache</h2>
@@ -287,7 +287,7 @@ QMAKE_EXTRA_TARGETS += first copydata</pre>
 			</item>
 		<item>
 		<title>Setting up UnitTest++ with Qt Creator in a nice project structure</title>
-		<link>http://localhost/2013/04/19/setting-up-unittest-with-qt-creator/</link>
+		<link>2013/04/19/setting-up-unittest-with-qt-creator/</link>
 		<pubDate>Fri, 19 Apr 2013 10:07:16 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[C++]]></category>
@@ -300,7 +300,7 @@ QMAKE_EXTRA_TARGETS += first copydata</pre>
 		<category><![CDATA[ide]]></category>
 		<category><![CDATA[unit test]]></category>
 
-		<guid isPermaLink="false">http://comp-phys.net/?p=404</guid>
+		<guid isPermaLink="false">?p=404</guid>
 		<description><![CDATA[Note: I&#8217;ve found a better way to visually verify that all tests are running. Check out this post on Jenkins to see how I&#8217;m now working with my tests. The below post is still useful as a reference on how to set up UnitTest++ in Qt Creator, also when using Jenkins. Note 2: A new [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p><em><strong>Note</strong>: I&#8217;ve found a better way to visually verify that all tests are running. Check out <a title="Monitoring your unit tests without lifting a finger" href="http://dragly.org/2013/09/13/monitoring-your-unit-tests-without-lifting-a-finger/">this post on Jenkins</a> to see how I&#8217;m now working with my tests. The below post is still useful as a reference on how to set up UnitTest++ in Qt Creator, also when using Jenkins.</em></p>
 <p><em><strong>Note 2:</strong> <del>A new and, in my opinion, better project structure is shown <a href="http://dragly.org/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests">in this new post</a>.</del></em></p>
@@ -439,7 +439,7 @@ Working directory: <strong>%{buildDir}</strong></p>
 			</item>
 		<item>
 		<title>Developing MPI applications in Qt Creator</title>
-		<link>http://localhost/2012/03/14/developing-mpi-applications-in-qt-creator/</link>
+		<link>2012/03/14/developing-mpi-applications-in-qt-creator/</link>
 		<pubDate>Wed, 14 Mar 2012 15:43:08 +0000</pubDate>
 		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
 				<category><![CDATA[C++]]></category>
