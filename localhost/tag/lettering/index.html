@@ -6,7 +6,7 @@
 <html lang="en-US">
 <!--<![endif]-->
 
-<!-- Mirrored from localhost/tag/lettering/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:48:34 GMT -->
+<!-- Mirrored from localhost/tag/lettering/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 11:31:40 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
 <meta charset="UTF-8" />
@@ -135,7 +135,7 @@ body.custom-background { background-color: #ffffff; }
 			<p>Frequently when you include figures in a document you want them as panels within one larger float. Standard procedure is to put a letter on each panel and refer to it like Figure 69g. If you have unlimited space, using the subcaption or subfig packages to assign a letter and caption to each panel is the way to go.</p>
 <p>However, if space is limited you usually want a single letter inside the panel. Your options are 1) open the image/plot/whatever in image editing software and put a letter on it; 2) have your plotting routine put the letter on; 3) put the letter on in LaTeX. 1) is a bad idea if you expect the contents of the panel to change, because you have to redo the lettering every time. 2) works better, but gets annoying when you shuffle your panels around, or when you use the same panel in different figures (often in a different document altogether). Here I show you how to do 3).</p>
 <p>The idea is simple: use subfig to automatically assign a letter to your panel, but don&#8217;t ask for a caption. Refer to the panel number assigned, but do this within a \put() command, and put the letter returned by \subref somewhere on the panel (I opted for top left, but you can easily change this or move the letter around). You&#8217;re done.</p>
-<div id="attachment_769" style="width: 435px" class="wp-caption alignnone"><a href="http://comp-phys.net/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" rel="lightbox[768]"><img src="http://comp-phys.net/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" alt="The figure looks like you expect, and all the subfig functionality is unaffected." width="425" height="427" class="size-full wp-image-769" srcset="http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg 425w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-150x150.jpg 150w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-298x300.jpg 298w" sizes="(max-width: 425px) 100vw, 425px" /></a><p class="wp-caption-text">The figure looks like you expect, and all the subfig functionality is unaffected.</p></div>
+<div id="attachment_769" style="width: 435px" class="wp-caption alignnone"><a href="../../wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" rel="lightbox[768]"><img src="../../wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" alt="The figure looks like you expect, and all the subfig functionality is unaffected." width="425" height="427" class="size-full wp-image-769" srcset="http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg 425w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-150x150.jpg 150w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-298x300.jpg 298w" sizes="(max-width: 425px) 100vw, 425px" /></a><p class="wp-caption-text">The figure looks like you expect, and all the subfig functionality is unaffected.</p></div>
 <p><code><br />
 \begin{figure}<br />
 \panel{.5}{./panel1}{pan:cod}<br />
@@ -143,7 +143,7 @@ body.custom-background { background-color: #ffffff; }
 \caption{Two panels from separate image files with the subfig package and some other commands used to place panel lettering on the panels within LaTeX. \protect\subref{pan:cod} A cod. \protect\subref{pan:gull} A gull.\label{fig:animals}}<br />
 \end{figure}<br />
 </code></p>
-<p><a href="http://comp-phys.net/wp-content/uploads/2014/04/AutoLetteringOfPanels.zip">Working example for download.</a></p>
+<p><a href="../../wp-content/uploads/2014/04/AutoLetteringOfPanels.zip">Working example for download.</a></p>
 <p>Note that contrary to what Filip said in a recent post, <a href="http://tex.stackexchange.com/questions/144782/subfigure-and-subfig-packages-deprecated">subfig is still going strong</a>. </p>
 					</div><!-- .entry-content -->
 		
@@ -215,5 +215,5 @@ var JQLBSettings = {"showTitle":"1","showCaption":"1","showNumbers":"1","fitToSc
 <script type='text/javascript' src='../../wp-includes/js/wp-embed.min4906.js?ver=4.7'></script>
 </body>
 
-<!-- Mirrored from localhost/tag/lettering/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:48:34 GMT -->
+<!-- Mirrored from localhost/tag/lettering/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 11:31:40 GMT -->
 </html>

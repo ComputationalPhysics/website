@@ -6,7 +6,7 @@
 <html lang="en-US">
 <!--<![endif]-->
 
-<!-- Mirrored from localhost/blog/page/2/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:47:38 GMT -->
+<!-- Mirrored from localhost/blog/page/2/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 11:24:44 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
 <meta charset="UTF-8" />
@@ -157,7 +157,7 @@ body.custom-background { background-color: #ffffff; }
 			<p><a href="http://neuralensemble.org/sumatra/">Sumatra</a> is a great tool for reproducibility and provenance when you are running numerical simulations. Keeping your work reproducible ensures that you and others will be able to check your results at a later time, while provenance is to keep track of where your results came from in the first place.</p>
 <p>I won&#8217;t get into details about using <a href="http://neuralensemble.org/sumatra/">Sumatra</a> in this post, as <a href="http://pythonhosted.org/Sumatra/">its documentation</a> is quite good at describing that already.</p>
 <h2>Computational Physics members</h2>
-<p>If you are a member of the <a href="http://comp-phys.net/">Computational Physics group</a> and have access to <a href="http://comp-phys.net/cluster-info/">the computing cluster, Smaug</a>, you don&#8217;t have to install anything. Just ssh into our dedicated Sumatra machine, named bender, and run your jobs from there. In the future, all machines will support Sumatra, but for now, we only have one dedicated machine for this task:</p>
+<p>If you are a member of the <a href="../../../index.html">Computational Physics group</a> and have access to <a href="../../../cluster-info/index.html">the computing cluster, Smaug</a>, you don&#8217;t have to install anything. Just ssh into our dedicated Sumatra machine, named bender, and run your jobs from there. In the future, all machines will support Sumatra, but for now, we only have one dedicated machine for this task:</p>
 <pre>ssh bender</pre>
 <h2>On your own machine</h2>
 <p>Otherwise, or if you want it on your own machine, you will have to install it manually. This is done by cloning the repository and running the setup.py file. This will install Sumatra with all dependencies:</p>
@@ -187,7 +187,7 @@ python setup.py install --user</pre>
 			<p>Frequently when you include figures in a document you want them as panels within one larger float. Standard procedure is to put a letter on each panel and refer to it like Figure 69g. If you have unlimited space, using the subcaption or subfig packages to assign a letter and caption to each panel is the way to go.</p>
 <p>However, if space is limited you usually want a single letter inside the panel. Your options are 1) open the image/plot/whatever in image editing software and put a letter on it; 2) have your plotting routine put the letter on; 3) put the letter on in LaTeX. 1) is a bad idea if you expect the contents of the panel to change, because you have to redo the lettering every time. 2) works better, but gets annoying when you shuffle your panels around, or when you use the same panel in different figures (often in a different document altogether). Here I show you how to do 3).</p>
 <p>The idea is simple: use subfig to automatically assign a letter to your panel, but don&#8217;t ask for a caption. Refer to the panel number assigned, but do this within a \put() command, and put the letter returned by \subref somewhere on the panel (I opted for top left, but you can easily change this or move the letter around). You&#8217;re done.</p>
-<div id="attachment_769" style="width: 435px" class="wp-caption alignnone"><a href="http://comp-phys.net/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" rel="lightbox[768]"><img src="http://comp-phys.net/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" alt="The figure looks like you expect, and all the subfig functionality is unaffected." width="425" height="427" class="size-full wp-image-769" srcset="http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg 425w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-150x150.jpg 150w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-298x300.jpg 298w" sizes="(max-width: 425px) 100vw, 425px" /></a><p class="wp-caption-text">The figure looks like you expect, and all the subfig functionality is unaffected.</p></div>
+<div id="attachment_769" style="width: 435px" class="wp-caption alignnone"><a href="../../../wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" rel="lightbox[768]"><img src="../../../wp-content/uploads/2014/04/autoLetteringOfPanels.jpg" alt="The figure looks like you expect, and all the subfig functionality is unaffected." width="425" height="427" class="size-full wp-image-769" srcset="http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels.jpg 425w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-150x150.jpg 150w, http://localhost/wp-content/uploads/2014/04/autoLetteringOfPanels-298x300.jpg 298w" sizes="(max-width: 425px) 100vw, 425px" /></a><p class="wp-caption-text">The figure looks like you expect, and all the subfig functionality is unaffected.</p></div>
 <p><code><br />
 \begin{figure}<br />
 \panel{.5}{./panel1}{pan:cod}<br />
@@ -195,7 +195,7 @@ python setup.py install --user</pre>
 \caption{Two panels from separate image files with the subfig package and some other commands used to place panel lettering on the panels within LaTeX. \protect\subref{pan:cod} A cod. \protect\subref{pan:gull} A gull.\label{fig:animals}}<br />
 \end{figure}<br />
 </code></p>
-<p><a href="http://comp-phys.net/wp-content/uploads/2014/04/AutoLetteringOfPanels.zip">Working example for download.</a></p>
+<p><a href="../../../wp-content/uploads/2014/04/AutoLetteringOfPanels.zip">Working example for download.</a></p>
 <p>Note that contrary to what Filip said in a recent post, <a href="http://tex.stackexchange.com/questions/144782/subfigure-and-subfig-packages-deprecated">subfig is still going strong</a>. </p>
 					</div><!-- .entry-content -->
 		
@@ -213,7 +213,7 @@ python setup.py install --user</pre>
 					</header><!-- .entry-header -->
 
 				<div class="entry-content">
-			<p><em>Note: This post overlaps / conflicts with some of the material dicussed <a href="http://comp-phys.net/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/">here</a>. So I excourage you to read both posts if you have not read the previous one already.</em></p>
+			<p><em>Note: This post overlaps / conflicts with some of the material dicussed <a href="../../../2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/index.html">here</a>. So I excourage you to read both posts if you have not read the previous one already.</em></p>
 <p>Hey champs,</p>
 <p>first of all, let me just say that if you&#8217;re not using <a href="http://qt-project.org/wiki/Category:Tools::QtCreator">Qt Creator</a> for organizing and coding your projects, which uses <a href="http://qt-project.org/doc/qt-4.8/qmake-manual.html">QMake</a> intrinsically, the level of this post will be somewhat higher. Nevertheless, I&#8217;ll try to keep to the basics and explain things in a simply way, without all the <a href="http://idioms.thefreedictionary.com/jazz">jazz</a>. If you are interested in the jazz, however, I am very interested in discussing it in a separate post or in the comments / over some coffee.</p>
 <p>So let&#8217;s get to it! This post is aimed at those who develop a code centered around the use solvers, i.e. one implementation of a specific algorithm. Examples could be Molecular Dynamics (MD), Variational Monte-Carlo, Coupled-Cluster, Hartree-Fock, and so on.</p>
@@ -379,7 +379,7 @@ QMAKE_POST_LINK += $(COPY_DIR) $$OUT_PWD/../lib $$TOP_PWD<br />
 				<div class="entry-content">
 			<p>While writing my master thesis I&#8217;ve found that one of the best ways of explaining a lot of concepts is by using illustrations and figures. I make most of my illustrations using <a href="http://www.inkscape.org/" target="_blank">Inkscape</a>, an open source program for making and editing <a href="http://en.wikipedia.org/wiki/Vector_graphics" target="_blank">vector graphics</a>.</p>
 <p>Using vector graphics mean that all lines in the image is stored as mathematical expressions, contrary to <a href="http://en.wikipedia.org/wiki/Raster_graphics" target="_blank">raster graphics</a> where an image is stored by storing the color in each pixel. This means that if you try to zoom in on a raster image, you will get and ugly pixelated image, while if zooming in on a vector image the computer can produce a higher resolution image from the mathematical expressions, as seen in the figure below.</p>
-<div id="attachment_724" style="width: 423px" class="wp-caption aligncenter"><a href="http://comp-phys.net/wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_.png" rel="lightbox[711]"><img class=" wp-image-724   " src="http://comp-phys.net/wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_.png" alt="500px-Bitmap_VS_SVG.svg" width="413" height="274" srcset="http://localhost/wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_.png 573w, http://localhost/wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_-300x199.png 300w" sizes="(max-width: 413px) 100vw, 413px" /></a><p class="wp-caption-text">This image illustrates the difference between bitmap and vector images. The bitmap image is composed of a fixed set of dots, while the vector image is composed of a fixed set of shapes. In the picture, scaling the bitmap reveals the dots while scaling the vector image preserves the shapes. <a href="http://en.wikipedia.org/wiki/File:Bitmap_VS_SVG.svg">Source</a>.</p></div>
+<div id="attachment_724" style="width: 423px" class="wp-caption aligncenter"><a href="../../../wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_.png" rel="lightbox[711]"><img class=" wp-image-724   " src="../../../wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_.png" alt="500px-Bitmap_VS_SVG.svg" width="413" height="274" srcset="http://localhost/wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_.png 573w, http://localhost/wp-content/uploads/2014/03/500px-Bitmap_VS_SVG.svg_-300x199.png 300w" sizes="(max-width: 413px) 100vw, 413px" /></a><p class="wp-caption-text">This image illustrates the difference between bitmap and vector images. The bitmap image is composed of a fixed set of dots, while the vector image is composed of a fixed set of shapes. In the picture, scaling the bitmap reveals the dots while scaling the vector image preserves the shapes. <a href="http://en.wikipedia.org/wiki/File:Bitmap_VS_SVG.svg">Source</a>.</p></div>
 <p>The other advantage of vector images is that if the image consists of a few simple objects, as is the case for most illustrations in my thesis, the image can be stored in a very compact way. This means that the resulting pdf will be smaller in size, while still having nice and high resolution figures.</p>
 <h2><strong>Including vector graphics in LaTeX</strong></h2>
 <p><em>The impatient can check out a working example in <a href="https://github.com/FSund/latex-examples/tree/master/vector-graphics" target="_blank">this Github repo</a>.</em></p>
@@ -409,7 +409,7 @@ QMAKE_POST_LINK += $(COPY_DIR) $$OUT_PWD/../lib $$TOP_PWD<br />
 <p>This path can also be set permanently using</p>
 <pre>\setsvg{svgpath = images/}</pre>
 <h2><strong>Subfig vs subcaption</strong></h2>
-<p><em>(Take the section with below with a grain of salt, as according to a <a title="Automatic panel lettering within LaTeX" href="http://comp-phys.net/2014/04/04/automatic-panel-lettering-within-latex/">recent blog post</a> here on this blog, the </em>subfig<em> package <a href="http://tex.stackexchange.com/questions/144782/subfigure-and-subfig-packages-deprecated">isn&#8217;t depreceated</a> after all.)</em></p>
+<p><em>(Take the section with below with a grain of salt, as according to a <a title="Automatic panel lettering within LaTeX" href="../../../2014/04/04/automatic-panel-lettering-within-latex/index.html">recent blog post</a> here on this blog, the </em>subfig<em> package <a href="http://tex.stackexchange.com/questions/144782/subfigure-and-subfig-packages-deprecated">isn&#8217;t depreceated</a> after all.)</em></p>
 <p>The <strong>svg</strong> package uses the package <em>subfig</em>, which apparently is deprecated[<a href="http://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions#Subfloats" target="_blank">1</a>][<a href="http://tex.stackexchange.com/questions/144782/subfigure-and-subfig-packages-deprecated" target="_blank">2</a>], and should be replaced by for example <em>subcaption</em>. Using <em>subfig</em> and <em>subcaption</em> in the same document doesn&#8217;t work very well, so if you don&#8217;t want to use <em>subfig</em> this can be solved by editing svg.sty. Replace &#8220;subfig&#8221; with &#8220;subcaption&#8221; on line 40 and you&#8217;re done. An working version that uses <em>subcaption</em> can be found <a href="https://github.com/FSund/latex-examples/blob/master/vector-graphics/svg.sty" target="_blank">here</a>.</p>
 					</div><!-- .entry-content -->
 		
@@ -588,7 +588,7 @@ public:
 					</header><!-- .entry-header -->
 
 				<div class="entry-content">
-			<p>We were invited to join the <a href="http://uio.no/">UiO</a> stand at the education fair arranged by <a href="http://tautdanning.no/">tautdanning.no</a> in Oslo Spektrum last week. We brought with us some of our visualization equipment, including a 55&#8243; TV and an Oculus Rift, in addition to our homegrown software to visualize <a title="Projects" href="http://comp-phys.net/projects/">molecular dynamics simulations</a>.</p>
+			<p>We were invited to join the <a href="http://uio.no/">UiO</a> stand at the education fair arranged by <a href="http://tautdanning.no/">tautdanning.no</a> in Oslo Spektrum last week. We brought with us some of our visualization equipment, including a 55&#8243; TV and an Oculus Rift, in addition to our homegrown software to visualize <a title="Projects" href="../../../projects/index.html">molecular dynamics simulations</a>.</p>
 <p>The stand attracted a fair amount of attention and hopefully convinced some upcoming students to join our university and research group. We got plenty of questions about what was being shown on the TV, how the Oculus Rift controlled the camera in the visualization and of course about the different studies available at the University of Oslo.</p>
 
 		<style type='text/css'>
@@ -622,7 +622,7 @@ public:
 		</div>
 
 <p>What the visualization rendered was a simulation of water in <a href="http://en.wikipedia.org/wiki/Nanoporous">nanoporous</a> silica (SiO<sub>2</sub>), similar to <a href="http://www.apollon.uio.no/artikler/2013/2_tungregning_olje.html">other simulations done in our group</a> to improve our understanding of fluids in nanoporous media.</p>
-<p>If you are interested in what other things we do, have a look at <a title="Projects" href="http://comp-phys.net/projects/">our Projects page</a>.</p>
+<p>If you are interested in what other things we do, have a look at <a title="Projects" href="../../../projects/index.html">our Projects page</a>.</p>
 					</div><!-- .entry-content -->
 		
 		<footer class="entry-meta">
@@ -872,5 +872,5 @@ var JQLBSettings = {"showTitle":"1","showCaption":"1","showNumbers":"1","fitToSc
 <script type='text/javascript' src='../../../wp-includes/js/wp-embed.min4906.js?ver=4.7'></script>
 </body>
 
-<!-- Mirrored from localhost/blog/page/2/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:47:38 GMT -->
+<!-- Mirrored from localhost/blog/page/2/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 11:24:44 GMT -->
 </html>

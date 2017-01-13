@@ -6,7 +6,7 @@
 <html lang="en-US">
 <!--<![endif]-->
 
-<!-- Mirrored from localhost/2012/11/15/getting-the-latest-armadillo-package-for-ubuntu/?replytocom=150515 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:49:57 GMT -->
+<!-- Mirrored from localhost/2012/11/15/getting-the-latest-armadillo-package-for-ubuntu/?replytocom=150515 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 11:31:55 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
 <meta charset="UTF-8" />
@@ -156,7 +156,7 @@ sudo apt-get install libarmadillo-dev
 <p>Actually, version 3.4.4 is currently the newest version on Armadillo&#8217;s own webpages, but unless we need the latest fixes, I&#8217;ll just leave 3.4.2 in the repository for now. We might as well wait till the Debian maintainers update their version of Armadillo in Debian testing.</p>
 <p>Should you for some reason want to stick with version 2.4 which comes with Ubuntu 12.04 or 3.2 which comes with Ubuntu 12.10 and still have our PPA enabled, you may read up on <a href="https://help.ubuntu.com/community/PinningHowto#Introduction_to_Holding_Packages">holding packages here</a>.</p>
 <h3>If you want to add another package to our PPA</h3>
-<p>The whole process of getting the package from the Debian testomg repository to our PPA was actually quite easy. Usually one has to download the original package, do some changes, rebuild the source package and upload the new sources to the PPA. However, if you have the package ubuntu-dev-tools installed, you may as well run backportpackage in a terminal to automate the whole process for you. After this, you just need to <a title="Helping out with the Computational Physics PPA" href="http://comp-phys.net/2012/11/08/helping-out-with-the-computational-physics-ppa/">get an account to upload to our PPA</a>.</p>
+<p>The whole process of getting the package from the Debian testomg repository to our PPA was actually quite easy. Usually one has to download the original package, do some changes, rebuild the source package and upload the new sources to the PPA. However, if you have the package ubuntu-dev-tools installed, you may as well run backportpackage in a terminal to automate the whole process for you. After this, you just need to <a title="Helping out with the Computational Physics PPA" href="../../08/helping-out-with-the-computational-physics-ppa/index.html">get an account to upload to our PPA</a>.</p>
 <p>The exact command used to get the new Armadillo version into our PPA was this:</p>
 <pre class="brush: bash; title: ; notranslate" title="">
 backportpackage --upload ppa:comp-phys/testing --destination=quantal http://ftp.de.debian.org/debian/pool/main/a/armadillo/armadillo_3.6.1+dfsg-1.dsc
@@ -261,7 +261,7 @@ such a pity&#8230;</p>
 <p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
 <p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='153' id='comment_post_ID' />
 <input type='hidden' name='comment_parent' id='comment_parent' value='150515' />
-</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="92a07f3b7b" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="4"/></p>			</form>
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="92a07f3b7b" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="146"/></p>			</form>
 			</div><!-- #respond -->
 	
 </div><!-- #comments .comments-area -->
@@ -376,5 +376,5 @@ var JQLBSettings = {"showTitle":"1","showCaption":"1","showNumbers":"1","fitToSc
 <script type='text/javascript' src='../../../../wp-includes/js/wp-embed.min4906.js?ver=4.7'></script>
 </body>
 
-<!-- Mirrored from localhost/2012/11/15/getting-the-latest-armadillo-package-for-ubuntu/?replytocom=150515 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:49:57 GMT -->
+<!-- Mirrored from localhost/2012/11/15/getting-the-latest-armadillo-package-for-ubuntu/?replytocom=150515 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 11:31:55 GMT -->
 </html>
