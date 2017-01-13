@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>qmake &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/qmake/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>New project structure for projects in Qt Creator with unit tests</title>
+		<link>http://localhost/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/</link>
+		<pubDate>Thu, 13 Mar 2014 15:26:21 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Technical]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[.pri]]></category>
+		<category><![CDATA[.pro]]></category>
+		<category><![CDATA[project]]></category>
+		<category><![CDATA[project files]]></category>
+		<category><![CDATA[qmake]]></category>
+		<category><![CDATA[qt]]></category>
+		<category><![CDATA[structure]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=692</guid>
+		<description><![CDATA[Note: This is a new version of an earlier post, with a revised project structure. Note 2: See this post for the same project structure using the even better Catch testing framework. This post assumes that you are using a C++ testing framework such as UnitTest++. See this earlier post for some information on installing [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><em><strong>Note:</strong> This is a new version of <a href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">an earlier post</a>, with a revised project structure.</em></p>
+<p><em><strong>Note 2:</strong> See <a href="http://dragly.org/2015/11/24/getting-started-with-unit-tests-in-qt-creator-with-catch/">this post for the same project structure</a> using the even better Catch testing framework.</em></p>
+<p>This post assumes that you are using a C++ testing framework such as UnitTest++. See <a title="Setting up UnitTest++ with Qt Creator in a nice project structure" href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">this earlier post</a> for some information on installing UnitTest++ on Ubuntu.</p>
+<p>To get the most out UnitTest++ it is a good idea to integrate its output into the Qt Creator IDE. The way I have set this up in Qt Creator is with subprojects. One for the main project, which again is split into the app itself and a library, and one for the tests. In addition, I have a helper project file, named defaults.pri. The structure of the project is like this:</p>
+<pre>MyProject
+├─ MyProject.pro
+├─ defaults.pri
+├─ app/
+│  ├─ app.pro
+│  └─ main.cpp
+├─ src/
+│  ├─ src.pro
+│  └─ myclass.cpp
+└─ tests/
+   ├─ tests.pro
+   └─ main.cpp</pre>
+<p>An <a href="https://github.com/ComputationalPhysics/qtcreator-project-structure">example project using this code structure</a> has been posted on Github by Filip Sund. (Thanks to Filip for doing this!)</p>
+<p>The main project file, MyProject.pro will now be based on a subdirs template, and may look like this:</p>
+<pre>TEMPLATE = subdirs
+CONFIG+=ordered
+SUBDIRS = \
+    src \
+    app \
+    tests
+app.depends = src
+tests.depends = src</pre>
+<p>The app.depends and tests.depends statements makes sure that the src project is compiled before the application and tests, because the src directory contains the library that will be used by both the app and the tests.</p>
+<p>(<a href="http://dragly.org/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/comment-page-1/#comment-19940">Thanks to Will</a> for noting that this works better for parallel builds with make -j 8 than my previous version only using CONFIG+=ordered. We should keep CONFIG+=ordered in there still, though, because depends doesn&#8217;t affect the order when using make install).</p>
+<h2>defaults.pri</h2>
+<p>Each of the other .pro files will include defaults.pri to have all the headers available. defaults.pri contains the following:</p>
+<pre>INCLUDEPATH += $$PWD/src
+SRC_DIR = $$PWD</pre>
+<p>If the library, main program and tests use common libraries, it is very useful to have the defaults.pri define these dependencies too.</p>
+<h2>./src</h2>
+<p>In the src folder, I have myclass.cpp, which is the class that I want to use and test. The src.pro needs to compile to a library, so that it may be used both by app and tests, and could look something like this:</p>
+<pre>include(../defaults.pri)
+CONFIG -= qt
+
+TARGET = myapp
+TEMPLATE = lib
+
+SOURCES += myclass.cpp
+HEADERS += myclass.h</pre>
+<p>What this class does is not so interesting, it could be anything. A simple example could be this header file:</p>
+<pre class="brush:c++">#ifndef MYCLASS_H
+#define MYCLASS_H
+
+class MyClass {
+public:
+    double addition(double a, double b);
+};
+
+#endif // MYCLASS_H</pre>
+<p>With this accompaning source file:</p>
+<pre class="brush:c++">#include "myclass.h"
+
+double MyClass::addition(double a, double b) {
+    return a * b;
+}</pre>
+<h2>./app</h2>
+<p>I only have a main.cpp file in app, because the app is basically just something that uses everything in the src folder. It will depend on the shared compiled library from src, and app.pro would look something like this:</p>
+<pre>include(../defaults.pri)
+
+TEMPLATE = app
+CONFIG += console
+CONFIG -= app_bundle
+CONFIG -= qt
+
+SOURCES += main.cpp
+
+LIBS += -L../src -lmyapp</pre>
+<p>The main.cpp file could be a simple program that uses MyClass:</p>
+<pre class="brush:c++">#include &lt;myclass.h&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main()
+{
+    MyClass adder;
+    cout &lt;&lt; adder.addition(10, 20) &lt;&lt; endl;
+    return 0;
+}</pre>
+<h2>./tests</h2>
+<p>In the tests folder I have simply added a main.cpp which will run the tests. Then tests.pro has the following contents:</p>
+<pre>include(../defaults.pri)
+TEMPLATE = app
+
+CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   -= qt
+
+SOURCES += main.cpp
+
+LIBS += -lunittest++ -L../src -lmyapp</pre>
+<p>Which now links to the myapp library in addition to the unit tests.</p>
+<p>The main.cpp in tests file which could contain the following, if we were to use UnitTest++ as our testing library:</p>
+<pre class="brush:c++">#include &lt;unittest++/UnitTest++.h&gt;
+#include &lt;myclass.h&gt;
+
+TEST(MyMath) {
+    MyClass my;
+    CHECK(my.addition(3,4) == 7);
+}
+
+int main()
+{
+    return UnitTest::RunAllTests();
+}</pre>
+<p>This test will fail because my implementation of MyClass::addition is completely wrong:</p>
+<pre class="brush:c++">class MyClass {
+public:
+    double addition(double a, double b) {
+        return a * b;
+    }
+};</pre>
+<p>Note that I&#8217;m including MyClass by through &lt;myclass.h&gt; which is possible because of the INCLUDEPATH variable in defaults.pri.</p>
+<p>This is hopefully all you&#8217;ll need to define a project that compiles a library, as well as tests and an application using the library.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

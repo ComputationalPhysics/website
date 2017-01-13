@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Programming &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/category/programming/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Getting MCALab up and running on a 64-bit installation of Matlab on Ubuntu</title>
+		<link>http://localhost/2014/11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/</link>
+		<comments>http://localhost/2014/11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/#comments</comments>
+		<pubDate>Thu, 20 Nov 2014 15:31:50 +0000</pubDate>
+		<dc:creator><![CDATA[Andreas Våvang Solbrå]]></dc:creator>
+				<category><![CDATA[Programming]]></category>
+		<category><![CDATA[matlab]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=847</guid>
+		<description><![CDATA[MCALab is an easy-to-use Matlab toolkit for Compressed Sensing-related problems. This is a guide for getting it up and running on Ubuntu.  Get Matlab. The easiest way to get everything up and running is to use a 32-bit version of Matlab. This guide will detail how to do it for 64-bit as well.  Download MCALab. [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>MCALab is an easy-to-use Matlab toolkit for Compressed Sensing-related problems. This is a guide for getting it up and running on Ubuntu.</p>
+<ol>
+<ol>
+<ol>
+<li> Get Matlab. The easiest way to get everything up and running is to use a 32-bit version of Matlab. This guide will detail how to do it for 64-bit as well.</li>
+<li> Download MCALab. You can find it here: <a href="https://fadili.users.greyc.fr/demos/WaveRestore/downloads/mcalab/Download.html">https://fadili.users.greyc.fr/demos/WaveRestore/downloads/mcalab/Download.html</a></li>
+<li>Extract it where you like.</li>
+<li> If you are using 32-bit Matlab: Congratulations, you are done! Make sure to include all all the files in MCALab to your path, and try to run the script Two-D/Scripts/figInpaintLena.m, or any other.</li>
+<li> The problem is that a bunch of necessary files are compiled for 32-bit and then shipped, without including the source code. First, you should get the Rice Wavelet Toolbox. This can be downloaded from their repo here: <a href="https://github.com/ricedsp/rwt">https://github.com/ricedsp/rwt</a> . Clone the repo, go to rwt/mex and add #include “matrix.h” at the top of every file. Now follow the instructions in the INSTALL file.</li>
+<li> At this point MCALab should work as long as you link to the rwt files, if you do not use curvelet or wave atoms.</li>
+<li> Next is getting curvelets up and going. This is a big one. Begin by downloading the CurveLab toolkit at <a href="http://www.curvelet.org/software.html">http://www.curvelet.org/software.html</a> . There is a file called “curvelab.pdf” which details how to install it, but you must make the following tweaks:
+<ul>
+<li>After entering ./configure &#8211; -with-pic, open the makefile and add the line -fPIC to CXXFLAGS.</li>
+<li>FFTW 2.1.5 does not put the library files where Curvelab wants them. The easiest way to get around this is simply to type the following, when in the installation directory:
+<pre>mkdir fftw/.libs  
+cp lib/libfftw.a fftw/.libs/libfftw.a 
+cp lib/libfftw.so fftw/.libs/libfftw.so</pre>
+</li>
+<li>Now curvelab should compile fine if you follow the rest of the instructions.</li>
+</ul>
+</li>
+<li>Finally, if you want to test wave atoms as well, download the wave atom toolkit from <a href="http://www.waveatom.org/software.html">http://www.waveatom.org/software.html</a> and check that it works. If it does, go to the file “FastWAVEATOM2Analysis.m” in MCALab and replace
+<pre>wa(2).coeff = sqrt(2)/n*real(fatfm2sym(img,pat));
+with
+wa(2).coeff = real(fwa2sym(img,pat,'directional'));
+</pre>
+<p>and then open &#8220;FastWAVEATOM2Synthesis.m&#8221; and change</p>
+<pre>imr = real(iatfm2sym(wa(2).coeff/sqrt(n/2),pat));
+to
+imr = real(iwa2sym(wa(2).coeff,pat,'directional'));
+</pre>
+</li>
+<li>Realize you should have just gone with 32-bit Matlab.</li>
+</ol>
+</ol>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost/2014/11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+		</item>
+		<item>
+		<title>Installing Sumatra 0.6-dev in Ubuntu 13.10</title>
+		<link>http://localhost/2014/04/15/installing-sumatra-0-5-in-ubuntu-13-10/</link>
+		<pubDate>Tue, 15 Apr 2014 09:54:38 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[attribute error]]></category>
+		<category><![CDATA[python]]></category>
+		<category><![CDATA[reproducibility]]></category>
+		<category><![CDATA[sumatra]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=777</guid>
+		<description><![CDATA[Sumatra is a great tool for reproducibility and provenance when you are running numerical simulations. Keeping your work reproducible ensures that you and others will be able to check your results at a later time, while provenance is to keep track of where your results came from in the first place. I won&#8217;t get into [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><a href="http://neuralensemble.org/sumatra/">Sumatra</a> is a great tool for reproducibility and provenance when you are running numerical simulations. Keeping your work reproducible ensures that you and others will be able to check your results at a later time, while provenance is to keep track of where your results came from in the first place.</p>
+<p>I won&#8217;t get into details about using <a href="http://neuralensemble.org/sumatra/">Sumatra</a> in this post, as <a href="http://pythonhosted.org/Sumatra/">its documentation</a> is quite good at describing that already.</p>
+<h2>Computational Physics members</h2>
+<p>If you are a member of the <a href="http://comp-phys.net/">Computational Physics group</a> and have access to <a href="http://comp-phys.net/cluster-info/">the computing cluster, Smaug</a>, you don&#8217;t have to install anything. Just ssh into our dedicated Sumatra machine, named bender, and run your jobs from there. In the future, all machines will support Sumatra, but for now, we only have one dedicated machine for this task:</p>
+<pre>ssh bender</pre>
+<h2>On your own machine</h2>
+<p>Otherwise, or if you want it on your own machine, you will have to install it manually. This is done by cloning the repository and running the setup.py file. This will install Sumatra with all dependencies:</p>
+<pre>hg clone https://bitbucket.org/apdavison/sumatra
+cd sumatra
+python setup.py install --user</pre>
+<p>Adding &#8211;user to the final command ensures that all packages are installed to your home directory, under .local/lib, so that  you don&#8217;t have to install with sudo privileges, and it makes it a bit easier to remove the package if you don&#8217;t want to keep it.</p>
+<p>We also need the GitPython and PyYAML modules, which you may install using apt-get:</p>
+<pre>sudo apt-get install python-git python-yaml</pre>
+<p>And that&#8217;s it! You should now be able to run your projects with Sumatra.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>New project structure for projects in Qt Creator with unit tests</title>
+		<link>http://localhost/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/</link>
+		<pubDate>Thu, 13 Mar 2014 15:26:21 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Technical]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[.pri]]></category>
+		<category><![CDATA[.pro]]></category>
+		<category><![CDATA[project]]></category>
+		<category><![CDATA[project files]]></category>
+		<category><![CDATA[qmake]]></category>
+		<category><![CDATA[qt]]></category>
+		<category><![CDATA[structure]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=692</guid>
+		<description><![CDATA[Note: This is a new version of an earlier post, with a revised project structure. Note 2: See this post for the same project structure using the even better Catch testing framework. This post assumes that you are using a C++ testing framework such as UnitTest++. See this earlier post for some information on installing [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><em><strong>Note:</strong> This is a new version of <a href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">an earlier post</a>, with a revised project structure.</em></p>
+<p><em><strong>Note 2:</strong> See <a href="http://dragly.org/2015/11/24/getting-started-with-unit-tests-in-qt-creator-with-catch/">this post for the same project structure</a> using the even better Catch testing framework.</em></p>
+<p>This post assumes that you are using a C++ testing framework such as UnitTest++. See <a title="Setting up UnitTest++ with Qt Creator in a nice project structure" href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">this earlier post</a> for some information on installing UnitTest++ on Ubuntu.</p>
+<p>To get the most out UnitTest++ it is a good idea to integrate its output into the Qt Creator IDE. The way I have set this up in Qt Creator is with subprojects. One for the main project, which again is split into the app itself and a library, and one for the tests. In addition, I have a helper project file, named defaults.pri. The structure of the project is like this:</p>
+<pre>MyProject
+├─ MyProject.pro
+├─ defaults.pri
+├─ app/
+│  ├─ app.pro
+│  └─ main.cpp
+├─ src/
+│  ├─ src.pro
+│  └─ myclass.cpp
+└─ tests/
+   ├─ tests.pro
+   └─ main.cpp</pre>
+<p>An <a href="https://github.com/ComputationalPhysics/qtcreator-project-structure">example project using this code structure</a> has been posted on Github by Filip Sund. (Thanks to Filip for doing this!)</p>
+<p>The main project file, MyProject.pro will now be based on a subdirs template, and may look like this:</p>
+<pre>TEMPLATE = subdirs
+CONFIG+=ordered
+SUBDIRS = \
+    src \
+    app \
+    tests
+app.depends = src
+tests.depends = src</pre>
+<p>The app.depends and tests.depends statements makes sure that the src project is compiled before the application and tests, because the src directory contains the library that will be used by both the app and the tests.</p>
+<p>(<a href="http://dragly.org/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/comment-page-1/#comment-19940">Thanks to Will</a> for noting that this works better for parallel builds with make -j 8 than my previous version only using CONFIG+=ordered. We should keep CONFIG+=ordered in there still, though, because depends doesn&#8217;t affect the order when using make install).</p>
+<h2>defaults.pri</h2>
+<p>Each of the other .pro files will include defaults.pri to have all the headers available. defaults.pri contains the following:</p>
+<pre>INCLUDEPATH += $$PWD/src
+SRC_DIR = $$PWD</pre>
+<p>If the library, main program and tests use common libraries, it is very useful to have the defaults.pri define these dependencies too.</p>
+<h2>./src</h2>
+<p>In the src folder, I have myclass.cpp, which is the class that I want to use and test. The src.pro needs to compile to a library, so that it may be used both by app and tests, and could look something like this:</p>
+<pre>include(../defaults.pri)
+CONFIG -= qt
+
+TARGET = myapp
+TEMPLATE = lib
+
+SOURCES += myclass.cpp
+HEADERS += myclass.h</pre>
+<p>What this class does is not so interesting, it could be anything. A simple example could be this header file:</p>
+<pre class="brush:c++">#ifndef MYCLASS_H
+#define MYCLASS_H
+
+class MyClass {
+public:
+    double addition(double a, double b);
+};
+
+#endif // MYCLASS_H</pre>
+<p>With this accompaning source file:</p>
+<pre class="brush:c++">#include "myclass.h"
+
+double MyClass::addition(double a, double b) {
+    return a * b;
+}</pre>
+<h2>./app</h2>
+<p>I only have a main.cpp file in app, because the app is basically just something that uses everything in the src folder. It will depend on the shared compiled library from src, and app.pro would look something like this:</p>
+<pre>include(../defaults.pri)
+
+TEMPLATE = app
+CONFIG += console
+CONFIG -= app_bundle
+CONFIG -= qt
+
+SOURCES += main.cpp
+
+LIBS += -L../src -lmyapp</pre>
+<p>The main.cpp file could be a simple program that uses MyClass:</p>
+<pre class="brush:c++">#include &lt;myclass.h&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main()
+{
+    MyClass adder;
+    cout &lt;&lt; adder.addition(10, 20) &lt;&lt; endl;
+    return 0;
+}</pre>
+<h2>./tests</h2>
+<p>In the tests folder I have simply added a main.cpp which will run the tests. Then tests.pro has the following contents:</p>
+<pre>include(../defaults.pri)
+TEMPLATE = app
+
+CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   -= qt
+
+SOURCES += main.cpp
+
+LIBS += -lunittest++ -L../src -lmyapp</pre>
+<p>Which now links to the myapp library in addition to the unit tests.</p>
+<p>The main.cpp in tests file which could contain the following, if we were to use UnitTest++ as our testing library:</p>
+<pre class="brush:c++">#include &lt;unittest++/UnitTest++.h&gt;
+#include &lt;myclass.h&gt;
+
+TEST(MyMath) {
+    MyClass my;
+    CHECK(my.addition(3,4) == 7);
+}
+
+int main()
+{
+    return UnitTest::RunAllTests();
+}</pre>
+<p>This test will fail because my implementation of MyClass::addition is completely wrong:</p>
+<pre class="brush:c++">class MyClass {
+public:
+    double addition(double a, double b) {
+        return a * b;
+    }
+};</pre>
+<p>Note that I&#8217;m including MyClass by through &lt;myclass.h&gt; which is possible because of the INCLUDEPATH variable in defaults.pri.</p>
+<p>This is hopefully all you&#8217;ll need to define a project that compiles a library, as well as tests and an application using the library.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Quantum molecular dynamics simulation of $H_2$ &#038; $H_2 O$</title>
+		<link>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/</link>
+		<comments>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/#respond</comments>
+		<pubDate>Fri, 22 Nov 2013 16:58:40 +0000</pubDate>
+		<dc:creator><![CDATA[Milad Mobarhan]]></dc:creator>
+				<category><![CDATA[atoms]]></category>
+		<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[molecular dynamics]]></category>
+		<category><![CDATA[molecules]]></category>
+		<category><![CDATA[ovito]]></category>
+		<category><![CDATA[Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=574</guid>
+		<description><![CDATA[The classical molecular dynamics is primarily based on classical motion of atoms interacting with a given potential.  Quantum molecular dynamics, on the other hand, focuses on all the interactions between atoms and electrons, and does not involve fitting interactions to experimental data.  An approach to include the electronic structure is to solve the electronic Schrödinger [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>The classical molecular dynamics is primarily based on classical motion of atoms interacting with a given potential.  Quantum molecular dynamics, on the other hand, focuses on all the interactions between atoms and electrons, and does not involve fitting interactions to experimental data.  An approach to include the electronic structure is to solve the electronic Schrödinger equation, given the set of fixed nuclear positions, in each molecular dynamics step and let the nuclei to move according to classical mechanics in an effective potential due to the electrons.</p>
+<p>In the last two weeks I have been working on calculating this effective  potential, based on the results from my Hartree-Fock code.  The forces acting on the nuclei are found by taking the gradient of the energy with respect to the nuclei positions. Below I have included  molecular dynamics simulation of $H_2$  and $H_2O$ molecule, where the effective potential is calculated in each time step.</p>
+<p><iframe class='youtube-player' type='text/html' width='625' height='382' src='http://www.youtube.com/embed/fLs1nCLNv3c?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></p>
+<p><iframe class='youtube-player' type='text/html' width='625' height='382' src='http://www.youtube.com/embed/2QCJa-GghmQ?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Writing molecular dynamics data to binary LAMMPS format</title>
+		<link>http://localhost/2013/11/19/writing-lammps-files/</link>
+		<pubDate>Tue, 19 Nov 2013 19:55:07 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[armadillo]]></category>
+		<category><![CDATA[binary]]></category>
+		<category><![CDATA[file]]></category>
+		<category><![CDATA[lammps]]></category>
+		<category><![CDATA[ovito]]></category>
+		<category><![CDATA[read]]></category>
+		<category><![CDATA[write]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=537</guid>
+		<description><![CDATA[In this post I will explain  how to write to the binary LAMMPS file format from C++, using data stored in Armadillo vectors and matrices. After running the example in this post you should be able to open the resulting file in Ovito or any other program capable of reading binary LAMMPS files. The example [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In this post I will explain  how to write to the binary <a href="http://lammps.sandia.gov/">LAMMPS</a> file format from C++, using data stored in <a href="http://arma.sourceforge.net/">Armadillo</a> vectors and matrices. After running the example in this post you should be able to open the resulting file in <a href="http://ovito.org/">Ovito</a> or any other program capable of reading binary LAMMPS files. The example should also be fairly easy to port to other data structure type, if needed.</p>
+<p>For the impatient: You&#8217;ll find a working main.cpp file and a qmake project file <a href="https://github.com/dragly/lammpshandler">on GitHub</a>.</p>
+<p>The result, if rendered in Ovito, is two silicon atoms (in red) and one oxygen atom:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/11/lammps-in-ovito.png" rel="lightbox[537]"><img class="aligncenter size-medium wp-image-1078" alt="lammps-in-ovito" src="http://dragly.org/wp-content/uploads/2013/11/lammps-in-ovito-300x259.png" width="300" height="259" /></a></p>
+<h2>About the LAMMPS format</h2>
+<p><a href="http://lammps.sandia.gov/">LAMMPS</a> is a <a href="http://en.wikipedia.org/wiki/Molecular_dynamics">molecular dynamics</a> simulation package that is extremely versatile with plenty of interaction potentials and features implemented. However, you may have written some other code involving atoms and found yourself in the position of considering using a standard file format to write atom data to file. In this case, the <a href="http://en.wikipedia.org/wiki/XYZ_file_format">XYZ-format</a> has likely passed your mind, but because this is a ASCII-based text format, it is slow to read and write. This format also lacks standardized headers for information such as the system boundaries &#8211; causing visualizers like Ovito to have to guess for the right boundaries in your system.</p>
+<p><span id="more-537"></span></p>
+<p>The LAMMPS format is binary, so it is way faster than the XYZ-format, and it also carries with it information about the system, which helps Ovito render everything properly.</p>
+<p>The LAMMPS file format consists of an header and column-based data stored as doubles. The header consists of the following:</p>
+<ul>
+<li>1 × 32-bit integer holding the current time step</li>
+<li>1 × 32-bit integer holding the total number of atoms</li>
+<li>6 × 64-bit doubles holding the system boundaries</li>
+<li>3 × 64-bit doubles holding the <a href="http://en.wikipedia.org/wiki/Shear_mapping">shearing</a> of the boundaries</li>
+<li>1 × 32-bit integer holding the number of columns</li>
+<li>1 × 32-bit integer holding the number of chunks</li>
+<li>1 × 32-bit integer holding the chunk length, N atoms × n columns.</li>
+<li>(N atoms × n columns) × 64 -bit doubles holding the values of all the atom data</li>
+</ul>
+<h2>What is stored in the columns?</h2>
+<p>The 32-bit integer holding the number of columns in the header tells how much data will be stored for each atom. For instance the atom type, 3 position components, 3 velocity components would need 1 + 3 + 3 = 7 columns. The meaning of the data in the columns will have to be interpreted when you open the file in Ovito or any other program, because the LAMMPS format contains no information about the contents of the columns.</p>
+<p>Note that all data will have to be stored as 64-bit doubles, even though they might be integers in your application. So you will have to do the conversion to doubles before storing the data to file!</p>
+<h2>What are chunks?</h2>
+<p>You don&#8217;t really have to care about this. Just store everything as 1 chunk and set the chunk length to the number of columns times the number of atoms (N atoms × n columns).</p>
+<p>I think the idea of chunks is used when you build your file with data from multiple processors or split the file up in a logical way to make writing and reading easier for LAMMPS or other applications, but I&#8217;m not sure.</p>
+<h2>Get to the code already</h2>
+<p>You&#8217;ll find an up-to-date example of this code on <a href="https://github.com/dragly/lammpshandler">Github</a>, but I&#8217;ve included it below as well for reference:</p>
+<pre class="brush: cpp; title: ; notranslate">#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;armadillo&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+
+using namespace std;
+using namespace arma;
+
+void writeLammpsFile() {
+ivec atomTypes;
+atomTypes &amp;lt;&amp;lt; 14 &amp;lt;&amp;lt; 8 &amp;lt;&amp;lt; 14; // Silicon, oxygen, silicon
+cout &amp;lt;&amp;lt; atomTypes &amp;lt;&amp;lt; endl;
+mat positions;
+positions &amp;lt;&amp;lt; 1.0 &amp;lt;&amp;lt; 2.5 &amp;lt;&amp;lt; -1.5 &amp;lt;&amp;lt; endr
+&amp;lt;&amp;lt; 4.0 &amp;lt;&amp;lt; -5.0 &amp;lt;&amp;lt; 6.0 &amp;lt;&amp;lt; endr
+&amp;lt;&amp;lt; 7.0 &amp;lt;&amp;lt; 2.0 &amp;lt;&amp;lt; -3.0 &amp;lt;&amp;lt; endr;
+cout &amp;lt;&amp;lt; positions &amp;lt;&amp;lt; endl;
+ofstream lammpsFile(&amp;quot;outfile.lmp&amp;quot;, ios::out | ios::binary);
+// Set up data for the timestep of this file
+int currentTimeStep = 0;
+int nAtomsTotal = positions.n_rows;
+// The system boundaries
+double xMin = -10.0;
+double xMax = 10.0;
+double yMin = -10.0;
+double yMax = 10.0;
+double zMin = -10.0;
+double zMax = 10.0;
+// Shearing is zero unless the system boundaries are sheared (yes that's &amp;quot;sheared&amp;quot;,
+// not &amp;quot;shared&amp;quot;)
+double xShear = 0.0;
+double yShear = 0.0;
+double zShear = 0.0;
+// nColumns is the number of data types you want to write. In our case we want to
+// write four - the atom type and the x, y and z components of the position.
+// If you want velocities, forces, etc., just add more columns and write more data.
+int nColumns = 1 + 3;
+// We could divide the data into chunks by the LAMMPS file format, but we don't - i.e. only
+// use one chunk. The chunk length is then the same as the number of atoms times the number
+// of columns.
+int nChunks = 1;
+int chunkLength = nAtomsTotal * nColumns;
+
+// Write all the above to the lammps file
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;currentTimeStep), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nAtomsTotal), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nColumns), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nChunks), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;chunkLength), sizeof(int));
+
+// Write all the data for each atom to file
+for(uint i = 0; i &amp;lt; positions.n_rows; i++) {
+// IMPORTANT: Even though atom numbers are usually integers, they must be written
+// as double according to the LAMMPS standard.
+double atomType = atomTypes(i);
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;atomType), sizeof(double));
+// Write the x, y and z-components
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,0)), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,1)), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,2)), sizeof(double));
+}
+lammpsFile.close();
+}
+
+int main()
+{
+writeLammpsFile();
+return 0;
+}
+
+</pre>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Copying data files to the build directory with qmake</title>
+		<link>http://localhost/2013/11/05/copying-data-files-to-the-build-directory-with-qmake/</link>
+		<pubDate>Tue, 05 Nov 2013 19:17:29 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=510</guid>
+		<description><![CDATA[Sometimes you want to copy some data files to the same folder as your final executable when you are building with qmake in a different directory than your source code. This is what Qt Creator does by default, so this is quite often needed. Just add the following to your .pro file to copy the [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>Sometimes you want to copy some data files to the same folder as your final executable when you are building with qmake in a different directory than your source code. This is what Qt Creator does by default, so this is quite often needed.</p>
+<p>Just add the following to your .pro file to copy the folder &#8220;data&#8221; from the source directory to the build directory whenever you build the source code:</p>
+<pre>copydata.commands = $(COPY_DIR) $$PWD/data $$OUT_PWD
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata</pre>
+<p>The meaning of the different names in the above are as follows:</p>
+<ul>
+<ul>
+<li><strong>$(COPY_DIR)</strong> &#8211; Holds a platform-dependent copy-command that makes sure to copy recursively.</li>
+<li><strong>$$PWD</strong> &#8211; Holds the name of the source code directory, where your .pro file resides.</li>
+<li><strong>$$OUT_PWD</strong> &#8211; Holds the name of the build directory. Note that this may not work if you are running qmake and make in the same directory as your source code, as you will be copying into the same folder as you copy from.</li>
+<li><strong>copydata</strong> &#8211; Just a name we choose. You can replace this with whatever you want.</li>
+<li><strong>first &#8211;</strong> This is a build step that already exists in the Makefile generated by qmake. We attach the copy build step to this build step.</li>
+<li><strong>export</strong> &#8211; Makes the variable in the argument of the function available in a global scope.</li>
+<li><strong></strong><strong>QMAKE_EXTRA_TARGETS </strong>&#8211; Tells qmake that you want to build more targets than the ones it adds by default to the Makefile.<strong></strong></li>
+</ul>
+</ul>
+<p>This method is a bit messy, and I wish the Qt developers would make it easier to do this, but it works. It also ensures that the data is always copied, ensuring that any changes in the data folder are pushed to the build folder.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Multiple billboards in Qt3D</title>
+		<link>http://localhost/2013/10/29/multiple-billboards-in-qt3d/</link>
+		<pubDate>Tue, 29 Oct 2013 13:52:14 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[3D]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=483</guid>
+		<description><![CDATA[While Qt3D has a transform for drawing billboards, it is not very useful if you are drawing thousands of particles. This is because the transform can only be applied to one object at the time, and using thousands of objects is never a good idea in neither OpenGL or Qt. This is simply because the [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>While Qt3D has a transform for drawing billboards, it is not very useful if you are drawing thousands of particles. This is because the transform can only be applied to one object at the time, and using thousands of objects is never a good idea in neither OpenGL or Qt. This is simply because the overhead of each object is very large, both in terms of memory and performance.</p>
+<p>The solution I found was to write my own custom class that inherits QQuickItem3D and is capable of drawing a list of 3D points as billboards by directly turning each sprite towards the camera at every draw call. This is not very efficient, but it works and is way faster than the options: Drawing spheres or creating one billboard per particle. The ideal option is of course to use geometry shaders, but they are not easily available in Qt3D yet. Most likely because its a new feature in OpenGL 3.2.</p>
+<p>The class <a href="http://github.com/dragly/multibillboard/">is available on GitHub</a> and the resulting output is shown in this screenshot:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/10/multisphere.png" rel="lightbox[483]"><img class="aligncenter size-large wp-image-1041" alt="multisphere" src="http://dragly.org/wp-content/uploads/2013/10/multisphere-748x600.png" width="604" height="484" /></a></p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Using Qt3D today</title>
+		<link>http://localhost/2013/10/29/using-qt3d-today/</link>
+		<pubDate>Tue, 29 Oct 2013 13:50:45 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[3D]]></category>
+		<category><![CDATA[C++]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[android]]></category>
+		<category><![CDATA[game]]></category>
+		<category><![CDATA[opengl]]></category>
+		<category><![CDATA[qt]]></category>
+		<category><![CDATA[qt creator]]></category>
+		<category><![CDATA[qt3d]]></category>
+		<category><![CDATA[qt5.2]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=481</guid>
+		<description><![CDATA[Qt3D is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. It was announced that it [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><a href="http://doc-snapshot.qt-project.org/qt3d-1.0/">Qt3D</a> is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. <a href="http://blog.qt.digia.com/blog/2012/04/11/qt-3d-and-qt5-qt4-news-and-releases/">It was announced</a> that it would be bundled with Qt5.0, but because of the state of the library at the time, its release was postponed. Even so, the library is still very mature and appears to work very well in my opinion. So I would urge you to test it out.</p>
+<h2>Simple install on Ubuntu</h2>
+<p>To use the library you have a couple of different choices. If you are running Ubuntu, you may just run the following commands:</p>
+<pre>sudo apt-get install qt3d5-dev qtdeclarative5-qt3d-plugin</pre>
+<p>And you should be good to go. Look for examples in the <a href="http://doc-snapshot.qt-project.org/qt3d-1.0/">Qt3D documentation</a>.</p>
+<p>Note that Ubuntu currently doesn&#8217;t have QtQuick.Controls available, so you will have to follow the instructions below to combine Qt3D with QtQuick.Controls.</p>
+<h2>Install Qt3D into the newest Qt release</h2>
+<p>Currently Qt5.1.1 is the newest stable release of Qt and is the version I&#8217;d recommend that you use with Qt3D.</p>
+<ol>
+<li>Download and install <a href="http://qt-project.org/downloads">Qt5.1.1</a>.</li>
+<li>Clone Qt3D from Gitorious:
+<pre>git clone git://gitorious.org/qt/qt3d.git qt3d</pre>
+</li>
+<li>Open QtCreator from your new Qt installation.</li>
+<li>Open the qt3d.pro file from the cloned repository and configure it to use the platforms on which you want to use Qt3D (desktop, Android, etc.).</li>
+<li>Build for each platform you want to use. Set the build to Release instead of Debug mode while building. You should receive about one hundred warnings if you are building for Android. As always, ignore these.</li>
+<li>Open the build folder in a terminal and run
+<pre>make install</pre>
+<p>This will not install to your system, but to your Qt installation, so that it gets the ability to do awesome 3D stuff.</li>
+</ol>
+<p>You should now have Qt3D installed in your Qt installation and be ready to run projects that are using Qt3D.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Getting the newest version of IPython Notebook on Ubuntu</title>
+		<link>http://localhost/2013/09/16/getting-the-newest-version-of-ipython-notebook-on-ubuntu/</link>
+		<comments>http://localhost/2013/09/16/getting-the-newest-version-of-ipython-notebook-on-ubuntu/#comments</comments>
+		<pubDate>Mon, 16 Sep 2013 14:19:41 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[ipython]]></category>
+		<category><![CDATA[ipython notebook]]></category>
+		<category><![CDATA[neuro]]></category>
+		<category><![CDATA[notebook]]></category>
+		<category><![CDATA[python]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=469</guid>
+		<description><![CDATA[The easiest and failsafe way of getting the newest IPython Notebook installed on Ubuntu is to install the NeuroDebian repository. There you may select your version of Ubuntu, a server nearby and run the given commands in a command line. I recommend running &#8220;sudo echo&#8221; before the given commands to unlock sudo first. After running [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>The easiest and failsafe way of getting the newest IPython Notebook installed on Ubuntu is to install the <a href="http://neuro.debian.net">NeuroDebian repository</a>.</p>
+<p>There you may select your version of Ubuntu, a server nearby and run the given commands in a command line. I recommend running &#8220;sudo echo&#8221; before the given commands to unlock sudo first.</p>
+<p>After running &#8220;sudo apt-get update&#8221;, you may install the newest IPython Notebook and start it by running</p>
+<p>sudo apt-get install ipython1x-notebook</p>
+<pre>ipython1x notebook</pre>
+<p>You will have to use iptyhon1x because NeuroDebian keeps your old IPython installation available as ipython, just in case you regret going forward.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost/2013/09/16/getting-the-newest-version-of-ipython-notebook-on-ubuntu/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>Monitoring your unit tests without lifting a finger</title>
+		<link>http://localhost/2013/09/13/monitoring-your-unit-tests-without-lifting-a-finger/</link>
+		<pubDate>Fri, 13 Sep 2013 07:35:40 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[Testing]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[build]]></category>
+		<category><![CDATA[build jobs]]></category>
+		<category><![CDATA[code health]]></category>
+		<category><![CDATA[jenkins]]></category>
+		<category><![CDATA[monitor]]></category>
+		<category><![CDATA[monitoring]]></category>
+		<category><![CDATA[python]]></category>
+		<category><![CDATA[test]]></category>
+		<category><![CDATA[unit]]></category>
+		<category><![CDATA[unit testing]]></category>
+		<category><![CDATA[web]]></category>
+		<category><![CDATA[web interface]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=465</guid>
+		<description><![CDATA[I love unit testing. First of all, I think it is a good idea to test separate units of the code, but after doing so for some time, I&#8217;ve come to realize that unit tests are great for managing the software development cycle too. It all boils down to the idea that you should write [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>I love unit testing. First of all, I think it is a good idea to test separate units of the code, but after doing so for some time, I&#8217;ve come to realize that unit tests are great for managing the software development cycle too. It all boils down to the idea that you should write tests before you write your code.</p>
+<p>Now, this is something that I and others apparently struggle a lot with. How do you write a test for some code that doesn&#8217;t even exist yet? Even worse, how do you write a test for a piece of software that you&#8217;re not yet sure how will be used?</p>
+<p>In computational physics, this problem arises often because we are writing code at the same time as we are trying to understand the physics, mathematics and algorithms at hand. And this is a good thing. You might want to think that one should structure all code before it is written, but this is generally a bad approach in computational physics. Especially if you&#8217;re working on something new. The reason is that you will often understand the problem and algorithms better while developing, rather than just reading about them and trying to analyze them blindly.</p>
+<h2>Keeping the tests and code healthy</h2>
+<p>But enough with the talk, let&#8217;s just assume that you are convinced that you should (or have to) implement some unit tests. At one point you are likely to be in a position where you find it tiresome to have to go into that folder where the tests are defined and run them manually. This is where Jenkins comes in to play.</p>
+<p><span id="more-465"></span></p>
+<p>Jenkins is a build bot that is designed to fetch your code from wherever, download, build and run the commands you need to test your code. It also provides a very nice web interface that will allow you to keep track of which builds are working and which are not.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/jenkins.png" rel="lightbox[465]"><img class="aligncenter size-large wp-image-947" alt="jenkins" src="http://dragly.org/wp-content/uploads/2013/09/jenkins-e1379054595973-800x280.png" width="640" height="224" /></a>After running tests manually for way too long, this is exactly what I needed. I have already written a post about how you can <a title="Setting up UnitTest++ with Qt Creator" href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">launch your tests after building your project in Qt Creator</a>, but this has the disadvantage that your code will be compiled twice whenever you build it, and you&#8217;ll have to wait for the tests to finish before actually seeing your code run. With Jenkins, everything happens in the background. And Jenkins can be configured to run builds periodically, whenever your source code changes or is pushed to Git.</p>
+<h2>Setting up Jenkins with access to Git and local folders on Ubuntu</h2>
+<p>Installing Jenkins on Ubuntu is a piece of cake:</p>
+<pre>sudo apt-get install jenkins</pre>
+<p>However, you might want Jenkins to be able to pull your source code and build it from a remote Git repository, or even more obvious, access your projects on your local drive, which it is not able to do by default(!).</p>
+<h3>Installing the Git plugin</h3>
+<p>After installing Jenkins, you should immediately be able to access it through this page:</p>
+<p><a href="http://localhost:8080">http://localhost:8080</a></p>
+<p>To install the Git plugin, go to <em>Manage Jenkins</em> → <em>Manage plugins</em> → <em>Available</em> and search for &#8220;git&#8221;. You should install the plugin named <a href="http://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin">Jenkins GIT plugin</a>. If you click this link, you should see the same page as you do if you click the link in the list.</p>
+<p>Note that on Ubuntu 13.10 you will also have to install the Mailer plugin. This is a dependency of the Git plugin, but it is currently not listed, so you will have to install it manually for now.</p>
+<h3>Optional: Allowing Jenkins access to your private Github repository</h3>
+<p>This step is optional. If you only want to use Jenkins for public repositories, you may skip this step.</p>
+<p>Jenkins needs its own SSH key to access private Github repositories. If you&#8217;re not familiar with SSH keys and Github, this is a good time to <a href="https://help.github.com/articles/generating-ssh-keys">read a bit about it</a>.</p>
+<p>To generate this key, we&#8217;ll log in to the jenkins user in your Ubuntu terminal:</p>
+<pre>sudo su jenkins</pre>
+<p>Then run</p>
+<pre>ssh-keygen</pre>
+<p>and go through the steps to generate your key. Then print your key to screen so you may copy and paste it to Github:</p>
+<pre>cat /var/lib/jenkins/.ssh/id_rsa.pub</pre>
+<p>Copy and paste the key to Github. Then, by still being logged in as jenkins, run the following command to verify Github as a proper SSH host:</p>
+<pre>ssh git@github.com</pre>
+<p>You should receive a prompt like this:</p>
+<pre>PTY allocation request failed on channel 0
+Hi dragly! You've successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.</pre>
+<p>Now log out of jenkins by clicking CTRL+D.</p>
+<p>That&#8217;s it! Jenkins now should have access both to public and private repositories.</p>
+<h3>Optional: Allowing Jenkins access to your files</h3>
+<p>This step is optional. If you only want to use Jenkins for Git projects, you may skip this step.</p>
+<p>By default, and this is for security reasons, Jenkins doesn&#8217;t have access to your files on your computer. So if you want to launch a set of unit tests in your home folder, you will need to give Jenkins access to these. The easiest way to do this is by adding the jenkins user to your group. Just replace your_user_name below:</p>
+<pre>usermod -G your_user_name jenkins</pre>
+<p>Jenkins will now be able to access your files.</p>
+<h3>Optional: Adding some extra security by setting up a firewall</h3>
+<p>Jenkins uses port 8080 on your computer and by default allows anyone to access its services through this port. While you may mess around with Jenkins&#8217; settings to set up user authentication, I found it better just to enable a firewall in Ubuntu and restrict inbound access on all ports (except the ones I use for other things).</p>
+<p>Download and install <em>Firewall Configuration</em> from Ubuntu Software Center. And turn it on like this:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/firewall.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-948" alt="firewall" src="http://dragly.org/wp-content/uploads/2013/09/firewall-e1379055216219.png" width="361" height="174" /></a>Now your Jenkins bot won&#8217;t allow anyone else access to run jobs on your machine.</p>
+<h2>Setting up your first project</h2>
+<p>Click <em>Jenkins</em> → <em>New job</em> and give it a name of your choice. Select <b>Build a free-style software project</b> as your setting and click OK.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/newjob.png" rel="lightbox[465]"><img class="aligncenter size-large wp-image-949" alt="newjob" src="http://dragly.org/wp-content/uploads/2013/09/newjob-e1379055794391-800x235.png" width="640" height="188" /></a>In the next window, select Git as the <em>Source Code Management</em> option and enter your repository URL with http as the access method. If it is a private repository, follow the steps above to give Jenkins access to it, and use SSH as your access method.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/jenkins-git.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-953" alt="jenkins-git" src="http://dragly.org/wp-content/uploads/2013/09/jenkins-git.png" width="565" height="184" /></a></p>
+<p>Further down, add an <em>Execute shell</em> build step:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/build-step.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-954" alt="build-step" src="http://dragly.org/wp-content/uploads/2013/09/build-step.png" width="548" height="125" /></a></p>
+<p>This allows you to type in whatever commands are needed to run before the build may be tested. In my case, it would be to do something like this:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/execute-shell2.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-958" alt="execute-shell" src="http://dragly.org/wp-content/uploads/2013/09/execute-shell2.png" width="516" height="259" /></a>After doing so, click <em>Apply</em> and test your build by clicking <em>Build now</em>.</p>
+<h3>Checking the output</h3>
+<p>What Jenkins does now is to clone your repository into a temporary folder and execute the commands given in the <em>Execute shell </em>text box. You may check the result by looking at the <em>Build History</em> on the left hand side of the screen. Blue means unstable (crashed) build, red means stable build. Hover the pointer over a build and click <em>Console output</em> to see the exact output of the build. This is very useful if the build should fail and you want to know why.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/build-history.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-959" alt="build-history" src="http://dragly.org/wp-content/uploads/2013/09/build-history.png" width="215" height="114" /></a>If all goes well, you may explore the options to build whenever your source code changes or periodically, by looking at the <em>Build triggers</em>.</p>
+<p>There are also plenty of other features in Jenkins, but I&#8217;ll leave it up to you to explore them all. The last thing you should do before you stop playing around is to add Jenkins as your browser&#8217;s start up page and always keep it visible on a screen so that you at any given time know how your builds perform.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

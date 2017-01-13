@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>attribute error &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/attribute-error/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Installing Sumatra 0.6-dev in Ubuntu 13.10</title>
+		<link>http://localhost/2014/04/15/installing-sumatra-0-5-in-ubuntu-13-10/</link>
+		<pubDate>Tue, 15 Apr 2014 09:54:38 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[attribute error]]></category>
+		<category><![CDATA[python]]></category>
+		<category><![CDATA[reproducibility]]></category>
+		<category><![CDATA[sumatra]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=777</guid>
+		<description><![CDATA[Sumatra is a great tool for reproducibility and provenance when you are running numerical simulations. Keeping your work reproducible ensures that you and others will be able to check your results at a later time, while provenance is to keep track of where your results came from in the first place. I won&#8217;t get into [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><a href="http://neuralensemble.org/sumatra/">Sumatra</a> is a great tool for reproducibility and provenance when you are running numerical simulations. Keeping your work reproducible ensures that you and others will be able to check your results at a later time, while provenance is to keep track of where your results came from in the first place.</p>
+<p>I won&#8217;t get into details about using <a href="http://neuralensemble.org/sumatra/">Sumatra</a> in this post, as <a href="http://pythonhosted.org/Sumatra/">its documentation</a> is quite good at describing that already.</p>
+<h2>Computational Physics members</h2>
+<p>If you are a member of the <a href="http://comp-phys.net/">Computational Physics group</a> and have access to <a href="http://comp-phys.net/cluster-info/">the computing cluster, Smaug</a>, you don&#8217;t have to install anything. Just ssh into our dedicated Sumatra machine, named bender, and run your jobs from there. In the future, all machines will support Sumatra, but for now, we only have one dedicated machine for this task:</p>
+<pre>ssh bender</pre>
+<h2>On your own machine</h2>
+<p>Otherwise, or if you want it on your own machine, you will have to install it manually. This is done by cloning the repository and running the setup.py file. This will install Sumatra with all dependencies:</p>
+<pre>hg clone https://bitbucket.org/apdavison/sumatra
+cd sumatra
+python setup.py install --user</pre>
+<p>Adding &#8211;user to the final command ensures that all packages are installed to your home directory, under .local/lib, so that  you don&#8217;t have to install with sudo privileges, and it makes it a bit easier to remove the package if you don&#8217;t want to keep it.</p>
+<p>We also need the GitPython and PyYAML modules, which you may install using apt-get:</p>
+<pre>sudo apt-get install python-git python-yaml</pre>
+<p>And that&#8217;s it! You should now be able to run your projects with Sumatra.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

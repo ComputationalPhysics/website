@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>MPI &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/category/programming/mpi/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Developing MPI applications in Qt Creator</title>
+		<link>http://localhost/2012/03/14/developing-mpi-applications-in-qt-creator/</link>
+		<pubDate>Wed, 14 Mar 2012 15:43:08 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Featured]]></category>
+		<category><![CDATA[MPI]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+
+		<guid isPermaLink="false">http://dragly.org/?p=643</guid>
+		<description><![CDATA[I have grown very fond of the ease and usability of Qt Creator lately, making it my main tool for developing anything in C and C++. Recently I started learning the MPI framework for doing large scale parallel programming and &#8230; <a href="http://dragly.org/2012/03/14/developing-mpi-applications-in-qt-creator/">Continue reading <span>&#8594;</span></a>]]></description>
+				<content:encoded><![CDATA[<p>I have grown very fond of the ease and usability of Qt Creator lately, making it my main tool for developing anything in C and C++. Recently I started learning the MPI framework for doing large scale parallel programming and figured I wanted to try to make MPI play along with Qt Creator.</p>
+<p>The first thing I noticed is that there is no problem using Qt Creator as an editor while compiling the MPI executable and running it from the command line. However, for the quick and easy testing of minor changes, running by pressing Ctrl + R in Qt Creator quickly came to a high place on my wish list.</p>
+<p>After a quick search around the Internet, I found the necessary adjustments to make this exact thing happen. The steps are as follows:</p>
+<h3>Make Qt Creator use mpicxx instead of g++</h3>
+<p>To change the compiler in Qt Creator, you simply have to edit the .pro file of your project. Add the following lines, and Qt Creator will call mpicxx instead of g++:</p>
+<pre class="brush:shell"># MPI Settings
+QMAKE_CXX = mpicxx
+QMAKE_CXX_RELEASE = $$QMAKE_CXX
+QMAKE_CXX_DEBUG = $$QMAKE_CXX
+QMAKE_LINK = $$QMAKE_CXX
+QMAKE_CC = mpicc
+
+QMAKE_CFLAGS = $$system(mpicc --showme:compile)
+QMAKE_LFLAGS = $$system(mpicxx --showme:link)
+QMAKE_CXXFLAGS = $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS</pre>
+<p>This also sets the correct compile and link flags in addition to changing the linker to mpicxx as well. The DMPICH_IGNORE_CXX_SEEK flag is added to avoid some errors I experienced on Red Hat Linux 5.</p>
+<h3>Running the application with mpirun</h3>
+<p>Usually Qt Creator will simply run the generated executable after compiling, but to make use of multiple processors (which kind of is the whole point with MPI), you have to change the run settings of your project to a custom executable. This is done in the project configuration in Qt Creator under the Run tab for your project.</p>
+<p>Add a Custom Executable run configuration and set the executable to /usr/bin/mpirun or any other path where mpirun resides on your system (run ‘which mpirun’ in a terminal to find it if you don’t know where it is). Then, set the arguments to</p>
+<pre class="brush:shell">-n 2 yourexecutable</pre>
+<p>to run yourexecutable with 2 processors. Of course you’ll have to change <em>yourexecutable</em> to whatever your executable is named.</p>
+<h3>Adding a GUI to your MPI program</h3>
+<p>I advice you to not use MPI together with Qt GUI libraries. The reasons for this is that Qt has its own threading classes that are easier to use together with GUI elements in your application if you need them and the fact that if you want to run your app on any large scale cluster you might not be able to use Qt at all, depending on what packages are available on this cluster. A much better solution is to load config settings from a file in the INI format, using for instance the lightweight <a href="http://code.google.com/p/inih/">inih</a> library and make this settings file writable from a Qt GUI application using QSettings to write this file.</p>
+<p>The downside of this approach is that you won’t be able to implement any communication directly with the MPI process, but this could be worked around by for instance reading and writing to a progress status file if this is what you need.</p>
+<p>However, it is not impossible to make Qt GUI applications play along with MPI, even though you might have to juggle a bit around with stuff to make it work flawlessly. Passing MPI broadcasts and such to all the other processes is definitely possible, and a relatively small example of how to do this is shown in <a href="http://www.velvet-star.com/qt/">this post</a> by Tiffany Chong and Valencia Hare.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Andreas Våvang Solbrå &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/author/andreavs/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Getting MCALab up and running on a 64-bit installation of Matlab on Ubuntu</title>
+		<link>http://localhost/2014/11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/</link>
+		<comments>http://localhost/2014/11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/#comments</comments>
+		<pubDate>Thu, 20 Nov 2014 15:31:50 +0000</pubDate>
+		<dc:creator><![CDATA[Andreas Våvang Solbrå]]></dc:creator>
+				<category><![CDATA[Programming]]></category>
+		<category><![CDATA[matlab]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=847</guid>
+		<description><![CDATA[MCALab is an easy-to-use Matlab toolkit for Compressed Sensing-related problems. This is a guide for getting it up and running on Ubuntu.  Get Matlab. The easiest way to get everything up and running is to use a 32-bit version of Matlab. This guide will detail how to do it for 64-bit as well.  Download MCALab. [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>MCALab is an easy-to-use Matlab toolkit for Compressed Sensing-related problems. This is a guide for getting it up and running on Ubuntu.</p>
+<ol>
+<ol>
+<ol>
+<li> Get Matlab. The easiest way to get everything up and running is to use a 32-bit version of Matlab. This guide will detail how to do it for 64-bit as well.</li>
+<li> Download MCALab. You can find it here: <a href="https://fadili.users.greyc.fr/demos/WaveRestore/downloads/mcalab/Download.html">https://fadili.users.greyc.fr/demos/WaveRestore/downloads/mcalab/Download.html</a></li>
+<li>Extract it where you like.</li>
+<li> If you are using 32-bit Matlab: Congratulations, you are done! Make sure to include all all the files in MCALab to your path, and try to run the script Two-D/Scripts/figInpaintLena.m, or any other.</li>
+<li> The problem is that a bunch of necessary files are compiled for 32-bit and then shipped, without including the source code. First, you should get the Rice Wavelet Toolbox. This can be downloaded from their repo here: <a href="https://github.com/ricedsp/rwt">https://github.com/ricedsp/rwt</a> . Clone the repo, go to rwt/mex and add #include “matrix.h” at the top of every file. Now follow the instructions in the INSTALL file.</li>
+<li> At this point MCALab should work as long as you link to the rwt files, if you do not use curvelet or wave atoms.</li>
+<li> Next is getting curvelets up and going. This is a big one. Begin by downloading the CurveLab toolkit at <a href="http://www.curvelet.org/software.html">http://www.curvelet.org/software.html</a> . There is a file called “curvelab.pdf” which details how to install it, but you must make the following tweaks:
+<ul>
+<li>After entering ./configure &#8211; -with-pic, open the makefile and add the line -fPIC to CXXFLAGS.</li>
+<li>FFTW 2.1.5 does not put the library files where Curvelab wants them. The easiest way to get around this is simply to type the following, when in the installation directory:
+<pre>mkdir fftw/.libs  
+cp lib/libfftw.a fftw/.libs/libfftw.a 
+cp lib/libfftw.so fftw/.libs/libfftw.so</pre>
+</li>
+<li>Now curvelab should compile fine if you follow the rest of the instructions.</li>
+</ul>
+</li>
+<li>Finally, if you want to test wave atoms as well, download the wave atom toolkit from <a href="http://www.waveatom.org/software.html">http://www.waveatom.org/software.html</a> and check that it works. If it does, go to the file “FastWAVEATOM2Analysis.m” in MCALab and replace
+<pre>wa(2).coeff = sqrt(2)/n*real(fatfm2sym(img,pat));
+with
+wa(2).coeff = real(fwa2sym(img,pat,'directional'));
+</pre>
+<p>and then open &#8220;FastWAVEATOM2Synthesis.m&#8221; and change</p>
+<pre>imr = real(iatfm2sym(wa(2).coeff/sqrt(n/2),pat));
+to
+imr = real(iwa2sym(wa(2).coeff,pat,'directional'));
+</pre>
+</li>
+<li>Realize you should have just gone with 32-bit Matlab.</li>
+</ol>
+</ol>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost/2014/11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+		</item>
+	</channel>
+</rss>

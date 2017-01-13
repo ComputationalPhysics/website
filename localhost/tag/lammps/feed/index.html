@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>lammps &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/lammps/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Writing molecular dynamics data to binary LAMMPS format</title>
+		<link>http://localhost/2013/11/19/writing-lammps-files/</link>
+		<pubDate>Tue, 19 Nov 2013 19:55:07 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[armadillo]]></category>
+		<category><![CDATA[binary]]></category>
+		<category><![CDATA[file]]></category>
+		<category><![CDATA[lammps]]></category>
+		<category><![CDATA[ovito]]></category>
+		<category><![CDATA[read]]></category>
+		<category><![CDATA[write]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=537</guid>
+		<description><![CDATA[In this post I will explain  how to write to the binary LAMMPS file format from C++, using data stored in Armadillo vectors and matrices. After running the example in this post you should be able to open the resulting file in Ovito or any other program capable of reading binary LAMMPS files. The example [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In this post I will explain  how to write to the binary <a href="http://lammps.sandia.gov/">LAMMPS</a> file format from C++, using data stored in <a href="http://arma.sourceforge.net/">Armadillo</a> vectors and matrices. After running the example in this post you should be able to open the resulting file in <a href="http://ovito.org/">Ovito</a> or any other program capable of reading binary LAMMPS files. The example should also be fairly easy to port to other data structure type, if needed.</p>
+<p>For the impatient: You&#8217;ll find a working main.cpp file and a qmake project file <a href="https://github.com/dragly/lammpshandler">on GitHub</a>.</p>
+<p>The result, if rendered in Ovito, is two silicon atoms (in red) and one oxygen atom:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/11/lammps-in-ovito.png" rel="lightbox[537]"><img class="aligncenter size-medium wp-image-1078" alt="lammps-in-ovito" src="http://dragly.org/wp-content/uploads/2013/11/lammps-in-ovito-300x259.png" width="300" height="259" /></a></p>
+<h2>About the LAMMPS format</h2>
+<p><a href="http://lammps.sandia.gov/">LAMMPS</a> is a <a href="http://en.wikipedia.org/wiki/Molecular_dynamics">molecular dynamics</a> simulation package that is extremely versatile with plenty of interaction potentials and features implemented. However, you may have written some other code involving atoms and found yourself in the position of considering using a standard file format to write atom data to file. In this case, the <a href="http://en.wikipedia.org/wiki/XYZ_file_format">XYZ-format</a> has likely passed your mind, but because this is a ASCII-based text format, it is slow to read and write. This format also lacks standardized headers for information such as the system boundaries &#8211; causing visualizers like Ovito to have to guess for the right boundaries in your system.</p>
+<p><span id="more-537"></span></p>
+<p>The LAMMPS format is binary, so it is way faster than the XYZ-format, and it also carries with it information about the system, which helps Ovito render everything properly.</p>
+<p>The LAMMPS file format consists of an header and column-based data stored as doubles. The header consists of the following:</p>
+<ul>
+<li>1 × 32-bit integer holding the current time step</li>
+<li>1 × 32-bit integer holding the total number of atoms</li>
+<li>6 × 64-bit doubles holding the system boundaries</li>
+<li>3 × 64-bit doubles holding the <a href="http://en.wikipedia.org/wiki/Shear_mapping">shearing</a> of the boundaries</li>
+<li>1 × 32-bit integer holding the number of columns</li>
+<li>1 × 32-bit integer holding the number of chunks</li>
+<li>1 × 32-bit integer holding the chunk length, N atoms × n columns.</li>
+<li>(N atoms × n columns) × 64 -bit doubles holding the values of all the atom data</li>
+</ul>
+<h2>What is stored in the columns?</h2>
+<p>The 32-bit integer holding the number of columns in the header tells how much data will be stored for each atom. For instance the atom type, 3 position components, 3 velocity components would need 1 + 3 + 3 = 7 columns. The meaning of the data in the columns will have to be interpreted when you open the file in Ovito or any other program, because the LAMMPS format contains no information about the contents of the columns.</p>
+<p>Note that all data will have to be stored as 64-bit doubles, even though they might be integers in your application. So you will have to do the conversion to doubles before storing the data to file!</p>
+<h2>What are chunks?</h2>
+<p>You don&#8217;t really have to care about this. Just store everything as 1 chunk and set the chunk length to the number of columns times the number of atoms (N atoms × n columns).</p>
+<p>I think the idea of chunks is used when you build your file with data from multiple processors or split the file up in a logical way to make writing and reading easier for LAMMPS or other applications, but I&#8217;m not sure.</p>
+<h2>Get to the code already</h2>
+<p>You&#8217;ll find an up-to-date example of this code on <a href="https://github.com/dragly/lammpshandler">Github</a>, but I&#8217;ve included it below as well for reference:</p>
+<pre class="brush: cpp; title: ; notranslate">#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;armadillo&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+
+using namespace std;
+using namespace arma;
+
+void writeLammpsFile() {
+ivec atomTypes;
+atomTypes &amp;lt;&amp;lt; 14 &amp;lt;&amp;lt; 8 &amp;lt;&amp;lt; 14; // Silicon, oxygen, silicon
+cout &amp;lt;&amp;lt; atomTypes &amp;lt;&amp;lt; endl;
+mat positions;
+positions &amp;lt;&amp;lt; 1.0 &amp;lt;&amp;lt; 2.5 &amp;lt;&amp;lt; -1.5 &amp;lt;&amp;lt; endr
+&amp;lt;&amp;lt; 4.0 &amp;lt;&amp;lt; -5.0 &amp;lt;&amp;lt; 6.0 &amp;lt;&amp;lt; endr
+&amp;lt;&amp;lt; 7.0 &amp;lt;&amp;lt; 2.0 &amp;lt;&amp;lt; -3.0 &amp;lt;&amp;lt; endr;
+cout &amp;lt;&amp;lt; positions &amp;lt;&amp;lt; endl;
+ofstream lammpsFile(&amp;quot;outfile.lmp&amp;quot;, ios::out | ios::binary);
+// Set up data for the timestep of this file
+int currentTimeStep = 0;
+int nAtomsTotal = positions.n_rows;
+// The system boundaries
+double xMin = -10.0;
+double xMax = 10.0;
+double yMin = -10.0;
+double yMax = 10.0;
+double zMin = -10.0;
+double zMax = 10.0;
+// Shearing is zero unless the system boundaries are sheared (yes that's &amp;quot;sheared&amp;quot;,
+// not &amp;quot;shared&amp;quot;)
+double xShear = 0.0;
+double yShear = 0.0;
+double zShear = 0.0;
+// nColumns is the number of data types you want to write. In our case we want to
+// write four - the atom type and the x, y and z components of the position.
+// If you want velocities, forces, etc., just add more columns and write more data.
+int nColumns = 1 + 3;
+// We could divide the data into chunks by the LAMMPS file format, but we don't - i.e. only
+// use one chunk. The chunk length is then the same as the number of atoms times the number
+// of columns.
+int nChunks = 1;
+int chunkLength = nAtomsTotal * nColumns;
+
+// Write all the above to the lammps file
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;currentTimeStep), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nAtomsTotal), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nColumns), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nChunks), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;chunkLength), sizeof(int));
+
+// Write all the data for each atom to file
+for(uint i = 0; i &amp;lt; positions.n_rows; i++) {
+// IMPORTANT: Even though atom numbers are usually integers, they must be written
+// as double according to the LAMMPS standard.
+double atomType = atomTypes(i);
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;atomType), sizeof(double));
+// Write the x, y and z-components
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,0)), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,1)), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,2)), sizeof(double));
+}
+lammpsFile.close();
+}
+
+int main()
+{
+writeLammpsFile();
+return 0;
+}
+
+</pre>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

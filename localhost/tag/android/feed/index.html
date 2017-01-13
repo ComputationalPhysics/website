@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>android &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/android/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Using Qt3D today</title>
+		<link>http://localhost/2013/10/29/using-qt3d-today/</link>
+		<pubDate>Tue, 29 Oct 2013 13:50:45 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[3D]]></category>
+		<category><![CDATA[C++]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[android]]></category>
+		<category><![CDATA[game]]></category>
+		<category><![CDATA[opengl]]></category>
+		<category><![CDATA[qt]]></category>
+		<category><![CDATA[qt creator]]></category>
+		<category><![CDATA[qt3d]]></category>
+		<category><![CDATA[qt5.2]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=481</guid>
+		<description><![CDATA[Qt3D is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. It was announced that it [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><a href="http://doc-snapshot.qt-project.org/qt3d-1.0/">Qt3D</a> is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. <a href="http://blog.qt.digia.com/blog/2012/04/11/qt-3d-and-qt5-qt4-news-and-releases/">It was announced</a> that it would be bundled with Qt5.0, but because of the state of the library at the time, its release was postponed. Even so, the library is still very mature and appears to work very well in my opinion. So I would urge you to test it out.</p>
+<h2>Simple install on Ubuntu</h2>
+<p>To use the library you have a couple of different choices. If you are running Ubuntu, you may just run the following commands:</p>
+<pre>sudo apt-get install qt3d5-dev qtdeclarative5-qt3d-plugin</pre>
+<p>And you should be good to go. Look for examples in the <a href="http://doc-snapshot.qt-project.org/qt3d-1.0/">Qt3D documentation</a>.</p>
+<p>Note that Ubuntu currently doesn&#8217;t have QtQuick.Controls available, so you will have to follow the instructions below to combine Qt3D with QtQuick.Controls.</p>
+<h2>Install Qt3D into the newest Qt release</h2>
+<p>Currently Qt5.1.1 is the newest stable release of Qt and is the version I&#8217;d recommend that you use with Qt3D.</p>
+<ol>
+<li>Download and install <a href="http://qt-project.org/downloads">Qt5.1.1</a>.</li>
+<li>Clone Qt3D from Gitorious:
+<pre>git clone git://gitorious.org/qt/qt3d.git qt3d</pre>
+</li>
+<li>Open QtCreator from your new Qt installation.</li>
+<li>Open the qt3d.pro file from the cloned repository and configure it to use the platforms on which you want to use Qt3D (desktop, Android, etc.).</li>
+<li>Build for each platform you want to use. Set the build to Release instead of Debug mode while building. You should receive about one hundred warnings if you are building for Android. As always, ignore these.</li>
+<li>Open the build folder in a terminal and run
+<pre>make install</pre>
+<p>This will not install to your system, but to your Qt installation, so that it gets the ability to do awesome 3D stuff.</li>
+</ol>
+<p>You should now have Qt3D installed in your Qt installation and be ready to run projects that are using Qt3D.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

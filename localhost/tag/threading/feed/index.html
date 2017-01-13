@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>threading &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/threading/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Speeding up compilation on Ubuntu with Qt Creator</title>
+		<link>http://localhost/2013/05/13/speeding-up-compilation-on-ubuntu-with-qt-creator/</link>
+		<pubDate>Mon, 13 May 2013 12:32:10 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[make]]></category>
+		<category><![CDATA[multiple processors]]></category>
+		<category><![CDATA[processor]]></category>
+		<category><![CDATA[qt creator]]></category>
+		<category><![CDATA[threader]]></category>
+		<category><![CDATA[threading]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=414</guid>
+		<description><![CDATA[Are you reading random stuff on the web while waiting for your C++ compilation to finish? Then you have come to the right place. In this post I will tell you about two really nice tweaks you may do to speed up your compilations, namely ccache and the make -j flag, and how you may [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>Are you reading random stuff on the web while waiting for your C++ <a href="http://en.wikipedia.org/wiki/Compiler">compilation</a> to finish? Then you have come to the right place. In this post I will tell you about two really nice tweaks you may do to speed up your compilations, namely ccache and the make -j flag, and how you may set these up in Qt Creator.</p>
+<h2>ccache</h2>
+<p>ccache is a clever tool that wraps you compiler (g++ or mpicxx) and understands whether the file you are compiling has been compiled before with exactly the same contents and settings. If it has, it just returns a cached result.</p>
+<p>Unlike regular make, ccache is extremely good at detecting the true state of what you are compiling. I have never had any trouble with ccache.</p>
+<p>This really speeds up the compilation when you are using make clean, especially if you are switching git branches. In other words, it is a much simpler solution to achieve fast compilation with git branches than to create separate build folders for each branch.</p>
+<p>To enable ccache, install it with</p>
+<pre class="brush:shell">sudo apt-get install ccache</pre>
+<p>and add the following to your .pro file:</p>
+<pre class="brush:shell">QMAKE_CXX = ccache g++</pre>
+<p>Replace g++ with mpicxx if you are using MPI.</p>
+<h2>The make -j flag</h2>
+<p>I realized when compiling the Qt source that make has a -j flag that enables threaded compilation on all available processors on the machine. This also speeds up compilation significantly, and I made a 3.55x performance gain on a 4 core CPU. To enable this flag, go to the Projects view in Qt Creator and add the following arguments to the make build step:</p>
+<pre class="brush:shell">-j</pre>
+<p>This should look something like this afterwards:</p>
+<div id="attachment_918" style="width: 650px" class="wp-caption aligncenter"><a href="http://dragly.org/wp-content/uploads/2013/05/makej-qtcreator.png" rel="lightbox[414]"><img class="size-large wp-image-918" alt="This is how your project settings should look like after adding the -j option to make." src="http://dragly.org/wp-content/uploads/2013/05/makej-qtcreator-800x213.png" width="640" height="170" /></a><p class="wp-caption-text">This is how your project settings should look like after adding the -j option to make.</p></div>
+<p>If you prefer not to use all available processors for compilation, you may add a number after -j to set the number of processors. For instance make -j 3 would compile with 3 processors.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

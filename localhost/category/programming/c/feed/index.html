@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>C++ &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/category/programming/c/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>New project structure for projects in Qt Creator with unit tests</title>
+		<link>http://localhost/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/</link>
+		<pubDate>Thu, 13 Mar 2014 15:26:21 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Technical]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[.pri]]></category>
+		<category><![CDATA[.pro]]></category>
+		<category><![CDATA[project]]></category>
+		<category><![CDATA[project files]]></category>
+		<category><![CDATA[qmake]]></category>
+		<category><![CDATA[qt]]></category>
+		<category><![CDATA[structure]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=692</guid>
+		<description><![CDATA[Note: This is a new version of an earlier post, with a revised project structure. Note 2: See this post for the same project structure using the even better Catch testing framework. This post assumes that you are using a C++ testing framework such as UnitTest++. See this earlier post for some information on installing [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><em><strong>Note:</strong> This is a new version of <a href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">an earlier post</a>, with a revised project structure.</em></p>
+<p><em><strong>Note 2:</strong> See <a href="http://dragly.org/2015/11/24/getting-started-with-unit-tests-in-qt-creator-with-catch/">this post for the same project structure</a> using the even better Catch testing framework.</em></p>
+<p>This post assumes that you are using a C++ testing framework such as UnitTest++. See <a title="Setting up UnitTest++ with Qt Creator in a nice project structure" href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">this earlier post</a> for some information on installing UnitTest++ on Ubuntu.</p>
+<p>To get the most out UnitTest++ it is a good idea to integrate its output into the Qt Creator IDE. The way I have set this up in Qt Creator is with subprojects. One for the main project, which again is split into the app itself and a library, and one for the tests. In addition, I have a helper project file, named defaults.pri. The structure of the project is like this:</p>
+<pre>MyProject
+├─ MyProject.pro
+├─ defaults.pri
+├─ app/
+│  ├─ app.pro
+│  └─ main.cpp
+├─ src/
+│  ├─ src.pro
+│  └─ myclass.cpp
+└─ tests/
+   ├─ tests.pro
+   └─ main.cpp</pre>
+<p>An <a href="https://github.com/ComputationalPhysics/qtcreator-project-structure">example project using this code structure</a> has been posted on Github by Filip Sund. (Thanks to Filip for doing this!)</p>
+<p>The main project file, MyProject.pro will now be based on a subdirs template, and may look like this:</p>
+<pre>TEMPLATE = subdirs
+CONFIG+=ordered
+SUBDIRS = \
+    src \
+    app \
+    tests
+app.depends = src
+tests.depends = src</pre>
+<p>The app.depends and tests.depends statements makes sure that the src project is compiled before the application and tests, because the src directory contains the library that will be used by both the app and the tests.</p>
+<p>(<a href="http://dragly.org/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/comment-page-1/#comment-19940">Thanks to Will</a> for noting that this works better for parallel builds with make -j 8 than my previous version only using CONFIG+=ordered. We should keep CONFIG+=ordered in there still, though, because depends doesn&#8217;t affect the order when using make install).</p>
+<h2>defaults.pri</h2>
+<p>Each of the other .pro files will include defaults.pri to have all the headers available. defaults.pri contains the following:</p>
+<pre>INCLUDEPATH += $$PWD/src
+SRC_DIR = $$PWD</pre>
+<p>If the library, main program and tests use common libraries, it is very useful to have the defaults.pri define these dependencies too.</p>
+<h2>./src</h2>
+<p>In the src folder, I have myclass.cpp, which is the class that I want to use and test. The src.pro needs to compile to a library, so that it may be used both by app and tests, and could look something like this:</p>
+<pre>include(../defaults.pri)
+CONFIG -= qt
+
+TARGET = myapp
+TEMPLATE = lib
+
+SOURCES += myclass.cpp
+HEADERS += myclass.h</pre>
+<p>What this class does is not so interesting, it could be anything. A simple example could be this header file:</p>
+<pre class="brush:c++">#ifndef MYCLASS_H
+#define MYCLASS_H
+
+class MyClass {
+public:
+    double addition(double a, double b);
+};
+
+#endif // MYCLASS_H</pre>
+<p>With this accompaning source file:</p>
+<pre class="brush:c++">#include "myclass.h"
+
+double MyClass::addition(double a, double b) {
+    return a * b;
+}</pre>
+<h2>./app</h2>
+<p>I only have a main.cpp file in app, because the app is basically just something that uses everything in the src folder. It will depend on the shared compiled library from src, and app.pro would look something like this:</p>
+<pre>include(../defaults.pri)
+
+TEMPLATE = app
+CONFIG += console
+CONFIG -= app_bundle
+CONFIG -= qt
+
+SOURCES += main.cpp
+
+LIBS += -L../src -lmyapp</pre>
+<p>The main.cpp file could be a simple program that uses MyClass:</p>
+<pre class="brush:c++">#include &lt;myclass.h&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main()
+{
+    MyClass adder;
+    cout &lt;&lt; adder.addition(10, 20) &lt;&lt; endl;
+    return 0;
+}</pre>
+<h2>./tests</h2>
+<p>In the tests folder I have simply added a main.cpp which will run the tests. Then tests.pro has the following contents:</p>
+<pre>include(../defaults.pri)
+TEMPLATE = app
+
+CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   -= qt
+
+SOURCES += main.cpp
+
+LIBS += -lunittest++ -L../src -lmyapp</pre>
+<p>Which now links to the myapp library in addition to the unit tests.</p>
+<p>The main.cpp in tests file which could contain the following, if we were to use UnitTest++ as our testing library:</p>
+<pre class="brush:c++">#include &lt;unittest++/UnitTest++.h&gt;
+#include &lt;myclass.h&gt;
+
+TEST(MyMath) {
+    MyClass my;
+    CHECK(my.addition(3,4) == 7);
+}
+
+int main()
+{
+    return UnitTest::RunAllTests();
+}</pre>
+<p>This test will fail because my implementation of MyClass::addition is completely wrong:</p>
+<pre class="brush:c++">class MyClass {
+public:
+    double addition(double a, double b) {
+        return a * b;
+    }
+};</pre>
+<p>Note that I&#8217;m including MyClass by through &lt;myclass.h&gt; which is possible because of the INCLUDEPATH variable in defaults.pri.</p>
+<p>This is hopefully all you&#8217;ll need to define a project that compiles a library, as well as tests and an application using the library.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Quantum molecular dynamics simulation of $H_2$ &#038; $H_2 O$</title>
+		<link>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/</link>
+		<comments>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/#respond</comments>
+		<pubDate>Fri, 22 Nov 2013 16:58:40 +0000</pubDate>
+		<dc:creator><![CDATA[Milad Mobarhan]]></dc:creator>
+				<category><![CDATA[atoms]]></category>
+		<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[molecular dynamics]]></category>
+		<category><![CDATA[molecules]]></category>
+		<category><![CDATA[ovito]]></category>
+		<category><![CDATA[Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=574</guid>
+		<description><![CDATA[The classical molecular dynamics is primarily based on classical motion of atoms interacting with a given potential.  Quantum molecular dynamics, on the other hand, focuses on all the interactions between atoms and electrons, and does not involve fitting interactions to experimental data.  An approach to include the electronic structure is to solve the electronic Schrödinger [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>The classical molecular dynamics is primarily based on classical motion of atoms interacting with a given potential.  Quantum molecular dynamics, on the other hand, focuses on all the interactions between atoms and electrons, and does not involve fitting interactions to experimental data.  An approach to include the electronic structure is to solve the electronic Schrödinger equation, given the set of fixed nuclear positions, in each molecular dynamics step and let the nuclei to move according to classical mechanics in an effective potential due to the electrons.</p>
+<p>In the last two weeks I have been working on calculating this effective  potential, based on the results from my Hartree-Fock code.  The forces acting on the nuclei are found by taking the gradient of the energy with respect to the nuclei positions. Below I have included  molecular dynamics simulation of $H_2$  and $H_2O$ molecule, where the effective potential is calculated in each time step.</p>
+<p><iframe class='youtube-player' type='text/html' width='625' height='382' src='http://www.youtube.com/embed/fLs1nCLNv3c?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></p>
+<p><iframe class='youtube-player' type='text/html' width='625' height='382' src='http://www.youtube.com/embed/2QCJa-GghmQ?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Writing molecular dynamics data to binary LAMMPS format</title>
+		<link>http://localhost/2013/11/19/writing-lammps-files/</link>
+		<pubDate>Tue, 19 Nov 2013 19:55:07 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[armadillo]]></category>
+		<category><![CDATA[binary]]></category>
+		<category><![CDATA[file]]></category>
+		<category><![CDATA[lammps]]></category>
+		<category><![CDATA[ovito]]></category>
+		<category><![CDATA[read]]></category>
+		<category><![CDATA[write]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=537</guid>
+		<description><![CDATA[In this post I will explain  how to write to the binary LAMMPS file format from C++, using data stored in Armadillo vectors and matrices. After running the example in this post you should be able to open the resulting file in Ovito or any other program capable of reading binary LAMMPS files. The example [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In this post I will explain  how to write to the binary <a href="http://lammps.sandia.gov/">LAMMPS</a> file format from C++, using data stored in <a href="http://arma.sourceforge.net/">Armadillo</a> vectors and matrices. After running the example in this post you should be able to open the resulting file in <a href="http://ovito.org/">Ovito</a> or any other program capable of reading binary LAMMPS files. The example should also be fairly easy to port to other data structure type, if needed.</p>
+<p>For the impatient: You&#8217;ll find a working main.cpp file and a qmake project file <a href="https://github.com/dragly/lammpshandler">on GitHub</a>.</p>
+<p>The result, if rendered in Ovito, is two silicon atoms (in red) and one oxygen atom:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/11/lammps-in-ovito.png" rel="lightbox[537]"><img class="aligncenter size-medium wp-image-1078" alt="lammps-in-ovito" src="http://dragly.org/wp-content/uploads/2013/11/lammps-in-ovito-300x259.png" width="300" height="259" /></a></p>
+<h2>About the LAMMPS format</h2>
+<p><a href="http://lammps.sandia.gov/">LAMMPS</a> is a <a href="http://en.wikipedia.org/wiki/Molecular_dynamics">molecular dynamics</a> simulation package that is extremely versatile with plenty of interaction potentials and features implemented. However, you may have written some other code involving atoms and found yourself in the position of considering using a standard file format to write atom data to file. In this case, the <a href="http://en.wikipedia.org/wiki/XYZ_file_format">XYZ-format</a> has likely passed your mind, but because this is a ASCII-based text format, it is slow to read and write. This format also lacks standardized headers for information such as the system boundaries &#8211; causing visualizers like Ovito to have to guess for the right boundaries in your system.</p>
+<p><span id="more-537"></span></p>
+<p>The LAMMPS format is binary, so it is way faster than the XYZ-format, and it also carries with it information about the system, which helps Ovito render everything properly.</p>
+<p>The LAMMPS file format consists of an header and column-based data stored as doubles. The header consists of the following:</p>
+<ul>
+<li>1 × 32-bit integer holding the current time step</li>
+<li>1 × 32-bit integer holding the total number of atoms</li>
+<li>6 × 64-bit doubles holding the system boundaries</li>
+<li>3 × 64-bit doubles holding the <a href="http://en.wikipedia.org/wiki/Shear_mapping">shearing</a> of the boundaries</li>
+<li>1 × 32-bit integer holding the number of columns</li>
+<li>1 × 32-bit integer holding the number of chunks</li>
+<li>1 × 32-bit integer holding the chunk length, N atoms × n columns.</li>
+<li>(N atoms × n columns) × 64 -bit doubles holding the values of all the atom data</li>
+</ul>
+<h2>What is stored in the columns?</h2>
+<p>The 32-bit integer holding the number of columns in the header tells how much data will be stored for each atom. For instance the atom type, 3 position components, 3 velocity components would need 1 + 3 + 3 = 7 columns. The meaning of the data in the columns will have to be interpreted when you open the file in Ovito or any other program, because the LAMMPS format contains no information about the contents of the columns.</p>
+<p>Note that all data will have to be stored as 64-bit doubles, even though they might be integers in your application. So you will have to do the conversion to doubles before storing the data to file!</p>
+<h2>What are chunks?</h2>
+<p>You don&#8217;t really have to care about this. Just store everything as 1 chunk and set the chunk length to the number of columns times the number of atoms (N atoms × n columns).</p>
+<p>I think the idea of chunks is used when you build your file with data from multiple processors or split the file up in a logical way to make writing and reading easier for LAMMPS or other applications, but I&#8217;m not sure.</p>
+<h2>Get to the code already</h2>
+<p>You&#8217;ll find an up-to-date example of this code on <a href="https://github.com/dragly/lammpshandler">Github</a>, but I&#8217;ve included it below as well for reference:</p>
+<pre class="brush: cpp; title: ; notranslate">#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;armadillo&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+
+using namespace std;
+using namespace arma;
+
+void writeLammpsFile() {
+ivec atomTypes;
+atomTypes &amp;lt;&amp;lt; 14 &amp;lt;&amp;lt; 8 &amp;lt;&amp;lt; 14; // Silicon, oxygen, silicon
+cout &amp;lt;&amp;lt; atomTypes &amp;lt;&amp;lt; endl;
+mat positions;
+positions &amp;lt;&amp;lt; 1.0 &amp;lt;&amp;lt; 2.5 &amp;lt;&amp;lt; -1.5 &amp;lt;&amp;lt; endr
+&amp;lt;&amp;lt; 4.0 &amp;lt;&amp;lt; -5.0 &amp;lt;&amp;lt; 6.0 &amp;lt;&amp;lt; endr
+&amp;lt;&amp;lt; 7.0 &amp;lt;&amp;lt; 2.0 &amp;lt;&amp;lt; -3.0 &amp;lt;&amp;lt; endr;
+cout &amp;lt;&amp;lt; positions &amp;lt;&amp;lt; endl;
+ofstream lammpsFile(&amp;quot;outfile.lmp&amp;quot;, ios::out | ios::binary);
+// Set up data for the timestep of this file
+int currentTimeStep = 0;
+int nAtomsTotal = positions.n_rows;
+// The system boundaries
+double xMin = -10.0;
+double xMax = 10.0;
+double yMin = -10.0;
+double yMax = 10.0;
+double zMin = -10.0;
+double zMax = 10.0;
+// Shearing is zero unless the system boundaries are sheared (yes that's &amp;quot;sheared&amp;quot;,
+// not &amp;quot;shared&amp;quot;)
+double xShear = 0.0;
+double yShear = 0.0;
+double zShear = 0.0;
+// nColumns is the number of data types you want to write. In our case we want to
+// write four - the atom type and the x, y and z components of the position.
+// If you want velocities, forces, etc., just add more columns and write more data.
+int nColumns = 1 + 3;
+// We could divide the data into chunks by the LAMMPS file format, but we don't - i.e. only
+// use one chunk. The chunk length is then the same as the number of atoms times the number
+// of columns.
+int nChunks = 1;
+int chunkLength = nAtomsTotal * nColumns;
+
+// Write all the above to the lammps file
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;currentTimeStep), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nAtomsTotal), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zMin), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zMax), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;xShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;yShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;zShear), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nColumns), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;nChunks), sizeof(int));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;chunkLength), sizeof(int));
+
+// Write all the data for each atom to file
+for(uint i = 0; i &amp;lt; positions.n_rows; i++) {
+// IMPORTANT: Even though atom numbers are usually integers, they must be written
+// as double according to the LAMMPS standard.
+double atomType = atomTypes(i);
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;atomType), sizeof(double));
+// Write the x, y and z-components
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,0)), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,1)), sizeof(double));
+lammpsFile.write(reinterpret_cast&amp;lt;const char*&amp;gt;(&amp;amp;positions(i,2)), sizeof(double));
+}
+lammpsFile.close();
+}
+
+int main()
+{
+writeLammpsFile();
+return 0;
+}
+
+</pre>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Using Qt3D today</title>
+		<link>http://localhost/2013/10/29/using-qt3d-today/</link>
+		<pubDate>Tue, 29 Oct 2013 13:50:45 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[3D]]></category>
+		<category><![CDATA[C++]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[android]]></category>
+		<category><![CDATA[game]]></category>
+		<category><![CDATA[opengl]]></category>
+		<category><![CDATA[qt]]></category>
+		<category><![CDATA[qt creator]]></category>
+		<category><![CDATA[qt3d]]></category>
+		<category><![CDATA[qt5.2]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=481</guid>
+		<description><![CDATA[Qt3D is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. It was announced that it [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><a href="http://doc-snapshot.qt-project.org/qt3d-1.0/">Qt3D</a> is an amazing library for Qt that gives you the ability to render your own 3D stuff together with your existing widget or QML based GUI. The library was started by the Qt developers a few years back, but has not yet been released with the official Qt SDK. <a href="http://blog.qt.digia.com/blog/2012/04/11/qt-3d-and-qt5-qt4-news-and-releases/">It was announced</a> that it would be bundled with Qt5.0, but because of the state of the library at the time, its release was postponed. Even so, the library is still very mature and appears to work very well in my opinion. So I would urge you to test it out.</p>
+<h2>Simple install on Ubuntu</h2>
+<p>To use the library you have a couple of different choices. If you are running Ubuntu, you may just run the following commands:</p>
+<pre>sudo apt-get install qt3d5-dev qtdeclarative5-qt3d-plugin</pre>
+<p>And you should be good to go. Look for examples in the <a href="http://doc-snapshot.qt-project.org/qt3d-1.0/">Qt3D documentation</a>.</p>
+<p>Note that Ubuntu currently doesn&#8217;t have QtQuick.Controls available, so you will have to follow the instructions below to combine Qt3D with QtQuick.Controls.</p>
+<h2>Install Qt3D into the newest Qt release</h2>
+<p>Currently Qt5.1.1 is the newest stable release of Qt and is the version I&#8217;d recommend that you use with Qt3D.</p>
+<ol>
+<li>Download and install <a href="http://qt-project.org/downloads">Qt5.1.1</a>.</li>
+<li>Clone Qt3D from Gitorious:
+<pre>git clone git://gitorious.org/qt/qt3d.git qt3d</pre>
+</li>
+<li>Open QtCreator from your new Qt installation.</li>
+<li>Open the qt3d.pro file from the cloned repository and configure it to use the platforms on which you want to use Qt3D (desktop, Android, etc.).</li>
+<li>Build for each platform you want to use. Set the build to Release instead of Debug mode while building. You should receive about one hundred warnings if you are building for Android. As always, ignore these.</li>
+<li>Open the build folder in a terminal and run
+<pre>make install</pre>
+<p>This will not install to your system, but to your Qt installation, so that it gets the ability to do awesome 3D stuff.</li>
+</ol>
+<p>You should now have Qt3D installed in your Qt installation and be ready to run projects that are using Qt3D.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Monitoring your unit tests without lifting a finger</title>
+		<link>http://localhost/2013/09/13/monitoring-your-unit-tests-without-lifting-a-finger/</link>
+		<pubDate>Fri, 13 Sep 2013 07:35:40 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[Testing]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[build]]></category>
+		<category><![CDATA[build jobs]]></category>
+		<category><![CDATA[code health]]></category>
+		<category><![CDATA[jenkins]]></category>
+		<category><![CDATA[monitor]]></category>
+		<category><![CDATA[monitoring]]></category>
+		<category><![CDATA[python]]></category>
+		<category><![CDATA[test]]></category>
+		<category><![CDATA[unit]]></category>
+		<category><![CDATA[unit testing]]></category>
+		<category><![CDATA[web]]></category>
+		<category><![CDATA[web interface]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=465</guid>
+		<description><![CDATA[I love unit testing. First of all, I think it is a good idea to test separate units of the code, but after doing so for some time, I&#8217;ve come to realize that unit tests are great for managing the software development cycle too. It all boils down to the idea that you should write [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>I love unit testing. First of all, I think it is a good idea to test separate units of the code, but after doing so for some time, I&#8217;ve come to realize that unit tests are great for managing the software development cycle too. It all boils down to the idea that you should write tests before you write your code.</p>
+<p>Now, this is something that I and others apparently struggle a lot with. How do you write a test for some code that doesn&#8217;t even exist yet? Even worse, how do you write a test for a piece of software that you&#8217;re not yet sure how will be used?</p>
+<p>In computational physics, this problem arises often because we are writing code at the same time as we are trying to understand the physics, mathematics and algorithms at hand. And this is a good thing. You might want to think that one should structure all code before it is written, but this is generally a bad approach in computational physics. Especially if you&#8217;re working on something new. The reason is that you will often understand the problem and algorithms better while developing, rather than just reading about them and trying to analyze them blindly.</p>
+<h2>Keeping the tests and code healthy</h2>
+<p>But enough with the talk, let&#8217;s just assume that you are convinced that you should (or have to) implement some unit tests. At one point you are likely to be in a position where you find it tiresome to have to go into that folder where the tests are defined and run them manually. This is where Jenkins comes in to play.</p>
+<p><span id="more-465"></span></p>
+<p>Jenkins is a build bot that is designed to fetch your code from wherever, download, build and run the commands you need to test your code. It also provides a very nice web interface that will allow you to keep track of which builds are working and which are not.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/jenkins.png" rel="lightbox[465]"><img class="aligncenter size-large wp-image-947" alt="jenkins" src="http://dragly.org/wp-content/uploads/2013/09/jenkins-e1379054595973-800x280.png" width="640" height="224" /></a>After running tests manually for way too long, this is exactly what I needed. I have already written a post about how you can <a title="Setting up UnitTest++ with Qt Creator" href="http://dragly.org/2013/04/19/setting-up-unittest-with-qt-creator/">launch your tests after building your project in Qt Creator</a>, but this has the disadvantage that your code will be compiled twice whenever you build it, and you&#8217;ll have to wait for the tests to finish before actually seeing your code run. With Jenkins, everything happens in the background. And Jenkins can be configured to run builds periodically, whenever your source code changes or is pushed to Git.</p>
+<h2>Setting up Jenkins with access to Git and local folders on Ubuntu</h2>
+<p>Installing Jenkins on Ubuntu is a piece of cake:</p>
+<pre>sudo apt-get install jenkins</pre>
+<p>However, you might want Jenkins to be able to pull your source code and build it from a remote Git repository, or even more obvious, access your projects on your local drive, which it is not able to do by default(!).</p>
+<h3>Installing the Git plugin</h3>
+<p>After installing Jenkins, you should immediately be able to access it through this page:</p>
+<p><a href="http://localhost:8080">http://localhost:8080</a></p>
+<p>To install the Git plugin, go to <em>Manage Jenkins</em> → <em>Manage plugins</em> → <em>Available</em> and search for &#8220;git&#8221;. You should install the plugin named <a href="http://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin">Jenkins GIT plugin</a>. If you click this link, you should see the same page as you do if you click the link in the list.</p>
+<p>Note that on Ubuntu 13.10 you will also have to install the Mailer plugin. This is a dependency of the Git plugin, but it is currently not listed, so you will have to install it manually for now.</p>
+<h3>Optional: Allowing Jenkins access to your private Github repository</h3>
+<p>This step is optional. If you only want to use Jenkins for public repositories, you may skip this step.</p>
+<p>Jenkins needs its own SSH key to access private Github repositories. If you&#8217;re not familiar with SSH keys and Github, this is a good time to <a href="https://help.github.com/articles/generating-ssh-keys">read a bit about it</a>.</p>
+<p>To generate this key, we&#8217;ll log in to the jenkins user in your Ubuntu terminal:</p>
+<pre>sudo su jenkins</pre>
+<p>Then run</p>
+<pre>ssh-keygen</pre>
+<p>and go through the steps to generate your key. Then print your key to screen so you may copy and paste it to Github:</p>
+<pre>cat /var/lib/jenkins/.ssh/id_rsa.pub</pre>
+<p>Copy and paste the key to Github. Then, by still being logged in as jenkins, run the following command to verify Github as a proper SSH host:</p>
+<pre>ssh git@github.com</pre>
+<p>You should receive a prompt like this:</p>
+<pre>PTY allocation request failed on channel 0
+Hi dragly! You've successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.</pre>
+<p>Now log out of jenkins by clicking CTRL+D.</p>
+<p>That&#8217;s it! Jenkins now should have access both to public and private repositories.</p>
+<h3>Optional: Allowing Jenkins access to your files</h3>
+<p>This step is optional. If you only want to use Jenkins for Git projects, you may skip this step.</p>
+<p>By default, and this is for security reasons, Jenkins doesn&#8217;t have access to your files on your computer. So if you want to launch a set of unit tests in your home folder, you will need to give Jenkins access to these. The easiest way to do this is by adding the jenkins user to your group. Just replace your_user_name below:</p>
+<pre>usermod -G your_user_name jenkins</pre>
+<p>Jenkins will now be able to access your files.</p>
+<h3>Optional: Adding some extra security by setting up a firewall</h3>
+<p>Jenkins uses port 8080 on your computer and by default allows anyone to access its services through this port. While you may mess around with Jenkins&#8217; settings to set up user authentication, I found it better just to enable a firewall in Ubuntu and restrict inbound access on all ports (except the ones I use for other things).</p>
+<p>Download and install <em>Firewall Configuration</em> from Ubuntu Software Center. And turn it on like this:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/firewall.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-948" alt="firewall" src="http://dragly.org/wp-content/uploads/2013/09/firewall-e1379055216219.png" width="361" height="174" /></a>Now your Jenkins bot won&#8217;t allow anyone else access to run jobs on your machine.</p>
+<h2>Setting up your first project</h2>
+<p>Click <em>Jenkins</em> → <em>New job</em> and give it a name of your choice. Select <b>Build a free-style software project</b> as your setting and click OK.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/newjob.png" rel="lightbox[465]"><img class="aligncenter size-large wp-image-949" alt="newjob" src="http://dragly.org/wp-content/uploads/2013/09/newjob-e1379055794391-800x235.png" width="640" height="188" /></a>In the next window, select Git as the <em>Source Code Management</em> option and enter your repository URL with http as the access method. If it is a private repository, follow the steps above to give Jenkins access to it, and use SSH as your access method.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/jenkins-git.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-953" alt="jenkins-git" src="http://dragly.org/wp-content/uploads/2013/09/jenkins-git.png" width="565" height="184" /></a></p>
+<p>Further down, add an <em>Execute shell</em> build step:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/build-step.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-954" alt="build-step" src="http://dragly.org/wp-content/uploads/2013/09/build-step.png" width="548" height="125" /></a></p>
+<p>This allows you to type in whatever commands are needed to run before the build may be tested. In my case, it would be to do something like this:</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/execute-shell2.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-958" alt="execute-shell" src="http://dragly.org/wp-content/uploads/2013/09/execute-shell2.png" width="516" height="259" /></a>After doing so, click <em>Apply</em> and test your build by clicking <em>Build now</em>.</p>
+<h3>Checking the output</h3>
+<p>What Jenkins does now is to clone your repository into a temporary folder and execute the commands given in the <em>Execute shell </em>text box. You may check the result by looking at the <em>Build History</em> on the left hand side of the screen. Blue means unstable (crashed) build, red means stable build. Hover the pointer over a build and click <em>Console output</em> to see the exact output of the build. This is very useful if the build should fail and you want to know why.</p>
+<p><a href="http://dragly.org/wp-content/uploads/2013/09/build-history.png" rel="lightbox[465]"><img class="aligncenter size-full wp-image-959" alt="build-history" src="http://dragly.org/wp-content/uploads/2013/09/build-history.png" width="215" height="114" /></a>If all goes well, you may explore the options to build whenever your source code changes or periodically, by looking at the <em>Build triggers</em>.</p>
+<p>There are also plenty of other features in Jenkins, but I&#8217;ll leave it up to you to explore them all. The last thing you should do before you stop playing around is to add Jenkins as your browser&#8217;s start up page and always keep it visible on a screen so that you at any given time know how your builds perform.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Speeding up compilation on Ubuntu with Qt Creator</title>
+		<link>http://localhost/2013/05/13/speeding-up-compilation-on-ubuntu-with-qt-creator/</link>
+		<pubDate>Mon, 13 May 2013 12:32:10 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[make]]></category>
+		<category><![CDATA[multiple processors]]></category>
+		<category><![CDATA[processor]]></category>
+		<category><![CDATA[qt creator]]></category>
+		<category><![CDATA[threader]]></category>
+		<category><![CDATA[threading]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=414</guid>
+		<description><![CDATA[Are you reading random stuff on the web while waiting for your C++ compilation to finish? Then you have come to the right place. In this post I will tell you about two really nice tweaks you may do to speed up your compilations, namely ccache and the make -j flag, and how you may [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>Are you reading random stuff on the web while waiting for your C++ <a href="http://en.wikipedia.org/wiki/Compiler">compilation</a> to finish? Then you have come to the right place. In this post I will tell you about two really nice tweaks you may do to speed up your compilations, namely ccache and the make -j flag, and how you may set these up in Qt Creator.</p>
+<h2>ccache</h2>
+<p>ccache is a clever tool that wraps you compiler (g++ or mpicxx) and understands whether the file you are compiling has been compiled before with exactly the same contents and settings. If it has, it just returns a cached result.</p>
+<p>Unlike regular make, ccache is extremely good at detecting the true state of what you are compiling. I have never had any trouble with ccache.</p>
+<p>This really speeds up the compilation when you are using make clean, especially if you are switching git branches. In other words, it is a much simpler solution to achieve fast compilation with git branches than to create separate build folders for each branch.</p>
+<p>To enable ccache, install it with</p>
+<pre class="brush:shell">sudo apt-get install ccache</pre>
+<p>and add the following to your .pro file:</p>
+<pre class="brush:shell">QMAKE_CXX = ccache g++</pre>
+<p>Replace g++ with mpicxx if you are using MPI.</p>
+<h2>The make -j flag</h2>
+<p>I realized when compiling the Qt source that make has a -j flag that enables threaded compilation on all available processors on the machine. This also speeds up compilation significantly, and I made a 3.55x performance gain on a 4 core CPU. To enable this flag, go to the Projects view in Qt Creator and add the following arguments to the make build step:</p>
+<pre class="brush:shell">-j</pre>
+<p>This should look something like this afterwards:</p>
+<div id="attachment_918" style="width: 650px" class="wp-caption aligncenter"><a href="http://dragly.org/wp-content/uploads/2013/05/makej-qtcreator.png" rel="lightbox[414]"><img class="size-large wp-image-918" alt="This is how your project settings should look like after adding the -j option to make." src="http://dragly.org/wp-content/uploads/2013/05/makej-qtcreator-800x213.png" width="640" height="170" /></a><p class="wp-caption-text">This is how your project settings should look like after adding the -j option to make.</p></div>
+<p>If you prefer not to use all available processors for compilation, you may add a number after -j to set the number of processors. For instance make -j 3 would compile with 3 processors.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Setting up UnitTest++ with Qt Creator in a nice project structure</title>
+		<link>http://localhost/2013/04/19/setting-up-unittest-with-qt-creator/</link>
+		<pubDate>Fri, 19 Apr 2013 10:07:16 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Technical]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[gui]]></category>
+		<category><![CDATA[ide]]></category>
+		<category><![CDATA[unit test]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=404</guid>
+		<description><![CDATA[Note: I&#8217;ve found a better way to visually verify that all tests are running. Check out this post on Jenkins to see how I&#8217;m now working with my tests. The below post is still useful as a reference on how to set up UnitTest++ in Qt Creator, also when using Jenkins. Note 2: A new [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><em><strong>Note</strong>: I&#8217;ve found a better way to visually verify that all tests are running. Check out <a title="Monitoring your unit tests without lifting a finger" href="http://dragly.org/2013/09/13/monitoring-your-unit-tests-without-lifting-a-finger/">this post on Jenkins</a> to see how I&#8217;m now working with my tests. The below post is still useful as a reference on how to set up UnitTest++ in Qt Creator, also when using Jenkins.</em></p>
+<p><em><strong>Note 2:</strong> <del>A new and, in my opinion, better project structure is shown <a href="http://dragly.org/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests">in this new post</a>.</del></em></p>
+<p><em><strong>Note 3:</strong> See <a href="http://dragly.org/2015/11/24/getting-started-with-unit-tests-in-qt-creator-with-catch/">this post for the same project structure</a> using the even better Catch testing framework.</em></p>
+<p>When you want to make sure that your code is working properly, it is a good idea to divide it into smaller, independent pieces that may be tested individually. A unit test is a short  code that tests a smallest possible portion of your application. It is a good idea to write tests as you go and it can even be useful to write a test before you even implement the function that will be tested.</p>
+<p>With the combination of <a href="http://unittest-cpp.sourceforge.net/UnitTest++.html">UnitTest++</a> and <a href="http://qt-project.org/downloads">Qt Creator</a>, I&#8217;m now able to write unit tests while working on the code and also have some nice visual indication about failed tests during the build step of my project:</p>
+<p style="text-align: center;"><a href="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" rel="lightbox[404]"><img class="aligncenter wp-image-903" src="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" alt="qt-creator-unit-tests1" width="501" height="46" /></a></p>
+<p>During my search for a good setup for testing my applications I realized there were a few needs that I wanted to satisfy:</p>
+<ol>
+<li>Creating new unit tests should be dead-easy to do. I want to spend as little time as possible on reading documentation about the testing framework.</li>
+<li>Tests should be run immediately after a new build of the source code, automatically and without the extra hassle to remember to run the tests.</li>
+<li>Tests should provide visual feedback with an easy way to get to where the tests fail. This should show up in the IDE or some other useful GUI tool.</li>
+<li>The testing framework should be fairly easy to install, especially on Ubuntu. This is because I want to be able to promote it to my fellow students.</li>
+</ol>
+<p><span id="more-404"></span><br />
+For a long time I have been using the QtTestlib. It is fairly quick to use, but I have failed to make the tests give me the visual feedback I wanted. In addition it requires the Qt library to run, which makes it hard to advocate to my fellow students that are not using Qt already.</p>
+<h2>UnitTest++</h2>
+<p>The <a href="http://unittest-cpp.sourceforge.net/UnitTest++.html">UnitTest++</a> framework is extremely simple to use. To download it in Ubuntu, all you have to do is</p>
+<pre class="brush:bash">sudo apt-get install libunittest++-dev</pre>
+<p>and create a new C++ file the following way:</p>
+<pre class="brush:cpp">#include &lt;unittest++/UnitTest++.h&gt;
+
+TEST(WillFail) {
+    CHECK(false);
+}
+
+int main()
+{
+    return UnitTest::RunAllTests();
+}</pre>
+<p>When you compile, all you need to do is to link to the library. Add the following to your .pro file:</p>
+<pre>LIBS += -lunittest++</pre>
+<p>You may write as many tests as you like and check that they are successful with the CHECK macro.</p>
+<p><a href="http://unittest-cpp.sourceforge.net/UnitTest++.html">Read more about the UnitTest++ library.</a></p>
+<h2>The complete solution: UnitTest++ and Qt Creator</h2>
+<p>To get the most out UnitTest++ it is a good idea to integrate its output into the Qt Creator IDE. The way I have set this up in Qt Creator is with subprojects. One for the main project, which again is split into the app itself and a library, and one for the tests. In addition, I have a helper project file, named defaults.pri. The structure of the project is like this:</p>
+<pre>MyProject
+├─ MyProject.pro
+├─ defaults.pri
+├─ .qmake.conf
+├─ src/
+│  ├─ src.pro
+│  ├─ app/
+│  │  ├─ app.pro
+│  │  └─ main.cpp
+│  └─ libs
+│     ├─ libs.pro
+│     └─ myclass.cpp
+└─ tests/
+   ├─ tests.pro
+   └─ main.cpp</pre>
+<p>The .qmake.conf file is a helper file that defines a few things that we will use in the subprojects. This is only available in Qt5, and looks something like this:</p>
+<pre>TOP_PWD=$$PWD
+TOP_OUT_PWD=$$shadowed($$PWD)</pre>
+<p>The main project file, MyProject.pro will now be based on a subdirs template, and may look like this:</p>
+<pre>TEMPLATE=subdirs
+SUBDIRS=src tests
+CONFIG+=ordered</pre>
+<p>The CONFIG+=ordered statement makes sure that the src project is compiled before the tests.</p>
+<p>The src.pro file looks similar:</p>
+<pre>TEMPLATE=subdirs
+SUBDIRS=libs app
+CONFIG+=ordered</pre>
+<p>The src directory contains the actual project, and is split into app and libs. In app, I now only have a main.cpp file, because the app is basically just something that uses everything in the libs folder. It will depend on the shared compiled library from libs, and app.pro would look something like this:</p>
+<pre>include(../../defaults.pri)
+TEMPLATE = app
+SOURCES = main.cpp</pre>
+<p>In the libs folder, I have myclass.cpp, that contains the MyClass class, and is what I want to test. The libs.pro needs to compile to a library, so that it may be used both by app and tests, and could look something like this:</p>
+<pre>include(../../defaults.pri)
+TEMPLATE = lib
+TARGET = myapp
+SOURCES = myclass.cpp
+HEADERS = myclass.h</pre>
+<p>What this class does is not so interesting, it could be anything.</p>
+<p>In the tests folder I have simply added a main.cpp file which could contain the following:</p>
+<pre>#include &lt;unittest++/UnitTest++.h&gt;
+#include &lt;src/myclass.h&gt;
+
+TEST(MyMath) {
+    MyClass my;
+    CHECK(my.addition(3,4) == 7);
+}
+
+int main()
+{
+    return UnitTest::RunAllTests();
+}</pre>
+<p>This test will fail because my implementation of MyClass::addition is completely wrong:</p>
+<pre>class MyClass {
+public:
+    double addition(double a, double b) {
+        return a * b;
+    }
+};</pre>
+<p>Note that I&#8217;m including MyClass by through &lt;src/myclass.h&gt;. To be allowed to do this, I have included a defaults.pri file that helps me resolve the correct directory of the source files. The defaults.pri file contains this:</p>
+<pre># Directories
+INCLUDEPATH += $$TOP_PWD/src/libs
+SRC_DIR = $$TOP_PWD</pre>
+<p>And in the tests.pro file I have:</p>
+<pre>include(defaults.pri)
+TEMPLATE = app
+
+CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   -= qt
+
+SOURCES += main.cpp
+
+LIBS += -lunittest++ -L$$TOP_OUT_PWD/src/libs -lmyapp</pre>
+<p>The final two lines will search for any .cpp file in your source directory and add them to your test project. This may be a problem if you have source files hanging around that are not in use by your Qt project, so you may just replace these lines with all your sources explicitly.</p>
+<p>If the main program uses some libraries that the test project now will also need, it is very useful to have this common defaults.pri file which may be included in both tests.pro and src.pro.</p>
+<h3>Getting that visual output</h3>
+<p>With the above, I&#8217;m now able to run the tests executable to get some nice terminal output:</p>
+<pre class="brush:bash">../../MyProject/tests/main.cpp:72: warning: Failure in MyMath: my.addition(3,4) == 7
+FAILURE: 1 out of 1 tests failed (1 failures).
+Test time: 0.00 seconds.</pre>
+<p>However, I would like this to show up without having to explicitly run the tests executable. To do this, I have added a Custom Build Step in Qt Creator after the Make step in MyProject.</p>
+<p>Do this by selecting Projects &gt; Build Steps &gt; Add Build Step with the following options:</p>
+<p style="padding-left: 30px;">Command:<strong> ./tests/tests</strong><br />
+Arguments: <strong>1&gt;&amp;2</strong><br />
+Working directory: <strong>%{buildDir}</strong></p>
+<p>If you don&#8217;t want the tests to completely fail your build, you may replace the errors with warnings instead by using the following options instead:</p>
+<p style="padding-left: 30px;">Command: <strong>./tests/tests</strong><br />
+Arguments:  <strong>| sed s/error:/warning:/ 1&gt;&amp;2</strong><br />
+Working directory: <strong>%{buildDir}</strong></p>
+<p>It should look something like this:</p>
+<p style="text-align: center;"><a href="http://dragly.org/wp-content/uploads/2013/04/qt-creator-build-step.png" rel="lightbox[404]"><img class="aligncenter wp-image-904" src="http://dragly.org/wp-content/uploads/2013/04/qt-creator-build-step.png" alt="qt-creator-build-step" width="640" height="146" /></a></p>
+<p>This will invoke the command line tool sed after running the tests executable to replace all strings with &#8220;error:&#8221; to &#8220;warning:&#8221;. Qt Creator will then just list the failures in the Issues tab and start your application even if the tests fail.</p>
+<h3>The best part</h3>
+<p>With this up and running, you should get some output like this whenever a test fails:</p>
+<p style="text-align: left;"><a href="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" rel="lightbox[404]"><img class="aligncenter wp-image-903" src="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" alt="qt-creator-unit-tests1" width="556" height="50" /></a>And the best thing about it is that you can even click the line to go directly to the test that fails. Isn&#8217;t that just great?</p>
+<h2>Other frameworks</h2>
+<p>I also came across Boost.Test and GoogleTest. The test framework from Boost seemed to be a bit too much hassle to install and the documentation was a bit outdated. It is also said that the code would build slower due to it being a header-only framework.</p>
+<p>GoogleTest was likely the best alternative to UnitTest++, but installing it on Ubuntu was a bit more hassle, which made the choice easy. On the other hand, GoogleTest seems to be a more advanced framework, so I may switch sometime in the future.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Optimizing your C++ code for molecular dynamics</title>
+		<link>http://localhost/2013/03/19/optimizing-your-c-code-for-molecular-dynamics/</link>
+		<pubDate>Tue, 19 Mar 2013 18:10:18 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[code]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[const]]></category>
+		<category><![CDATA[Efficiency]]></category>
+		<category><![CDATA[efficient]]></category>
+		<category><![CDATA[fast]]></category>
+		<category><![CDATA[molecular dynamics]]></category>
+		<category><![CDATA[optimizing]]></category>
+		<category><![CDATA[performance]]></category>
+		<category><![CDATA[Physics]]></category>
+		<category><![CDATA[pointers]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[quick]]></category>
+		<category><![CDATA[references]]></category>
+
+		<guid isPermaLink="false">http://dragly.org/?p=843</guid>
+		<description><![CDATA[While working with the molecular dynamics project in FYS4460 I decided to learn more about how to optimize my C++ code for performance. As always, I follow Donald Knuth&#8217;s famous quote as a guideline to optimization: &#8220;We should forget about &#8230; <a href="http://dragly.org/2013/03/19/optimizing-your-c-code-for-molecular-dynamics/">Continue reading <span>&#8594;</span></a>
+]]></description>
+				<content:encoded><![CDATA[<p>While working with the molecular dynamics project in <a href="http://www.uio.no/studier/emner/matnat/fys/FYS4460/v13/">FYS4460</a> I decided to learn more about how to optimize my C++ code for performance. As always, I follow Donald Knuth’s famous quote as a guideline to optimization:</p>
+<blockquote><p>“We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil”<sup id="cite_ref-autogenerated268_2-0"><a href="http://en.wikipedia.org/wiki/Program_optimization#cite_note-autogenerated268-2">[2]</a></sup></p></blockquote>
+<p>And this has proved to be as true as ever in my efforts to optimize my code. There are a bunch of things that I have tried that didn’t turn out to be as effective as I had thought, and some other that I would never think could be so important. I’ve listed most of these in this post so you too may learn from my experience. They are all listed in the order from most useful to most wasteful:</p>
+<p><span id="more-281"></span></p>
+<h2>Benchmark!</h2>
+<p>Before doing any “optimization”, benchmark your code by using a timer (MPI has a timer in their library, as does Boost::MPI). Otherwise you might be optimizing and rewrite already working code for no good reason. You should always measure and see if your optimizations are good for anything. If they are not, you should consider leaving things as they are for the sake of readability or style.</p>
+<h2>Analyze your code using a tool such as Qt Creator (and Valgrind)</h2>
+<p>Qt Creator has a really neat visualization tool for the Valgrind profiler. This visualization is very helpful to figure out what parts of your application is actually wasting time.</p>
+<div class="wp-caption aligncenter" id="attachment_845" style="width: 650px;"><a href="http://dragly.org/wp-content/uploads/2013/03/qt-valgrind.png" rel="lightbox[843]"><img class="size-large wp-image-845" alt="Qt's Valgrind visualization is very neat to see what parts of your code that are spending the most time." src="http://dragly.org/wp-content/uploads/2013/03/qt-valgrind-755x600.png" width="640" height="508" /></a></p>
+<p class="wp-caption-text">Qt’s Valgrind visualization is very neat to see what parts of your code that are spending the most time.</p>
+</div>
+<p>Here you may see the number of instruction calls each functions makes use of. This helps greatly in pinpointing the bottlenecks of you code.</p>
+<p>You can read more about Qt and Valgrind <a href="http://qt-project.org/doc/qtcreator-2.6/creator-cache-profiler.html">on their webpages</a>.</p>
+<h2>Use const references (or pointers) whenever possible</h2>
+<p>Whenever you are declaring a function or a variable, you should most likely use const references all over the place. References keeps your code from making unnecessary copies while the const keeps you from making changes to things that should be constant. Just don’t return references of temporary objects!</p>
+<p>In practice you should change your getter function declarations (and implementations) from</p>
+<pre class="brush:cpp">Vector3 Atom::position();</pre>
+<p>to</p>
+<pre class="brush:cpp">const Vector3&amp; Atom::position();</pre>
+<p>But only do this when the object you return is a class member. Such as the position is for the Atom. If you return av temporary you must by all means return a copy. However, you may let the parameter be a reference.</p>
+<pre class="brush:cpp">Vector3 Atom::vectorTo(const Atom&amp; otherAtom) {
+    Vector3 vector = otherAtom.position() - this-&gt;position();
+    return vector;
+}</pre>
+<p>Note the ampersand (&amp;) which tells the compiler that you wish to return a reference declaration. Whenever this is left out, the compiler will think that you want to make a copy of the object, which can be very expensive performance wise.</p>
+<p>If you are using pointers, you don’t have to worry about this. You should go back to worrying about allocating memory instead.</p>
+<h2>Write components of 3D vectors explicitly in your force calculation</h2>
+<p>The following code may look nasty in comparison to for instance using a vector class with overloaded + and = operators, but it is much faster:</p>
+<pre class="brush:cpp">double x;
+double y;
+double z;
+x = atom2-&gt;position()(0) + atom2Offset(0) - atom1-&gt;position()(0);
+y = atom2-&gt;position()(1) + atom2Offset(1) - atom1-&gt;position()(1);
+z = atom2-&gt;position()(2) + atom2Offset(2) - atom1-&gt;position()(2);
+rSquared = x*x + y*y + z*z;</pre>
+<p>This is generally true, but more so if you are using a general vector class and not an optimized 3D vector class. Optimized 3D vector classes will be only a bit faster.</p>
+<h2>Inline your much-used getters and setters</h2>
+<p>If you are using getters and setters like</p>
+<pre class="brush:cpp">const Vector3&amp; Atom::position() const { 
+    return m_position; 
+}</pre>
+<p>you may want to inline these in the header file. Ideally you should declare the header as usual and put the implementation with the inline keyword in the same header file:</p>
+<pre class="brush:cpp">class Atom
+{
+public:
+    inline const Vector3 &amp;position() const;
+protected:
+    Vector3 m_position;
+}
+
+inline const Vector3 &amp;Atom::position() const
+{
+    return m_position;
+}</pre>
+<p>Did you notice the extra const at the end of the declaration? This is just good style telling the compiler that this function will not write to the Atom object, only read from it. Again, this is good style, but not necessary.</p>
+<h2>Use double arrays instead of classes to store positions and forces</h2>
+<p>I’m not doing this myself, but after some intense optimization testing i found that for the Lennard-Jones force, the code runs in about 67 % of the original time by storing the positions and forces in their own continuous-memory arrays rather than in Atom objects.</p>
+<p>This is optimal because (for my code at least) it caused the processor to keep data in the <a href="http://en.wikipedia.org/wiki/CPU_cache">CPU cache</a> over longer time, which is faster than having to fetch new data from RAM. The reason is likely that it can prefetch the position data more easily when it is stored sequentially rather than together with other data in the Atom object.</p>
+<p>This may differ greatly from architecture to architecture, so I skipped actually implementing this myself. The code became so much harder to maintain with this optimization built in that I eventually left it out. In addition, I have no idea how it would fare with 3- or 6-particle forces which are yet to be implemented.</p>
+<p>If you store everything in double arrays already I would also advice you to consider storing it in static-size memory on the stack rather than allocating the memory dynamically. I hear that this is also supposed to improve performance.</p>
+]]></content:encoded>
+			</item>
+		<item>
+		<title>Developing MPI applications in Qt Creator</title>
+		<link>http://localhost/2012/03/14/developing-mpi-applications-in-qt-creator/</link>
+		<pubDate>Wed, 14 Mar 2012 15:43:08 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Featured]]></category>
+		<category><![CDATA[MPI]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+
+		<guid isPermaLink="false">http://dragly.org/?p=643</guid>
+		<description><![CDATA[I have grown very fond of the ease and usability of Qt Creator lately, making it my main tool for developing anything in C and C++. Recently I started learning the MPI framework for doing large scale parallel programming and &#8230; <a href="http://dragly.org/2012/03/14/developing-mpi-applications-in-qt-creator/">Continue reading <span>&#8594;</span></a>]]></description>
+				<content:encoded><![CDATA[<p>I have grown very fond of the ease and usability of Qt Creator lately, making it my main tool for developing anything in C and C++. Recently I started learning the MPI framework for doing large scale parallel programming and figured I wanted to try to make MPI play along with Qt Creator.</p>
+<p>The first thing I noticed is that there is no problem using Qt Creator as an editor while compiling the MPI executable and running it from the command line. However, for the quick and easy testing of minor changes, running by pressing Ctrl + R in Qt Creator quickly came to a high place on my wish list.</p>
+<p>After a quick search around the Internet, I found the necessary adjustments to make this exact thing happen. The steps are as follows:</p>
+<h3>Make Qt Creator use mpicxx instead of g++</h3>
+<p>To change the compiler in Qt Creator, you simply have to edit the .pro file of your project. Add the following lines, and Qt Creator will call mpicxx instead of g++:</p>
+<pre class="brush:shell"># MPI Settings
+QMAKE_CXX = mpicxx
+QMAKE_CXX_RELEASE = $$QMAKE_CXX
+QMAKE_CXX_DEBUG = $$QMAKE_CXX
+QMAKE_LINK = $$QMAKE_CXX
+QMAKE_CC = mpicc
+
+QMAKE_CFLAGS = $$system(mpicc --showme:compile)
+QMAKE_LFLAGS = $$system(mpicxx --showme:link)
+QMAKE_CXXFLAGS = $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_SEEK
+QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CXXFLAGS</pre>
+<p>This also sets the correct compile and link flags in addition to changing the linker to mpicxx as well. The DMPICH_IGNORE_CXX_SEEK flag is added to avoid some errors I experienced on Red Hat Linux 5.</p>
+<h3>Running the application with mpirun</h3>
+<p>Usually Qt Creator will simply run the generated executable after compiling, but to make use of multiple processors (which kind of is the whole point with MPI), you have to change the run settings of your project to a custom executable. This is done in the project configuration in Qt Creator under the Run tab for your project.</p>
+<p>Add a Custom Executable run configuration and set the executable to /usr/bin/mpirun or any other path where mpirun resides on your system (run ‘which mpirun’ in a terminal to find it if you don’t know where it is). Then, set the arguments to</p>
+<pre class="brush:shell">-n 2 yourexecutable</pre>
+<p>to run yourexecutable with 2 processors. Of course you’ll have to change <em>yourexecutable</em> to whatever your executable is named.</p>
+<h3>Adding a GUI to your MPI program</h3>
+<p>I advice you to not use MPI together with Qt GUI libraries. The reasons for this is that Qt has its own threading classes that are easier to use together with GUI elements in your application if you need them and the fact that if you want to run your app on any large scale cluster you might not be able to use Qt at all, depending on what packages are available on this cluster. A much better solution is to load config settings from a file in the INI format, using for instance the lightweight <a href="http://code.google.com/p/inih/">inih</a> library and make this settings file writable from a Qt GUI application using QSettings to write this file.</p>
+<p>The downside of this approach is that you won’t be able to implement any communication directly with the MPI process, but this could be worked around by for instance reading and writing to a progress status file if this is what you need.</p>
+<p>However, it is not impossible to make Qt GUI applications play along with MPI, even though you might have to juggle a bit around with stuff to make it work flawlessly. Passing MPI broadcasts and such to all the other processes is definitely possible, and a relatively small example of how to do this is shown in <a href="http://www.velvet-star.com/qt/">this post</a> by Tiffany Chong and Valencia Hare.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

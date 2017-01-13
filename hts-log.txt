@@ -1,0 +1,142 @@
+HTTrack3.48-21 launched on Fri, 13 Jan 2017 11:30:40 at localhost
+(httrack localhost )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+11:30:51	Error: 	"Method Not Allowed" (405) at link localhost/xmlrpc.php (from localhost/)
+11:33:45	Warning: 	Moved Permanently for localhost/?p=599
+11:33:45	Warning: 	File has moved from localhost/?p=599 to http://localhost/software/
+11:33:45	Warning: 	Moved Permanently for localhost/?p=10
+11:33:45	Warning: 	File has moved from localhost/?p=10 to http://localhost/projects/
+11:33:46	Warning: 	Moved Permanently for localhost/?p=93
+11:33:46	Warning: 	File has moved from localhost/?p=93 to http://localhost/courses/
+11:33:47	Warning: 	Moved Permanently for localhost/?p=8
+11:33:47	Warning: 	File has moved from localhost/?p=8 to http://localhost/thesises/
+11:33:47	Warning: 	Moved Permanently for localhost/?p=4
+11:33:47	Warning: 	File has moved from localhost/?p=4 to http://localhost/people/
+11:33:49	Warning: 	Moved Permanently for localhost/?author=11
+11:33:49	Warning: 	File has moved from localhost/?author=11 to http://localhost/author/mhjensen/
+11:33:51	Warning: 	Moved Permanently for localhost/?author=33
+11:33:51	Warning: 	File has moved from localhost/?author=33 to http://localhost/author/andreavs/
+11:33:52	Warning: 	Moved Permanently for localhost/?author=9
+11:33:52	Warning: 	File has moved from localhost/?author=9 to http://localhost/author/jorgen/
+11:33:52	Warning: 	Moved Permanently for localhost/?author=4
+11:33:52	Warning: 	File has moved from localhost/?author=4 to http://localhost/author/miladh/
+11:33:53	Warning: 	Moved Permanently for localhost/?author=1
+11:33:53	Warning: 	File has moved from localhost/?author=1 to http://localhost/author/dragly/
+11:34:00	Warning: 	Moved Permanently for localhost/?author=30
+11:34:00	Warning: 	File has moved from localhost/?author=30 to http://localhost/author/jorgentr/
+11:34:04	Warning: 	Moved Permanently for localhost/?author=28
+11:34:04	Warning: 	File has moved from localhost/?author=28 to http://localhost/author/fsund/
+11:34:07	Warning: 	Moved Permanently for localhost/?author=14
+11:34:07	Warning: 	File has moved from localhost/?author=14 to http://localhost/author/jadzia626/
+11:34:09	Warning: 	Moved Permanently for localhost/?author=42
+11:34:09	Warning: 	File has moved from localhost/?author=42 to http://localhost/author/marelius/
+11:34:12	Warning: 	Moved Permanently for localhost/?p=90
+11:34:12	Warning: 	File has moved from localhost/?p=90 to http://localhost/events/
+11:34:13	Warning: 	Moved Permanently for localhost/?p=422
+11:34:13	Warning: 	File has moved from localhost/?p=422 to http://localhost/internals/
+11:34:13	Warning: 	Moved Permanently for localhost/?p=497
+11:34:13	Warning: 	File has moved from localhost/?p=497 to http://localhost/cluster-info/using-smaug/
+11:34:14	Warning: 	Moved Permanently for localhost/?p=968
+11:34:14	Warning: 	File has moved from localhost/?p=968 to http://localhost/coding-style/
+11:34:14	Warning: 	Moved Permanently for localhost/?p=947
+11:34:14	Warning: 	File has moved from localhost/?p=947 to http://localhost/2015/09/24/education-prize-to-computational-physics/
+11:34:14	Warning: 	Moved Permanently for localhost/?p=863
+11:34:14	Warning: 	File has moved from localhost/?p=863 to http://localhost/2015/01/15/national-education-price-awarded-to-computational-physics-professor/
+11:34:20	Warning: 	Moved Permanently for localhost/?p=679
+11:34:20	Warning: 	File has moved from localhost/?p=679 to http://localhost/2014/02/22/representing-the-university-of-oslo-at-the-education-fair-in-oslo-spektrum/
+11:34:32	Warning: 	Moved Permanently for localhost/?p=891
+11:34:32	Warning: 	File has moved from localhost/?p=891 to http://localhost/2015/02/10/creating-a-3d-neuron-scene-in-blender/
+11:34:32	Warning: 	Moved Permanently for localhost/?p=851
+11:34:32	Warning: 	File has moved from localhost/?p=851 to http://localhost/2014/11/22/choosing-the-right-license-for-your-code/
+11:34:32	Warning: 	Moved Permanently for localhost/?p=847
+11:34:32	Warning: 	File has moved from localhost/?p=847 to http://localhost/2014/11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/
+11:34:35	Warning: 	Moved Permanently for localhost/?p=832
+11:34:35	Warning: 	File has moved from localhost/?p=832 to http://localhost/2014/09/16/find-usages-keybind-broken-qtcreator/
+11:34:47	Warning: 	Moved Permanently for localhost/?p=825
+11:34:47	Warning: 	File has moved from localhost/?p=825 to http://localhost/2014/09/16/pycharm-for-qtcreator-fanatics/
+11:34:47	Warning: 	Moved Permanently for localhost/?p=814
+11:34:47	Warning: 	File has moved from localhost/?p=814 to http://localhost/2014/09/03/fixing-gdb-issues-with-gcc-4-8-x-and-c11/
+11:34:47	Warning: 	Moved Permanently for localhost/?p=799
+11:34:47	Warning: 	File has moved from localhost/?p=799 to http://localhost/2014/08/04/latex-package-for-uio-masters-theses/
+11:34:47	Warning: 	Moved Permanently for localhost/?p=792
+11:34:47	Warning: 	File has moved from localhost/?p=792 to http://localhost/2014/07/09/circumventing-annoying-library-path-issues-with-qtcreator/
+11:34:51	Warning: 	Moved Permanently for localhost/?p=789
+11:34:51	Warning: 	File has moved from localhost/?p=789 to http://localhost/2014/07/05/visualization-of-training-neural-networks/
+11:34:57	Error: 	"Not Found" (404) at link localhost/%22http:/urn.nb.no/URN:NBN:no-50221%22Molecular (from localhost/?author=32)
+11:35:00	Warning: 	Moved Permanently for localhost/?p=574
+11:35:00	Warning: 	File has moved from localhost/?p=574 to http://localhost/2013/11/22/quantum-molecular-dynamics-simulation-of-h_2-h_2-o/
+11:35:00	Warning: 	Moved Permanently for localhost/?p=535
+11:35:00	Warning: 	File has moved from localhost/?p=535 to http://localhost/2013/11/19/symmetries-in-one-body-and-two-body-matrix-elements-in-hartree-fock/
+11:35:00	Warning: 	Moved Permanently for localhost/?p=650
+11:35:00	Warning: 	File has moved from localhost/?p=650 to http://localhost/2014/01/22/simplistic-config-files-for-c/
+11:35:00	Warning: 	Moved Permanently for localhost/?p=692
+11:35:00	Warning: 	File has moved from localhost/?p=692 to http://localhost/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/
+11:35:02	Warning: 	Moved Permanently for localhost/?p=777
+11:35:02	Warning: 	File has moved from localhost/?p=777 to http://localhost/2014/04/15/installing-sumatra-0-5-in-ubuntu-13-10/
+11:35:02	Warning: 	Moved Permanently for localhost/?p=537
+11:35:02	Warning: 	File has moved from localhost/?p=537 to http://localhost/2013/11/19/writing-lammps-files/
+11:35:02	Warning: 	Moved Permanently for localhost/?p=510
+11:35:02	Warning: 	File has moved from localhost/?p=510 to http://localhost/2013/11/05/copying-data-files-to-the-build-directory-with-qmake/
+11:35:02	Warning: 	Moved Permanently for localhost/?p=483
+11:35:02	Warning: 	File has moved from localhost/?p=483 to http://localhost/2013/10/29/multiple-billboards-in-qt3d/
+11:35:04	Warning: 	Moved Permanently for localhost/?p=481
+11:35:04	Warning: 	File has moved from localhost/?p=481 to http://localhost/2013/10/29/using-qt3d-today/
+11:35:04	Warning: 	Moved Permanently for localhost/?p=729
+11:35:04	Warning: 	File has moved from localhost/?p=729 to http://localhost/2014/03/24/structuring-larger-projects-using-qmake/
+11:35:04	Warning: 	Moved Permanently for localhost/?p=531
+11:35:04	Warning: 	File has moved from localhost/?p=531 to http://localhost/2013/11/18/creating-directories-in-the-build-folder-using-qmake/
+11:35:05	Warning: 	Moved Permanently for localhost/?p=223
+11:35:05	Warning: 	File has moved from localhost/?p=223 to http://localhost/2012/12/04/the-time-is-not-a-lie/
+11:35:05	Warning: 	Moved Permanently for localhost/?p=170
+11:35:05	Warning: 	File has moved from localhost/?p=170 to http://localhost/2012/11/28/mathematics-is-useful/
+11:35:06	Warning: 	Moved Permanently for localhost/?p=163
+11:35:06	Warning: 	File has moved from localhost/?p=163 to http://localhost/2012/11/22/armadillos-lapack-wrapper-vs-you/
+11:35:06	Warning: 	Moved Permanently for localhost/?p=637
+11:35:06	Warning: 	File has moved from localhost/?p=637 to http://localhost/2013/12/16/637/
+11:35:07	Warning: 	Moved Permanently for localhost/?p=305
+11:35:07	Warning: 	File has moved from localhost/?p=305 to http://localhost/2013/03/25/working-with-percolation-clusters-in-python/
+11:35:07	Warning: 	Moved Permanently for localhost/?p=273
+11:35:07	Warning: 	File has moved from localhost/?p=273 to http://localhost/2013/02/28/getting-the-latest-version-of-ovito-for-ubuntu/
+11:35:07	Warning: 	Moved Permanently for localhost/?p=60
+11:35:07	Warning: 	File has moved from localhost/?p=60 to http://localhost/2012/03/14/developing-mpi-applications-in-qt-creator/
+11:35:07	Warning: 	Moved Permanently for localhost/?p=67
+11:35:07	Warning: 	File has moved from localhost/?p=67 to http://localhost/2011/11/01/bookmarks-in-terminal/
+11:35:08	Warning: 	Moved Permanently for localhost/?p=68
+11:35:08	Warning: 	File has moved from localhost/?p=68 to http://localhost/2011/09/10/forgot-that-latex-symbol-use-detexify-to-find-it-for-you/
+11:35:08	Warning: 	Moved Permanently for localhost/?p=465
+11:35:08	Warning: 	File has moved from localhost/?p=465 to http://localhost/2013/09/13/monitoring-your-unit-tests-without-lifting-a-finger/
+11:35:08	Warning: 	Moved Permanently for localhost/?p=414
+11:35:08	Warning: 	File has moved from localhost/?p=414 to http://localhost/2013/05/13/speeding-up-compilation-on-ubuntu-with-qt-creator/
+11:35:08	Warning: 	Moved Permanently for localhost/?p=404
+11:35:08	Warning: 	File has moved from localhost/?p=404 to http://localhost/2013/04/19/setting-up-unittest-with-qt-creator/
+11:35:09	Warning: 	Moved Permanently for localhost/?p=281
+11:35:09	Warning: 	File has moved from localhost/?p=281 to http://localhost/2013/03/19/optimizing-your-c-code-for-molecular-dynamics/
+11:35:09	Warning: 	Moved Permanently for localhost/?p=469
+11:35:09	Warning: 	File has moved from localhost/?p=469 to http://localhost/2013/09/16/getting-the-newest-version-of-ipython-notebook-on-ubuntu/
+11:35:09	Warning: 	Moved Permanently for localhost/?p=471
+11:35:09	Warning: 	File has moved from localhost/?p=471 to http://localhost/2013/09/23/when-variational-monte-carlo-becomes-visual/
+11:35:09	Warning: 	Moved Permanently for localhost/?p=768
+11:35:09	Warning: 	File has moved from localhost/?p=768 to http://localhost/2014/04/04/automatic-panel-lettering-within-latex/
+11:35:10	Warning: 	Moved Permanently for localhost/?p=711
+11:35:10	Warning: 	File has moved from localhost/?p=711 to http://localhost/2014/03/22/including-vector-graphics-in-latex-using-includesvg/
+11:35:11	Warning: 	Moved Permanently for localhost/?p=703
+11:35:11	Warning: 	File has moved from localhost/?p=703 to http://localhost/2014/03/20/simple-cross-referencing-in-latex-using-cleveref/
+11:35:12	Error: 	"Not Found" (404) at link localhost/author/josteinbl/%22http:/urn.nb.no/URN:NBN:no-50221%22Molecular (from localhost/author/josteinbl/)
+11:35:13	Warning: 	Moved Permanently for localhost/?p=386
+11:35:13	Warning: 	File has moved from localhost/?p=386 to http://localhost/2013/04/02/setting-up-qmake-on-the-abel-cluster/
+11:35:13	Warning: 	Moved Permanently for localhost/?p=153
+11:35:13	Warning: 	File has moved from localhost/?p=153 to http://localhost/2012/11/15/getting-the-latest-armadillo-package-for-ubuntu/
+11:35:14	Warning: 	Moved Permanently for localhost/?p=119
+11:35:14	Warning: 	File has moved from localhost/?p=119 to http://localhost/2012/11/05/naming-the-new-computers/
+11:35:16	Warning: 	Moved Permanently for localhost/?p=147
+11:35:16	Warning: 	File has moved from localhost/?p=147 to http://localhost/2012/11/08/helping-out-with-the-computational-physics-ppa/
+11:35:17	Warning: 	Moved Permanently for localhost/?p=140
+11:35:17	Warning: 	File has moved from localhost/?p=140 to http://localhost/2012/11/08/joining-in-on-the-cpu-race/
+
+HTTrack Website Copier/3.48-21 mirror complete in 4 minutes 37 seconds : 687 links scanned, 619 files written (13830467 bytes overall) [6894746 bytes received at 24890 bytes/sec], 10034952 bytes transferred using HTTP compression in 523 files, ratio 28%, 24.6 requests per connection
+(3 errors, 128 warnings, 0 messages)

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ide &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/ide/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Setting up UnitTest++ with Qt Creator in a nice project structure</title>
+		<link>http://localhost/2013/04/19/setting-up-unittest-with-qt-creator/</link>
+		<pubDate>Fri, 19 Apr 2013 10:07:16 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[C++]]></category>
+		<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Qt]]></category>
+		<category><![CDATA[Technical]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[gui]]></category>
+		<category><![CDATA[ide]]></category>
+		<category><![CDATA[unit test]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=404</guid>
+		<description><![CDATA[Note: I&#8217;ve found a better way to visually verify that all tests are running. Check out this post on Jenkins to see how I&#8217;m now working with my tests. The below post is still useful as a reference on how to set up UnitTest++ in Qt Creator, also when using Jenkins. Note 2: A new [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p><em><strong>Note</strong>: I&#8217;ve found a better way to visually verify that all tests are running. Check out <a title="Monitoring your unit tests without lifting a finger" href="http://dragly.org/2013/09/13/monitoring-your-unit-tests-without-lifting-a-finger/">this post on Jenkins</a> to see how I&#8217;m now working with my tests. The below post is still useful as a reference on how to set up UnitTest++ in Qt Creator, also when using Jenkins.</em></p>
+<p><em><strong>Note 2:</strong> <del>A new and, in my opinion, better project structure is shown <a href="http://dragly.org/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests">in this new post</a>.</del></em></p>
+<p><em><strong>Note 3:</strong> See <a href="http://dragly.org/2015/11/24/getting-started-with-unit-tests-in-qt-creator-with-catch/">this post for the same project structure</a> using the even better Catch testing framework.</em></p>
+<p>When you want to make sure that your code is working properly, it is a good idea to divide it into smaller, independent pieces that may be tested individually. A unit test is a short  code that tests a smallest possible portion of your application. It is a good idea to write tests as you go and it can even be useful to write a test before you even implement the function that will be tested.</p>
+<p>With the combination of <a href="http://unittest-cpp.sourceforge.net/UnitTest++.html">UnitTest++</a> and <a href="http://qt-project.org/downloads">Qt Creator</a>, I&#8217;m now able to write unit tests while working on the code and also have some nice visual indication about failed tests during the build step of my project:</p>
+<p style="text-align: center;"><a href="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" rel="lightbox[404]"><img class="aligncenter wp-image-903" src="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" alt="qt-creator-unit-tests1" width="501" height="46" /></a></p>
+<p>During my search for a good setup for testing my applications I realized there were a few needs that I wanted to satisfy:</p>
+<ol>
+<li>Creating new unit tests should be dead-easy to do. I want to spend as little time as possible on reading documentation about the testing framework.</li>
+<li>Tests should be run immediately after a new build of the source code, automatically and without the extra hassle to remember to run the tests.</li>
+<li>Tests should provide visual feedback with an easy way to get to where the tests fail. This should show up in the IDE or some other useful GUI tool.</li>
+<li>The testing framework should be fairly easy to install, especially on Ubuntu. This is because I want to be able to promote it to my fellow students.</li>
+</ol>
+<p><span id="more-404"></span><br />
+For a long time I have been using the QtTestlib. It is fairly quick to use, but I have failed to make the tests give me the visual feedback I wanted. In addition it requires the Qt library to run, which makes it hard to advocate to my fellow students that are not using Qt already.</p>
+<h2>UnitTest++</h2>
+<p>The <a href="http://unittest-cpp.sourceforge.net/UnitTest++.html">UnitTest++</a> framework is extremely simple to use. To download it in Ubuntu, all you have to do is</p>
+<pre class="brush:bash">sudo apt-get install libunittest++-dev</pre>
+<p>and create a new C++ file the following way:</p>
+<pre class="brush:cpp">#include &lt;unittest++/UnitTest++.h&gt;
+
+TEST(WillFail) {
+    CHECK(false);
+}
+
+int main()
+{
+    return UnitTest::RunAllTests();
+}</pre>
+<p>When you compile, all you need to do is to link to the library. Add the following to your .pro file:</p>
+<pre>LIBS += -lunittest++</pre>
+<p>You may write as many tests as you like and check that they are successful with the CHECK macro.</p>
+<p><a href="http://unittest-cpp.sourceforge.net/UnitTest++.html">Read more about the UnitTest++ library.</a></p>
+<h2>The complete solution: UnitTest++ and Qt Creator</h2>
+<p>To get the most out UnitTest++ it is a good idea to integrate its output into the Qt Creator IDE. The way I have set this up in Qt Creator is with subprojects. One for the main project, which again is split into the app itself and a library, and one for the tests. In addition, I have a helper project file, named defaults.pri. The structure of the project is like this:</p>
+<pre>MyProject
+├─ MyProject.pro
+├─ defaults.pri
+├─ .qmake.conf
+├─ src/
+│  ├─ src.pro
+│  ├─ app/
+│  │  ├─ app.pro
+│  │  └─ main.cpp
+│  └─ libs
+│     ├─ libs.pro
+│     └─ myclass.cpp
+└─ tests/
+   ├─ tests.pro
+   └─ main.cpp</pre>
+<p>The .qmake.conf file is a helper file that defines a few things that we will use in the subprojects. This is only available in Qt5, and looks something like this:</p>
+<pre>TOP_PWD=$$PWD
+TOP_OUT_PWD=$$shadowed($$PWD)</pre>
+<p>The main project file, MyProject.pro will now be based on a subdirs template, and may look like this:</p>
+<pre>TEMPLATE=subdirs
+SUBDIRS=src tests
+CONFIG+=ordered</pre>
+<p>The CONFIG+=ordered statement makes sure that the src project is compiled before the tests.</p>
+<p>The src.pro file looks similar:</p>
+<pre>TEMPLATE=subdirs
+SUBDIRS=libs app
+CONFIG+=ordered</pre>
+<p>The src directory contains the actual project, and is split into app and libs. In app, I now only have a main.cpp file, because the app is basically just something that uses everything in the libs folder. It will depend on the shared compiled library from libs, and app.pro would look something like this:</p>
+<pre>include(../../defaults.pri)
+TEMPLATE = app
+SOURCES = main.cpp</pre>
+<p>In the libs folder, I have myclass.cpp, that contains the MyClass class, and is what I want to test. The libs.pro needs to compile to a library, so that it may be used both by app and tests, and could look something like this:</p>
+<pre>include(../../defaults.pri)
+TEMPLATE = lib
+TARGET = myapp
+SOURCES = myclass.cpp
+HEADERS = myclass.h</pre>
+<p>What this class does is not so interesting, it could be anything.</p>
+<p>In the tests folder I have simply added a main.cpp file which could contain the following:</p>
+<pre>#include &lt;unittest++/UnitTest++.h&gt;
+#include &lt;src/myclass.h&gt;
+
+TEST(MyMath) {
+    MyClass my;
+    CHECK(my.addition(3,4) == 7);
+}
+
+int main()
+{
+    return UnitTest::RunAllTests();
+}</pre>
+<p>This test will fail because my implementation of MyClass::addition is completely wrong:</p>
+<pre>class MyClass {
+public:
+    double addition(double a, double b) {
+        return a * b;
+    }
+};</pre>
+<p>Note that I&#8217;m including MyClass by through &lt;src/myclass.h&gt;. To be allowed to do this, I have included a defaults.pri file that helps me resolve the correct directory of the source files. The defaults.pri file contains this:</p>
+<pre># Directories
+INCLUDEPATH += $$TOP_PWD/src/libs
+SRC_DIR = $$TOP_PWD</pre>
+<p>And in the tests.pro file I have:</p>
+<pre>include(defaults.pri)
+TEMPLATE = app
+
+CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   -= qt
+
+SOURCES += main.cpp
+
+LIBS += -lunittest++ -L$$TOP_OUT_PWD/src/libs -lmyapp</pre>
+<p>The final two lines will search for any .cpp file in your source directory and add them to your test project. This may be a problem if you have source files hanging around that are not in use by your Qt project, so you may just replace these lines with all your sources explicitly.</p>
+<p>If the main program uses some libraries that the test project now will also need, it is very useful to have this common defaults.pri file which may be included in both tests.pro and src.pro.</p>
+<h3>Getting that visual output</h3>
+<p>With the above, I&#8217;m now able to run the tests executable to get some nice terminal output:</p>
+<pre class="brush:bash">../../MyProject/tests/main.cpp:72: warning: Failure in MyMath: my.addition(3,4) == 7
+FAILURE: 1 out of 1 tests failed (1 failures).
+Test time: 0.00 seconds.</pre>
+<p>However, I would like this to show up without having to explicitly run the tests executable. To do this, I have added a Custom Build Step in Qt Creator after the Make step in MyProject.</p>
+<p>Do this by selecting Projects &gt; Build Steps &gt; Add Build Step with the following options:</p>
+<p style="padding-left: 30px;">Command:<strong> ./tests/tests</strong><br />
+Arguments: <strong>1&gt;&amp;2</strong><br />
+Working directory: <strong>%{buildDir}</strong></p>
+<p>If you don&#8217;t want the tests to completely fail your build, you may replace the errors with warnings instead by using the following options instead:</p>
+<p style="padding-left: 30px;">Command: <strong>./tests/tests</strong><br />
+Arguments:  <strong>| sed s/error:/warning:/ 1&gt;&amp;2</strong><br />
+Working directory: <strong>%{buildDir}</strong></p>
+<p>It should look something like this:</p>
+<p style="text-align: center;"><a href="http://dragly.org/wp-content/uploads/2013/04/qt-creator-build-step.png" rel="lightbox[404]"><img class="aligncenter wp-image-904" src="http://dragly.org/wp-content/uploads/2013/04/qt-creator-build-step.png" alt="qt-creator-build-step" width="640" height="146" /></a></p>
+<p>This will invoke the command line tool sed after running the tests executable to replace all strings with &#8220;error:&#8221; to &#8220;warning:&#8221;. Qt Creator will then just list the failures in the Issues tab and start your application even if the tests fail.</p>
+<h3>The best part</h3>
+<p>With this up and running, you should get some output like this whenever a test fails:</p>
+<p style="text-align: left;"><a href="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" rel="lightbox[404]"><img class="aligncenter wp-image-903" src="http://dragly.org/wp-content/uploads/2013/04/qt-creator-unit-tests1.png" alt="qt-creator-unit-tests1" width="556" height="50" /></a>And the best thing about it is that you can even click the line to go directly to the test that fails. Isn&#8217;t that just great?</p>
+<h2>Other frameworks</h2>
+<p>I also came across Boost.Test and GoogleTest. The test framework from Boost seemed to be a bit too much hassle to install and the documentation was a bit outdated. It is also said that the code would build slower due to it being a header-only framework.</p>
+<p>GoogleTest was likely the best alternative to UnitTest++, but installing it on Ubuntu was a bit more hassle, which made the choice easy. On the other hand, GoogleTest seems to be a more advanced framework, so I may switch sometime in the future.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

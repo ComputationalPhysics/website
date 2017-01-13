@@ -1,0 +1,422 @@
+/*
+Theme Name:     Computational Physics
+Theme URI:      http://computationalphysics.net
+Description:    Computational Physics theme based on Twenty Twelve
+Author:         Svenn-Arne Dragly and Sigve Bøe Skattum
+Author URI:     http://computationalphysics.net
+Template:       twentytwelve
+Version:        0.1.0
+*/
+@import url("../twentytwelve/style.css");
+@import url("people-list.css");
+@import url(http://fonts.googleapis.com/css?family=Alegreya:400,700,700italic,900,900italic,400italic);
+@import url(http://fonts.googleapis.com/css?family=Schoolbell);
+@import url(http://fonts.googleapis.com/css?family=Vollkorn);
+@import url(http://fonts.googleapis.com/css?family=Merriweather);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,400italic,700,700italic,300,300italic);
+
+html {
+    font-size: 87.5%;
+}
+body {
+    font-size: 16px;
+    font-size: 1.0rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+    color: #444;
+    line-height: 1.2;
+}
+
+@media screen and (min-width: 600px) {
+    .page-template-page-templatescompphys-front-page-php article {
+	width: 47%;
+    }
+}
+
+.entry-content a:visited,
+.comment-content a:visited {
+    color: rgb(33, 117, 155);
+}
+
+.entry-content a:visited,
+.comment-content a:visited {
+    color: rgb(33, 117, 155);
+}
+a:visited:hover {
+    color: rgb(33, 60, 80);
+}
+
+.main-navigation li {
+    font-size: 1.2rem;
+}
+
+body.custom-font-enabled {
+    font-family: 'Source Sans Pro', sans-serif;  
+    font-size: 1.3rem;
+}
+/* .main-navigation li {
+    font-size: 1.05rem;
+ }*/
+
+.entry-content, .entry-summary, .entry-content p, .entry-summary p {
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+.site-content {
+    clear: both;
+}
+
+h1, h2, h3, .entry-header .entry-title {
+    font-weight: 300;
+}
+
+.entry-header .entry-title {
+    font-size: 3rem;
+}
+
+.entry-content h2 {
+    font-size: 2rem;
+}
+
+.entry-content h3 {
+    font-size: 1.5rem;
+}
+
+h2 a {
+    text-decoration: none;
+}
+
+/*.entry-content img,
+.comment-content img,
+.widget img,
+img.header-image,
+.author-avatar img,
+img.wp-post-image {*/
+	/* Remove fancy borders to all WordPress-added images but not things like badges and icons and the like */
+/*	border-radius: 3px;
+	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}*/
+
+img.header-image {
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    margin-left: -30px;
+}
+
+.main-navigation {
+    margin: 0;
+}
+
+@media screen and (min-width: 960px) {
+    img.header-image {
+    }
+    #menu-main-menu {
+	border: 0px;
+    }
+}
+
+/* ---------- SIDE BAR ------------- */
+
+.widget-area {
+    padding: 20px;
+    background-color: rgb(245, 245, 245);
+}
+
+.widget li {
+    position: relative;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: rgb(252, 252, 252);
+    box-shadow: 0px 2px 4px rgb(220, 220, 220);
+    height: 48px;
+}
+
+.rpwe-alignleft {
+    float: left;
+    margin-right: 10px;
+}
+
+.rpwe-title {
+    clear: none;
+}
+
+.widgets-list-layout-links,
+.rpwe-title {
+    height: 42px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 1000px)
+{
+  .widget li {
+      height: 50px;
+  }
+
+  .widgets-list-layout-links,
+  .rpwe-title {
+      height: 48px;
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 860px)
+{
+  .widget li {
+      height: 72px;
+  }
+
+  .widgets-list-layout-links,
+  .rpwe-title {
+      height: 70px;
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 600px)
+{
+  .widget li {
+      height: 42px;
+  }
+
+  .widgets-list-layout-links,
+  .rpwe-title {
+      height: 42px;
+    overflow: hidden;
+  }
+}
+
+.widget-area .widget,
+.widget-area .widget h3,
+.widget-area .widget p,
+.widget-area .widget li,
+.widget-area .widget .textwidget { 
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.3;
+}
+
+.widget a {
+    text-decoration: none;
+}
+
+/* ---------- FRONT PAGE ----------- */
+
+/*.comp-front-page-title {
+    font-size: 50px;
+    margin-bottom: 1.71429rem;
+    font-weight: normal;
+}*/
+
+/*.comp-front-page-text p {
+    margin-bottom: 1.71429rem;
+}*/
+
+/*.comp-front-page-image {
+    float: none;
+    width: 95%;
+    height: 300px;
+}
+
+@media screen and (min-width: 959px)
+{ 
+    .comp-front-page-image {
+	width: 460px;
+	float: right;
+    }
+}*/
+
+#xkcdplot {
+    width: 95%;
+    height: 250px;
+    font-size: 1.1rem;
+/*     font-family: 'Schoolbell', cursive; */
+}
+
+#xkcdplot .legend {
+    font-size: 1.1rem;
+/*     font-family: 'Schoolbell', cursive; */
+}
+
+#xkcdplot .legend table td {
+    padding: 2px;
+/*     font-family: 'Schoolbell', cursive; */
+}
+
+/*.comp-front-page-content {
+    clear: both; */
+    /*border-top: 1px solid rgb(237, 237, 237);*/
+/*    padding-top: 50px;
+    padding-bottom: 25px;
+    width: 95%;
+}*/
+
+/*.comp-front-page-text {
+    margin-top: 5rem;
+    width: 95%;
+    float: none;
+}*/
+/*@media screen and (min-width: 959px)
+{
+    .comp-front-page-text {
+	margin-top: 0rem;
+	width: 40%;
+	float: left;
+    } 
+}*/
+
+.comp-front-page-posts-and-projects {
+    margin-top: 20px;
+    clear: both;
+    border-top: 1px solid rgb(237, 237, 237);
+}
+
+/* ----- LIST OF POSTS ------ */
+
+.comp-front-page-posts {
+    width: 100%;
+    border-right: 0px;
+}
+
+@media screen and (min-width: 959px)
+{ 
+    .comp-front-page-posts {
+	float: left;
+	width: 560px;
+	border-right: 1px solid rgb(237, 237, 237);
+	padding-top: 0px;
+    }
+}
+.comp-front-page-post {
+    clear: both;
+    padding-top: 20px;
+}
+.comp-front-page-post-image {
+    float: left;
+    width: 20%;
+/*     height: 150px; */
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    margin: 2%;
+    padding: 2%;
+}
+
+.comp-front-page-post-image img {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.0);
+}
+
+.comp-front-page-post-content {
+    float: left;
+    width: 60%;
+    margin-left: 5%;
+}
+
+.comp-front-page-post-author {
+    font-weight: normal;
+    color: #999;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+.comp-front-page-post-author a, .comp-front-page-project-author a {
+    text-decoration:none;
+    color: #999;
+}
+.comp-front-page-post-author a:hover, .comp-front-page-project-author a:hover {
+    text-decoration:none;
+    color: rgb(33,117,155);
+}
+
+.comp-front-page-post-title {
+    font-weight: 300;
+    color: #000;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+.comp-front-page-post-title a, .comp-front-page-project-title a {
+    text-decoration:none;
+    color: #000;
+}
+.comp-front-page-post-title a:hover, .comp-front-page-project-title a:hover {
+    text-decoration:none;
+    color: rgb(33,117,155);
+}
+
+/* ---------- LIST OF PROJECTS --------- */
+
+.comp-front-page-projects {
+    float: none;
+    width: 100%;
+}
+  
+.comp-front-page-projects .comp-front-page-post-content {
+    width: 100%;
+}
+
+@media screen and (min-width: 959px)
+{ 
+    .comp-front-page-projects {
+	float: right;
+	width: 300px;
+	padding-top: 0px;
+	padding-right: 30px;
+    }
+}
+.comp-front-page-project-title {
+    font-weight: 300;
+    color: #000;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.comp-front-page-project-author {
+    font-weight: normal;
+    color: #999;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 1.0rem;
+}
+
+/* ---------- IMAGES -------------------- */
+div.alignright {
+    margin-left: 1rem;
+}
+
+div.alignleft {
+    margin-right: 1rem;
+}
+
+/* ---------- SPECIAL CLASSES ----------- */
+
+.sidebysideimg .alignleft, .sidebysideimg .alignright {
+    max-width: 45%;
+    margin: 2%;
+/*     padding: 0px; */
+}
+
+a.biglink {
+    text-decoration: none;
+    color: white;
+    border-radius: 4px;
+    background: linear-gradient(rgb(100, 160, 200), rgb(80, 130, 180)) repeat scroll 0% 0% rgb(100, 160, 200);
+    border: 1px solid rgb(100, 100, 160);
+    padding: 10px;
+    margin: 10px;
+    line-height: 40px;
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.35) inset;
+    -o-transition: background 1s;
+    -ms-transition: background 1s;
+    -moz-transition: background 1s;
+    -webkit-transition: background 1s;
+    transition: background 1s;
+}
+
+a.biglink:hover {
+    background: rgb(50, 150, 200);
+    -o-transition: background 1s;
+    -ms-transition: background 1s;
+    -moz-transition: background 1s;
+    -webkit-transition: background 1s;
+    transition: background 1s;
+}

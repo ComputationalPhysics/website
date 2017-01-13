@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>license &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/license/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Choosing the right license for your code</title>
+		<link>http://localhost/2014/11/22/choosing-the-right-license-for-your-code/</link>
+		<pubDate>Sat, 22 Nov 2014 15:02:00 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Copyleft]]></category>
+		<category><![CDATA[Technical]]></category>
+		<category><![CDATA[bsd]]></category>
+		<category><![CDATA[copyleft]]></category>
+		<category><![CDATA[copyright]]></category>
+		<category><![CDATA[gpl]]></category>
+		<category><![CDATA[john hunter]]></category>
+		<category><![CDATA[license]]></category>
+		<category><![CDATA[licenses]]></category>
+		<category><![CDATA[licensing]]></category>
+		<category><![CDATA[open source]]></category>
+		<category><![CDATA[richard stallman]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=851</guid>
+		<description><![CDATA[I was pointed to John Hunter&#8217;s Why we should be using BSD and came to think about how I rather tend to advocate using the GPL license. Richard Stallman makes some very convincing arguments for why GPL is the better choice, but even though I like this reasoning, I do see why choosing a different [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>I was pointed to John Hunter&#8217;s <em><a href="http://nipy.sourceforge.net/nipy/devel/faq/johns_bsd_pitch.html">Why we should be using BSD</a></em> and came to think about how I rather tend to advocate using the GPL license. <a href="http://en.wikipedia.org/wiki/Richard_Stallman">Richard Stallman </a>makes some very convincing arguments for <a href="http://www.gnu.org/licenses/why-not-lgpl.html">why GPL is the better choice</a>, but even though I like this reasoning, I do see why choosing a different license may be the right choice.</p>
+<p>In this post, I will explain some of the differences between <a href="http://en.wikipedia.org/wiki/BSD_licenses">BSD</a> and <a href="http://www.gnu.org/copyleft/gpl.html">GPL</a> and hopefully help you to choose for yourself. The target audience for this post are people in the scientific community, but it may also be useful to others.</p>
+<p>So how do BSD and GPL differ? Below I have listed what I think is most important, but please remember that I am not a lawyer, and that there are other effects of licensing that may apply to you:</p>
+<ul>
+<li>BSD is a free-for-all license that only requires attribution. Anyone using your code must give credit to you as the original author. Apart from that, they can do pretty much everything. They can change the code and sell programs based on it without asking you.</li>
+<li>GPL too requires attribution. However, it also requires anyone distributing software based on your source code to make available any changes they make to it. They can still sell programs based on your code to others without asking, but if they were to do something really smart with your code, you can demand that they share the changes with you. And you too can sell software based on their changes.</li>
+</ul>
+<p>Before moving on, I would like to clarify one important thing: Even though you are licensing your code as BSD or GPL, you can still sell software based on your code. You can even sell the rights to use your code with a different license. The licenses only apply to what other people can do with your code. You still keep all other rights.</p>
+<p>In the below table, I have summarized the differences between the licenses by listing a few scenarios. &#8220;They&#8221; is referring to someone using your code in their own software projects:</p>
+<table>
+<tbody>
+<tr>
+<td></td>
+<td><strong>BSD</strong></td>
+<td><strong>GPL</strong></td>
+</tr>
+<tr>
+<td>You can sell software based on your own code.</td>
+<td><span style="color: #339966;">✔  </span></td>
+<td><span style="color: #339966;">✔  </span></td>
+</tr>
+<tr>
+<td>They can sell software based on your code.</td>
+<td><span style="color: #339966;">✔  </span></td>
+<td><span style="color: #339966;">✔  </span></td>
+</tr>
+<tr>
+<td>They can make changes to your code.</td>
+<td><span style="color: #339966;">✔ </span></td>
+<td><span style="color: #339966;">✔  </span></td>
+</tr>
+<tr>
+<td>They have to give you credit for writing the original code.</td>
+<td><span style="color: #339966;">✔  </span></td>
+<td><span style="color: #339966;">✔ </span></td>
+</tr>
+<tr>
+<td>They have to use the same license as you.</td>
+<td><span style="color: #800000;">✖ </span></td>
+<td><span style="color: #339966;">✔ </span></td>
+</tr>
+<tr>
+<td>You can demand access to the changes they made to your code.</td>
+<td><span style="color: #800000;">✖</span></td>
+<td><span style="color: #339966;">✔ </span></td>
+</tr>
+<tr>
+<td>They can sell software based on your code without sharing their changes with you.</td>
+<td><span style="color: #339966;">✔ </span></td>
+<td><span style="color: #800000;">✖</span></td>
+</tr>
+<tr>
+<td>You can sell software based on the changes they made to your code.</td>
+<td><span style="color: #800000;">✖</span> *</td>
+<td><span style="color: #339966;">✔ </span></td>
+</tr>
+</tbody>
+</table>
+<p><em>*Except if they also use a BSD license for their changes.</em></p>
+<p>Some people call GPL &#8220;viral&#8221; because it &#8220;infects&#8221; any software using GPL licensed code. Any project using code with a GPL license will basically have to be GPL licensed too. This may be a showstopper for some companies that want to keep their own changes proprietary (secret/hidden) while still using your code. Note that this only applies if they distribute the software to others: If someone downloads your code and plays around with it on their own computer, they don&#8217;t have to care about the GPL license.</p>
+<p>The viral effect is why Richard Stallman advocates the GPL license. He thinks that it benefits the open source community (and perhaps also the scientific community) that software using GPL code must be GPL too. In his opinion, companies have money to spend on developing new products or to buy access to other people&#8217;s source code. The open source community, on the other hand, does not necessarily have the same monetary resources, but has access to all the open source code out there. If an open source project is fine with the adhering to the GPL license, they can also use all other GPL licensed code .</p>
+<p>Further, I think you should choose GPL for any code you think might be commercially viable <em>for yourself</em> in the future. Some people think the best option is to keep source code proprietary if you want to make money of it in the future. I think the exact opposite. If you are working on a project that you believe has some commercial value, why not let others find that commercial value for you? If someone starts selling software based on an improved version of your code, you can demand that they share the changes with you and start selling the software yourself.</p>
+<p>However, there are many good arguments for using the BSD license too. Many open source projects are working with companies that require code not to be GPL licensed. One such project is <a href="http://matplotlib.org/">Matplotlib</a>, for which John Hunter is the original author. They have received contributions from companies like <a href="http://enthought.com">Enthought</a>, which want to make sure they don&#8217;t have to license all their software as GPL because some code they use is from GPL projects. Such contributions are often significant for open source projects, and I can see why choosing BSD is a good middle way for them to keep the project open while still getting as much benefit from cooperation with companies.</p>
+<p>Some also argue that BSD attracts more developers than GPL because some developers may be put off by a GPL license. However, I believe this works both ways. Some developers are also put off by non-GPL projects. I don&#8217;t think your licensing choice will change much in the number of developers that are attracted to your project. If anything, I would do some research and contact relevant companies and developers and ask if they would be willing to contribute to your project. You can always change the license as you go, but you should know that all code that has already been licensed as GPL or BSD will forever be licensed that way. It is non-retractable. Any future changes you make to your own code, however, can be put under a different license. You may even choose not to license your new code any more if you want to.</p>
+<p>To conclude, when choosing between BSD and GPL, you should consider whether your main goal is to contribute to the open source community or to everyone in general. If you target only the open source community, GPL may be your best choice. If you want to contribute to everyone without further restrictions to the usage of your code, BSD may be your best bet.</p>
+<p>Personally, I will continue using GPL as long as I think my code may turn into a commercially viable project or if I just don&#8217;t have a long-term plan yet. However, I will happily use BSD if I think the code can be contributed into a BSD licensed project such as Matplotlib.</p>
+<p>There are also many other licenses out there. Have a look at the list made by the <a href="http://opensource.org/licenses">Open Source Initiative</a> if you want to know more about other licenses.</p>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

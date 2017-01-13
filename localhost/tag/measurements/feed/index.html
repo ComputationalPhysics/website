@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>measurements &#8211; Computational Physics</title>
+	<atom:link href="http://localhost/tag/measurements/feed/" rel="self" type="application/rss+xml" />
+	<link>http://localhost</link>
+	<description>Exploring physics beyond what can be counted by hand</description>
+	<lastBuildDate>Sun, 21 Feb 2016 11:16:19 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.7</generator>
+	<item>
+		<title>Working with percolation clusters in Python</title>
+		<link>http://localhost/2013/03/25/working-with-percolation-clusters-in-python/</link>
+		<pubDate>Mon, 25 Mar 2013 12:38:12 +0000</pubDate>
+		<dc:creator><![CDATA[Svenn-Arne Dragly]]></dc:creator>
+				<category><![CDATA[Computational Physics]]></category>
+		<category><![CDATA[Featured]]></category>
+		<category><![CDATA[Physics]]></category>
+		<category><![CDATA[Programming]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[clusters]]></category>
+		<category><![CDATA[matlab]]></category>
+		<category><![CDATA[measurements]]></category>
+		<category><![CDATA[percolation]]></category>
+		<category><![CDATA[python]]></category>
+		<category><![CDATA[scipy]]></category>
+
+		<guid isPermaLink="false">http://comp-phys.net/?p=305</guid>
+		<description><![CDATA[We&#8217;re working on a new project in FYS4460 about percolation. In the introduction of this project, we are given a few commands to help us demonstrate a few properties of percolation clusters using MATLAB. As the Python-fan I am, I of course had to see if I could find equivalent commands in Python, and thankfully [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>We&#8217;re working on a new project in FYS4460 about percolation. In the introduction of this project, we are given a few commands to help us demonstrate a few properties of percolation clusters using MATLAB.</p>
+<p>As the Python-fan I am, I of course had to see if I could find equivalent commands in Python, and thankfully that was quite easy. Below I will summarize the commands that will generate a random matrix of filled and unfilled areas, label each cluster in this matrix and calculate the area of each such cluster. Finally, we&#8217;ll draw a bounding box around the largest cluster.</p>
+<p><span id="more-305"></span></p>
+<p>First of all, we need to include the <strong>pylab</strong> package together with the <strong>scipy.ndimage.measurements</strong> package:</p>
+<pre class="brush:py">from pylab import *
+from scipy.ndimage import measurements</pre>
+<p>Now, let&#8217;s create a random matrix of filled and unfilled regions and visualize it:</p>
+<pre class="brush:py">L = 100
+r = rand(L,L)
+p = 0.4
+z = r &lt; p
+
+imshow(z, origin='lower', interpolation='nearest')
+colorbar()
+title("Matrix")
+show()</pre>
+<p>This creates a matrix of random numbers <strong>r</strong> before creating a map <strong>z</strong> of this matrix where each element is set to True if <strong>r</strong> &lt; p and False if <strong>r</strong> &gt; p:</p>
+<div id="attachment_852" style="width: 310px" class="wp-caption aligncenter"><a href="http://dragly.org/wp-content/uploads/2013/03/matrix.png" rel="lightbox[305]"><img class="size-medium wp-image-852" alt="Visualization of the map z." src="http://dragly.org/wp-content/uploads/2013/03/matrix-300x225.png" width="300" height="225" /></a><p class="wp-caption-text">Visualization of the map z.</p></div>
+<p>Furthermore we want to label each cluster. This is performed by the scipy.ndimage.measurements.label function:</p>
+<pre class="brush:py">lw, num = measurements.label(z)
+imshow(lw, origin='lower', interpolation='nearest')
+colorbar()
+title("Labeled clusters")
+show()</pre>
+<p>This labels each cluster with a number which may be visualized using the imshow function as above:</p>
+<div id="attachment_872" style="width: 310px" class="wp-caption aligncenter"><a href="http://dragly.org/wp-content/uploads/2013/03/labeled-matrix-ordered.png" rel="lightbox[305]"><img class="size-medium wp-image-872" alt="Matrix with labeled clusters, so it is a bit hard to distinguish each cluster." src="http://dragly.org/wp-content/uploads/2013/03/labeled-matrix-ordered-300x225.png" width="300" height="225" /></a><p class="wp-caption-text">Matrix with labeled clusters, so it is a bit hard to distinguish each cluster.</p></div>
+<p>Beacause the label starts from the bottom up, the cluster colors are a bit too ordered, making it hard to distinguish two clusters close to each other. To fix this, we may shuffle the labeling with the following code:</p>
+<pre class="brush:py">b = arange(lw.max() + 1)
+shuffle(b)
+shuffledLw = b[lw]
+imshow(shuffledLw, origin='lower', interpolation='nearest')
+colorbar()
+title("Labeled clusters")
+show()</pre>
+<p>Now it is way easier to see the different clusters:</p>
+<div id="attachment_871" style="width: 310px" class="wp-caption aligncenter"><a href="http://dragly.org/wp-content/uploads/2013/03/labeled-matrix.png" rel="lightbox[305]"><img class="size-medium wp-image-871" alt="The same matrix with all clusters labeled with a number." src="http://dragly.org/wp-content/uploads/2013/03/labeled-matrix-300x225.png" width="300" height="225" /></a><p class="wp-caption-text">The same matrix with all clusters labeled with a number.</p></div>
+<p>After this we may want to extract some properties of the clusters, such as the area. This is possible using the scipy.ndimage.measurements.sum function:</p>
+<pre class="brush:py">area = measurements.sum(z, lw, index=arange(lw.max() + 1))
+areaImg = area[lw]
+im3 = imshow(areaImg, origin='lower', interpolation='nearest')
+colorbar()
+title("Clusters by area")
+show()</pre>
+<p>The above code now plots the same matrix as above, but this time with all clusters colored by area:</p>
+<div id="attachment_873" style="width: 310px" class="wp-caption aligncenter"><a href="http://dragly.org/wp-content/uploads/2013/03/colored-by-area.png" rel="lightbox[305]"><img class="size-medium wp-image-873" alt="Matrix with the clusters colored by area." src="http://dragly.org/wp-content/uploads/2013/03/colored-by-area-300x225.png" width="300" height="225" /></a><p class="wp-caption-text">Matrix with the clusters colored by area.</p></div>
+<p>Finally, we may want to find the bounding box of the largest cluster, so we again may see if there is a path from one side to the other. This is possible by using the function scipy.ndimage.measurements.find_objects. Note however that this is a bit risky. If there are two clusters that are largest with the same area, find_objects will find the bounding box of both clusters. I&#8217;ll leave it up to you to figure out a method to avoid this if necessary. (Pro tip: Make a mapping of the cluster labels to the areas.)</p>
+<p>With the find_objects function, we are able to plot a rectangle around the largest cluster:</p>
+<pre class="brush:py">sliced = measurements.find_objects(areaImg == areaImg.max())
+if(len(sliced) &gt; 0):
+    sliceX = sliced[0][1]
+    sliceY = sliced[0][0]
+    plotxlim=im3.axes.get_xlim()
+    plotylim=im3.axes.get_ylim()
+    plot([sliceX.start, sliceX.start, sliceX.stop, sliceX.stop, sliceX.start], \
+                      [sliceY.start, sliceY.stop, sliceY.stop, sliceY.start, sliceY.start], \
+                      color="red")
+    xlim(plotxlim)
+    ylim(plotylim)
+
+show()</pre>
+<p>This shows up like this:</p>
+<div id="attachment_874" style="width: 310px" class="wp-caption aligncenter"><a href="http://dragly.org/wp-content/uploads/2013/03/bounding-box.png" rel="lightbox[305]"><img class="size-medium wp-image-874" alt="bounding-box" src="http://dragly.org/wp-content/uploads/2013/03/bounding-box-300x225.png" width="300" height="225" /></a><p class="wp-caption-text">A bounding box on top of the largest cluster. The rest are colored by area.</p></div>
+<p>The whole program then becomes as follows:</p>
+<pre class="brush:py">from pylab import *
+from scipy.ndimage import measurements
+
+L = 100
+r = rand(L,L)
+p = 0.4
+z = r&lt;p
+
+figure(figsize=(16,5))
+subplot(1,3,1)
+imshow(z, origin='lower', interpolation='nearest')
+colorbar()
+title("Matrix")
+
+# Show image of labeled clusters (shuffled)
+lw, num = measurements.label(z)
+subplot(1,3,2)
+b = arange(lw.max() + 1) # create an array of values from 0 to lw.max() + 1
+shuffle(b) # shuffle this array
+shuffledLw = b[lw] # replace all values with values from b
+imshow(shuffledLw, origin='lower', interpolation='nearest') # show image clusters as labeled by a shuffled lw
+colorbar()
+title("Labeled clusters")
+
+# Calculate areas
+subplot(1,3,3)
+area = measurements.sum(z, lw, index=arange(lw.max() + 1))
+areaImg = area[lw]
+im3 = imshow(areaImg, origin='lower', interpolation='nearest')
+colorbar()
+title("Clusters by area")
+
+# Bounding box
+sliced = measurements.find_objects(areaImg == areaImg.max())
+if(len(sliced) &gt; 0):
+    sliceX = sliced[0][1]
+    sliceY = sliced[0][0]
+    plotxlim=im3.axes.get_xlim()
+    plotylim=im3.axes.get_ylim()
+    plot([sliceX.start, sliceX.start, sliceX.stop, sliceX.stop, sliceX.start], \
+                      [sliceY.start, sliceY.stop, sliceY.stop, sliceY.start, sliceY.start], \
+                      color="red")
+    xlim(plotxlim)
+    ylim(plotylim)
+
+show()</pre>
+]]></content:encoded>
+			</item>
+	</channel>
+</rss>

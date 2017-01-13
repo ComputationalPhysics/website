@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--[if IE 7 | IE 8]>
+<html class="ie" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+
+<!-- Mirrored from localhost/2014/03/24/structuring-larger-projects-using-qmake/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:48:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Structuring large(r) projects using QMake | Computational Physics</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="../../../../xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="http://localhost/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true}});
+</script>
+<link rel='dns-prefetch' href='http://s0.wp.com/' />
+<link rel='dns-prefetch' href='http://cdn.mathjax.org/' />
+<link rel='dns-prefetch' href='http://s.gravatar.com/' />
+<link rel='dns-prefetch' href='http://fonts.googleapis.com/' />
+<link rel='dns-prefetch' href='http://s.w.org/' />
+<link href='https://fonts.gstatic.com/' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="Computational Physics &raquo; Feed" href="../../../../feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Computational Physics &raquo; Comments Feed" href="../../../../comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Computational Physics &raquo; Structuring large(r) projects using QMake Comments Feed" href="feed/index.html" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/localhost\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='dropshadowboxes_css-css'  href='../../../../wp-content/plugins/drop-shadow-boxes/css/dropshadowboxes2846.css?ver=1.5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&amp;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='../../../../wp-content/themes/compphys/style4906.css?ver=4.7' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='http://localhost/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='jquery.lightbox.min.css-css'  href='../../../../wp-content/plugins/wp-jquery-lightbox/styles/lightbox.min5f04.css?ver=1.4.6' type='text/css' media='all' />
+<script type='text/javascript' src='../../../../wp-includes/js/jquery/jqueryb8ff.js?ver=1.12.4'></script>
+<script type='text/javascript' src='../../../../wp-includes/js/jquery/jquery-migrate.min330a.js?ver=1.4.1'></script>
+<script type='text/javascript' src='../../../../wp-content/plugins/cpu-reporter/jquery.flot4906.js?ver=4.7'></script>
+<script type='text/javascript' src='../../../../wp-content/plugins/cpu-reporter/jquery.flot.pie.min4906.js?ver=4.7'></script>
+<script type='text/javascript' src='http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML%2CSafe.js&amp;ver=4.7'></script>
+<link rel='https://api.w.org/' href='../../../../wp-json/index.html' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../../../xmlrpc0db0.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../../../../wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Including vector graphics in LaTeX using includesvg' href='../../22/including-vector-graphics-in-latex-using-includesvg/index.html' />
+<link rel='next' title='Automatic panel lettering within LaTeX' href='../../../04/04/automatic-panel-lettering-within-latex/index.html' />
+<meta name="generator" content="WordPress 4.7" />
+<link rel="canonical" href="index.html" />
+<link rel='shortlink' href='../../../../index66f9.html?p=729' />
+<link rel="alternate" type="application/json+oembed" href="../../../../wp-json/oembed/1.0/embed2a25.json?url=http%3A%2F%2Flocalhost%2F2014%2F03%2F24%2Fstructuring-larger-projects-using-qmake%2F" />
+
+<link rel='dns-prefetch' href='http://v0.wordpress.com/'>
+	<style type="text/css" id="twentytwelve-header-css">
+			.site-title,
+		.site-description {
+			position: absolute;
+			clip: rect(1px 1px 1px 1px); /* IE7 */
+			clip: rect(1px, 1px, 1px, 1px);
+		}
+		</style>
+	<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #ffffff; }
+</style>
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Structuring large(r) projects using QMake" />
+<meta property="og:url" content="http://localhost/2014/03/24/structuring-larger-projects-using-qmake/" />
+<meta property="og:description" content="Note: This post overlaps / conflicts with some of the material dicussed here. So I excourage you to read both posts if you have not read the previous one already. Hey champs, first of all, let me j…" />
+<meta property="article:published_time" content="2014-03-24T14:31:18+00:00" />
+<meta property="article:modified_time" content="2014-03-24T14:51:01+00:00" />
+<meta property="og:site_name" content="Computational Physics" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+</head>
+
+<body class="post-template-default single single-post postid-729 single-format-standard custom-background custom-background-white custom-font-enabled">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+		<hgroup>
+			<h1 class="site-title"><a href="../../../../index.html" title="Computational Physics" rel="home">Computational Physics</a></h1>
+			<h2 class="site-description">Exploring physics beyond what can be counted by hand</h2>
+		</hgroup>
+
+                                        <a href="../../../../index.html"><img src="http://comp-phys.net/wp-content/uploads/2012/11/cropped-heading6.png" class="header-image" width="360" height="94" alt="" /></a>
+                
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<h3 class="menu-toggle">Menu</h3>
+			<div class="skip-link assistive-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+			<div class="menu-main-menu-container"><ul id="menu-main-menu" class="nav-menu"><li id="menu-item-115" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-115"><a href="../../../../blog/index.html">Blog</a></li>
+<li id="menu-item-601" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-601"><a href="../../../../software/index.html">Software</a></li>
+<li id="menu-item-372" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-372"><a href="../../../../projects/index.html">Projects</a></li>
+<li id="menu-item-96" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-96"><a href="../../../../courses/index.html">Courses</a></li>
+<li id="menu-item-99" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-99"><a href="../../../../thesises/index.html">Theses</a></li>
+<li id="menu-item-98" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-98"><a href="../../../../people/index.html">People</a></li>
+<li id="menu-item-411" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-411"><a href="http://comp-phys.net/">About</a></li>
+<li id="menu-item-877" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-877"><a href="../../../../events/index.html">Events</a></li>
+<li id="menu-item-434" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-434"><a href="../../../../internals/index.html">Internals</a>
+<ul class="sub-menu">
+	<li id="menu-item-426" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-426"><a href="../../../../internals/index.html">Getting started</a></li>
+	<li id="menu-item-669" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-669"><a href="../../../../cluster-info/using-smaug/index.html">Computing Cluster</a></li>
+	<li id="menu-item-974" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-974"><a href="../../../../coding-style/index.html">Coding style</a></li>
+</ul>
+</li>
+</ul></div>		</nav><!-- #site-navigation -->
+	</header><!-- #masthead -->
+	
+	<div style="clear:both;"></div>
+
+	<div id="main" class="wrapper">
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+								
+	<article id="post-729" class="post-729 post type-post status-publish format-standard hentry category-uncategorized">
+				<header class="entry-header">
+									<h1 class="entry-title">Structuring large(r) projects using QMake</h1>
+										<div class="comments-link">
+					<a href="index.html#respond"><span class="leave-reply">Leave a reply</span></a>				</div><!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p><em>Note: This post overlaps / conflicts with some of the material dicussed <a href="http://comp-phys.net/2014/03/13/new-project-structure-for-projects-in-qt-creator-with-unit-tests/">here</a>. So I excourage you to read both posts if you have not read the previous one already.</em></p>
+<p>Hey champs,</p>
+<p>first of all, let me just say that if you&#8217;re not using <a href="http://qt-project.org/wiki/Category:Tools::QtCreator">Qt Creator</a> for organizing and coding your projects, which uses <a href="http://qt-project.org/doc/qt-4.8/qmake-manual.html">QMake</a> intrinsically, the level of this post will be somewhat higher. Nevertheless, I&#8217;ll try to keep to the basics and explain things in a simply way, without all the <a href="http://idioms.thefreedictionary.com/jazz">jazz</a>. If you are interested in the jazz, however, I am very interested in discussing it in a separate post or in the comments / over some coffee.</p>
+<p>So let&#8217;s get to it! This post is aimed at those who develop a code centered around the use solvers, i.e. one implementation of a specific algorithm. Examples could be Molecular Dynamics (MD), Variational Monte-Carlo, Coupled-Cluster, Hartree-Fock, and so on.</p>
+<p><strong>Structure your code.</strong> Don&#8217;t mash all your files in the same folder. It&#8217;s ugly. I don&#8217;t care if you are using an <a href="http://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a> which displays them in an organized fashion &#8211; it&#8217;s still ugly.</p>
+<p><strong>Separate the source code from the rest of the project. </strong>Let&#8217;s say you&#8217;re coding MD. You may use your implementation to study numerous systems, e.g. basic tempering of Argon, phase coexistence simulations, and so on. A brute force way of implementing multiple uses of a solver is to <a href="http://www.tutorialspoint.com/cplusplus/cpp_switch_statement.htm">switch test</a> in the main file and finally simply call <em>run() </em>using whichever objects was initialized in the switch.</p>
+<p>However, I will argue that this is a bad way of doing things. Your main file &#8220;main.cpp&#8221; will be awfully cluttered and a hazzle to work with. I would rather suggest you create a separate main file for each of the separate uses of the solver, e.g.</p>
+<ul>
+<li>&#8230;/MD/apps/argon/argonmain.cpp</li>
+<li>&#8230;/MD/apps/phasecoexistence/phasecoexistencemain.cpp</li>
+</ul>
+<p>and put your source code in</p>
+<ul>
+<li>&#8230;/MD/src/</li>
+</ul>
+<p>Moreover, if your classes have subclass implementations, they shold be structured in the following way for maximum transparency:</p>
+<ul>
+<li>&#8230;/MD/src/superclass/superclass.h</li>
+<li>&#8230;/MD/src/superclass/superclass.cpp</li>
+</ul>
+<ul>
+<li>&#8230;/MD/src/superclass/subclass/subclass.h</li>
+<li>&#8230;/MD/src/superclass/subclass/subclass.cpp</li>
+</ul>
+<p>Multiple main files require multiple <a href="http://en.wikipedia.org/wiki/Library_(computing)">executables</a>, as each executable is linked to one specific <a href="http://en.wikipedia.org/wiki/Entry_point">main function</a>. However, each of the main function reuse the same code for the algorithm. It is thus recommended to compile the source code to a <a href="http://en.wikipedia.org/wiki/Library_(computing)">shared library</a>. You can think if a library as an implementation with the main file removed; exactly what we need.</p>
+<p>Another argument for using shared libraries, is that if you do <a href="http://en.wikipedia.org/wiki/Unit_testing">unit testing</a>, you are guaranteed that the same machine code is used for testing and production runs.</p>
+<p>Your library file should be placed in</p>
+<ul>
+<li>&#8230;/MD/lib/</li>
+</ul>
+<p>The last missing piece now is how to include the library <a href="http://www.cplusplus.com/forum/articles/10627/">headers</a> in the main files. The brute force way of doing this is to implement every single header that you need. This is unnecessary. Since the library is built already, there is no <a href="http://www.tutorialspoint.com/makefile/why_makefile.htm">advantage to gain</a> by not including every single header. So you should make a combined header</p>
+<ul>
+<li>&#8230;/MD/include/MD.h</li>
+</ul>
+<p>which includes everything you need to use the library to it&#8217;s fullest. For example:</p>
+<p><div class='dropshadowboxes-container ' style='width:500px;'>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            <br />
+#pragma once</p>
+<p>#include &#8220;../src/stuff.h&#8221;</p>
+<p>#include &#8220;../src/superclass/subclass/subclass.h&#8221;</p>
+<p>&#8230;
+                            </div>
+                        </div><br />
+</p>
+<p>such that your main files can start like the following:</p>
+<p><div class='dropshadowboxes-container ' style='width:500px;'>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            <br />
+#include &lt;MD.h&gt;</p>
+<p>int main() {</p>
+<p>&#8230;</p>
+<p><span style="line-height: 1.714285714; font-size: 1rem;">}</span>
+                            </div>
+                        </div><br />
+</p>
+<p>Do note that this header <em>should never be used </em>within the library itself, <em>only</em> by outside sources which link to the library directly (apps).</p>
+<p><strong>So to recap</strong>, we&#8217;ve got some layers of structuring going on now:</p>
+<ul>
+<li>&#8230;/MD/src/                    &#8211; source code going into the MD solver</li>
+</ul>
+<ul>
+<li>&#8230;/MD/lib/                     &#8211; compiled MD shared library</li>
+<li>&#8230;/MD/include/MD.h    &#8211; complete header for use in main.</li>
+<li>&#8230;/MD/apps/                 &#8211; specific implementations.</li>
+</ul>
+<p><strong>Setting up QMake </strong>for this structure is very simple. First of all we need</p>
+<ul>
+<li>&#8230;/MD/MD.pro</li>
+</ul>
+<p><div class='dropshadowboxes-container ' style=''>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            TEMPLATE = subdirs<br />
+CONFIG += ordered</p>
+<p>SUBDIRS += src apps</p>
+<p>OTHER_FILES +=  $$PWD/include/MD.h
+                            </div>
+                        </div><br />
+</p>
+<p>This simply says that we are bulding multiple things; one thing located in <em>src</em>, and another thing located in <em>apps</em>. We are also keeping track of the file <em>MD.h</em>, but we are not using it to build anything.</p>
+<p>then we need</p>
+<ul>
+<li>&#8230;/MD/src/src.pro</li>
+</ul>
+<p><div class='dropshadowboxes-container ' style=''>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            include(../defaults.pri)</p>
+<p>TEMPLATE = lib<br />
+TARGET = ../lib/MD</p>
+<p>HEADERS = stuff.h superclass/superclass.h &#8230;</p>
+<p>SOURCES = superclass/superclass.cpp &#8230;
+                            </div>
+                        </div><br />
+</p>
+<p>where the <em>defaults.pri</em> file includes all the compiler information etc. that is general for everything you build. An example of this is listed <a href="https://github.com/jorgehog/kMC/blob/master/defaults.pri">here</a>.</p>
+<p>finally, we need</p>
+<ul>
+<li>&#8230;/MD/apps/apps.pro</li>
+</ul>
+<p><div class='dropshadowboxes-container ' style=''>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            TEMPLATE = subdirs<br />
+CONFIG += ordered</p>
+<p>SUBDIRS += argon phasecoexistence &#8230;
+                            </div>
+                        </div><br />
+</p>
+<p><strong>Implementing an app </strong>is then simply a matter of adding another subdir to the list of <em>apps.pro</em>, and setting up e.g.</p>
+<ul>
+<li>&#8230;/MD/apps/argon/argon.pro</li>
+</ul>
+<p><div class='dropshadowboxes-container ' style=''>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            include(../app_defaults.pri)</p>
+<p>SOURCES = argonmain.cpp
+                            </div>
+                        </div><br />
+</p>
+<p>where</p>
+<ul>
+<li>&#8230;/MD/apps/app_defaults.pri</li>
+</ul>
+<p>looks something like this:</p>
+<p><div class='dropshadowboxes-container ' style=''>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            include(../defaults.pri)</p>
+<p>TEMPLATE = app<br />
+CONFIG += console</p>
+<p>INCLUDEPATH += $$TOP_PWD/include</p>
+<p>LIBS += -L$$TOP_PWD/lib -lMD
+                            </div>
+                        </div><br />
+</p>
+<p>where <em>TOP_PWD </em>is set in defaults.pri and references the top MD folder. All in all, this project file setup should enable the easy use of the library as introduced previously.</p>
+<p><strong>Using this structure encourages external use of your code </strong>since it is already set up in such a way that it does not require recompilation and a messy ocean of headers to use. To ensure that all added apps can function <span style="text-decoration: underline;">independent of the source</span> (and thus more easily usable by others) the following lines can be added to the source project file, which ensures that your compiled library file will not remain at a distant build directory which other apps may not know about:</p>
+<p><code> !equals(PWD, $${OUT_PWD}) {<br />
+QMAKE_POST_LINK += $(COPY_DIR) $$OUT_PWD/../lib $$TOP_PWD<br />
+}<br />
+</code></p>
+<p><strong>Moreover, you should enable <a href="http://en.wikipedia.org/wiki/Debug_symbol">debug symbols</a></strong> for your library, so that the debugger will be able to speficy where in your code it crashed (also in src.pro):</p>
+<p><div class='dropshadowboxes-container ' style=''>
+                            <div class='dropshadowboxes-drop-shadow dropshadowboxes-rounded-corners dropshadowboxes-inside-and-outside-shadow dropshadowboxes-lifted-both dropshadowboxes-effect-default' style=' border: 1px solid #dddddd; height:; background-color:#ffffff;    '>
+                            QMAKE_LFLAGS += -g
+                            </div>
+                        </div><br />
+</p>
+<p>this is <strong>not default</strong>. however, you may keep this only for debug mode.</p>
+<p><strong>For examples</strong> of setups using the methods introduced above, see for example my <a href="https://github.com/jorgehog/QMC2">quantum Monte-Carlo code</a>, or my <a href="https://github.com/jorgehog/kMC">kinetic Monte-Carlo code</a>.</p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			This entry was posted in <a href="../../../../category/uncategorized/index.html" rel="category tag">Uncategorized</a> on <a href="index.html" title="15:31" rel="bookmark"><time class="entry-date" datetime="2014-03-24T15:31:18+00:00">24 March, 2014</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="../../../../author/jorgen/index.html" title="View all posts by Jørgen Høgberget" rel="author">Jørgen Høgberget</a></span></span>.										<div class="author-info">
+					<div class="author-avatar">
+						<img alt='' src='http://2.gravatar.com/avatar/210e46e4c83513581f09235893d04e9e?s=68&amp;d=mm&amp;r=g' srcset='http://2.gravatar.com/avatar/210e46e4c83513581f09235893d04e9e?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' />					</div><!-- .author-avatar -->
+					<div class="author-description">
+						<h2>About Jørgen Høgberget</h2>
+						<p><p>Former Master student in Computational physics, University of Oslo</p>
+<p><span style="color: #333333;">My current interest revolves around the development and implementation of state-of-the-art scientific methods using modern and optimized computational tools and techniques. Programming, mathematics and problem solving in general satisfies my curiosity and creativity to a level unmatched by any other activity I have yet encountered.</span></p>
+<p>Rockstar when you are asleep.</p>
+</p>
+						<div class="author-link">
+							<a href="../../../../author/jorgen/index.html" rel="author">
+								View all posts by Jørgen Høgberget <span class="meta-nav">&rarr;</span>							</a>
+						</div><!-- .author-link	-->
+					</div><!-- .author-description -->
+				</div><!-- .author-info -->
+					</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">Post navigation</h3>
+					<span class="nav-previous"><a href="../../22/including-vector-graphics-in-latex-using-includesvg/index.html" rel="prev"><span class="meta-nav">&larr;</span> Including vector graphics in LaTeX using includesvg</a></span>
+					<span class="nav-next"><a href="../../../04/04/automatic-panel-lettering-within-latex/index.html" rel="next">Automatic panel lettering within LaTeX <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.html#respond" style="display:none;">Cancel reply</a></small></h3>			<form action="http://localhost/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+				<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required='true' required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" aria-required='true' required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='729' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e5f9869b1f" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="23"/></p>			</form>
+			</div><!-- #respond -->
+	
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+			<aside id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="http://localhost/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s" />
+					<input type="submit" id="searchsubmit" value="Search" />
+				</div>
+			</form></aside><aside id="rpwe_widget-2" class="widget rpwe_widget recent-posts-extended"><h3 class="widget-title">Recent posts</h3><div  class="rpwe-block "><ul class="rpwe-ul"><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../../2015/09/24/education-prize-to-computational-physics/index.html"  rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="../../../../wp-content/uploads/2012/11/fredagsseminar1-45x45.png" alt="Education Prize to Computational Physics!"></a><h3 class="rpwe-title"><a href="../../../../2015/09/24/education-prize-to-computational-physics/index.html" title="Permalink to Education Prize to Computational Physics!" rel="bookmark">Education Prize to Computational Physics!</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../../2015/02/10/creating-a-3d-neuron-scene-in-blender/index.html"  rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="../../../../wp-content/uploads/2015/02/neuron-45x45.jpg" alt="Creating a 3D Neuron Scene in Blender"></a><h3 class="rpwe-title"><a href="../../../../2015/02/10/creating-a-3d-neuron-scene-in-blender/index.html" title="Permalink to Creating a 3D Neuron Scene in Blender" rel="bookmark">Creating a 3D Neuron Scene in Blender</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../../2015/01/15/national-education-price-awarded-to-computational-physics-professor/index.html"  rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="../../../../wp-content/uploads/2015/01/malthe-45x45.jpg" alt="National education price awarded to Computational Physics professor"></a><h3 class="rpwe-title"><a href="../../../../2015/01/15/national-education-price-awarded-to-computational-physics-professor/index.html" title="Permalink to National education price awarded to Computational Physics professor" rel="bookmark">National education price awarded to Computational Physics professor</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../11/22/choosing-the-right-license-for-your-code/index.html" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb rpwe-default-thumb" src="http://placehold.it/45x45/f0f0f0/ccc" alt="Choosing the right license for your code" width="45" height="45"></a><h3 class="rpwe-title"><a href="../../../11/22/choosing-the-right-license-for-your-code/index.html" title="Permalink to Choosing the right license for your code" rel="bookmark">Choosing the right license for your code</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/index.html" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb rpwe-default-thumb" src="http://placehold.it/45x45/f0f0f0/ccc" alt="Getting MCALab up and running on a 64-bit installation of Matlab on Ubuntu" width="45" height="45"></a><h3 class="rpwe-title"><a href="../../../11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/index.html" title="Permalink to Getting MCALab up and running on a 64-bit installation of Matlab on Ubuntu" rel="bookmark">Getting MCALab up and running on a 64-bit installation of Matlab on Ubuntu</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../09/16/find-usages-keybind-broken-qtcreator/index.html" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb rpwe-default-thumb" src="http://placehold.it/45x45/f0f0f0/ccc" alt="Find Usages Keybind broken in QtCreator" width="45" height="45"></a><h3 class="rpwe-title"><a href="../../../09/16/find-usages-keybind-broken-qtcreator/index.html" title="Permalink to Find Usages Keybind broken in QtCreator" rel="bookmark">Find Usages Keybind broken in QtCreator</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../09/16/pycharm-for-qtcreator-fanatics/index.html" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb rpwe-default-thumb" src="http://placehold.it/45x45/f0f0f0/ccc" alt="PyCharm Keymap for QtCreator Fanatics" width="45" height="45"></a><h3 class="rpwe-title"><a href="../../../09/16/pycharm-for-qtcreator-fanatics/index.html" title="Permalink to PyCharm Keymap for QtCreator Fanatics" rel="bookmark">PyCharm Keymap for QtCreator Fanatics</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../09/03/fixing-gdb-issues-with-gcc-4-8-x-and-c11/index.html" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb rpwe-default-thumb" src="http://placehold.it/45x45/f0f0f0/ccc" alt="Fixing GDB issues with GCC 4.8.x and C++11" width="45" height="45"></a><h3 class="rpwe-title"><a href="../../../09/03/fixing-gdb-issues-with-gcc-4-8-x-and-c11/index.html" title="Permalink to Fixing GDB issues with GCC 4.8.x and C++11" rel="bookmark">Fixing GDB issues with GCC 4.8.x and C++11</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../08/04/latex-package-for-uio-masters-theses/index.html" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb rpwe-default-thumb" src="http://placehold.it/45x45/f0f0f0/ccc" alt="LaTeX package for UiO Master&#8217;s theses" width="45" height="45"></a><h3 class="rpwe-title"><a href="../../../08/04/latex-package-for-uio-masters-theses/index.html" title="Permalink to LaTeX package for UiO Master&#8217;s theses" rel="bookmark">LaTeX package for UiO Master&#8217;s theses</a></h3></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="../../../07/09/circumventing-annoying-library-path-issues-with-qtcreator/index.html" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb rpwe-default-thumb" src="http://placehold.it/45x45/f0f0f0/ccc" alt="Circumventing annoying library path issues with QtCreator" width="45" height="45"></a><h3 class="rpwe-title"><a href="../../../07/09/circumventing-annoying-library-path-issues-with-qtcreator/index.html" title="Permalink to Circumventing annoying library path issues with QtCreator" rel="bookmark">Circumventing annoying library path issues with QtCreator</a></h3></li></ul></div><!-- Generated by http://wordpress.org/plugins/recent-posts-widget-extended/ --></aside><aside id="meta-2" class="widget widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="../../../../wp-login.html">Log in</a></li>
+			<li><a href="../../../../feed/index.html">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="../../../../comments/feed/index.html">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>			</ul>
+			</aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="../../../../2015/09/24/education-prize-to-computational-physics/index.html">Education Prize to Computational Physics!</a>
+						</li>
+					<li>
+				<a href="../../../../2015/02/10/creating-a-3d-neuron-scene-in-blender/index.html">Creating a 3D Neuron Scene in Blender</a>
+						</li>
+					<li>
+				<a href="../../../../2015/01/15/national-education-price-awarded-to-computational-physics-professor/index.html">National education price awarded to Computational Physics professor</a>
+						</li>
+					<li>
+				<a href="../../../11/22/choosing-the-right-license-for-your-code/index.html">Choosing the right license for your code</a>
+						</li>
+					<li>
+				<a href="../../../11/20/getting-mcalab-up-and-running-on-a-64-bit-installation-of-matlab-on-ubuntu/index.html">Getting MCALab up and running on a 64-bit installation of Matlab on Ubuntu</a>
+						</li>
+				</ul>
+		</aside>				</div><!-- #secondary -->
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.org/" title="Semantic Personal Publishing Platform">Proudly powered by WordPress</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+	<div style="display:none">
+	<div class="grofile-hash-map-210e46e4c83513581f09235893d04e9e">
+	</div>
+	</div>
+<script type='text/javascript' src='../../../../wp-content/plugins/akismet/_inc/formcf1b.js?ver=3.2'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201702'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2017Janaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='../../../../wp-content/plugins/jetpack/modules/wpgroho4906.js?ver=4.7'></script>
+<script type='text/javascript' src='../../../../wp-includes/js/comment-reply.min4906.js?ver=4.7'></script>
+<script type='text/javascript' src='../../../../wp-content/themes/twentytwelve/js/navigation0150.js?ver=20140711'></script>
+<script type='text/javascript' src='../../../../wp-content/plugins/wp-jquery-lightbox/jquery.touchwipe.min5f04.js?ver=1.4.6'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var JQLBSettings = {"showTitle":"1","showCaption":"1","showNumbers":"1","fitToScreen":"1","resizeSpeed":"400","showDownload":"0","navbarOnTop":"0","marginSize":"0","slideshowSpeed":"4000","prevLinkTitle":"previous image","nextLinkTitle":"next image","closeTitle":"close image gallery","image":"Image ","of":" of ","download":"Download","pause":"(pause slideshow)","play":"(play slideshow)"};
+var JQLBSettings = {"showTitle":"1","showCaption":"1","showNumbers":"1","fitToScreen":"1","resizeSpeed":"400","showDownload":"0","navbarOnTop":"0","marginSize":"0","slideshowSpeed":"4000","prevLinkTitle":"previous image","nextLinkTitle":"next image","closeTitle":"close image gallery","image":"Image ","of":" of ","download":"Download","pause":"(pause slideshow)","play":"(play slideshow)"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='../../../../wp-content/plugins/wp-jquery-lightbox/jquery.lightbox.min5f04.js?ver=1.4.6'></script>
+<script type='text/javascript' src='../../../../wp-includes/js/wp-embed.min4906.js?ver=4.7'></script>
+</body>
+
+<!-- Mirrored from localhost/2014/03/24/structuring-larger-projects-using-qmake/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Jan 2017 10:48:11 GMT -->
+</html>

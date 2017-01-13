@@ -1,0 +1,16 @@
+.user-thumbnail {
+    float: left;
+    clear: both;
+    padding: 20px;
+    margin: 20px;
+    margin-top: 0px;
+}
+
+.user-content {
+    float: left;
+    width: 400px;
+}
+
+.user-info {
+    margin-top: 20px;
+}
